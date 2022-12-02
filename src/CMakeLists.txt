@@ -87,5 +87,5 @@ endif()
 #############################################################
 #tests
 add_custom_target(tests COMMAND ${CMAKE_CTEST_COMMAND} --verbose
-                  DEPENDS unit_tests)
+                  DEPENDS graph_algorithms_tests graph_tests)
 
