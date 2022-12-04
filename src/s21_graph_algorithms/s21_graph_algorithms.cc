@@ -4,22 +4,22 @@
 
 namespace s21 {
 Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
-  int edge_count = 0;  // number of edge
+  int edge_count = 1;  // number of edge
   // create a array to track selected vertex
   // selected will become true otherwise false
   int graph_size = graph.GetSize();
-  std::vector<bool> selected(graph_size, false);
+  std::vector<bool> selected(graph_size + 1, false);
   Graph result(graph_size);
 
   // the number of egde in minimum spanning tree will be always
-  //  less than (graph_size -1), where graph_size is number of vertices in graph
+  //  less than (graph_size), where graph_size is number of vertices in graph
 
   // choose 0th vertex and make it true
-  selected[0] = true;
+  selected[1] = true;
 
-  int y = 0;  //  row number
-  int x = 0;  //  col number
-  while (edge_count < graph_size - 1) {
+  int y = 1;  //  row number
+  int x = 1;  //  col number
+  while (edge_count < graph_size) {
     // For every vertex in the set S, find the all adjacent vertices
     //  , calculate the distance from the vertex selected at step 1.
     //  if the vertex is already in the set S, discard it otherwise
@@ -27,9 +27,9 @@ Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
 
     int min = INT_MAX;
 
-    for (int i = 0; i < graph_size; i++) {
+    for (int i = 1; i <= graph_size; i++) {
       if (selected[i]) {
-        for (int j = 0; j < graph_size; j++) {
+        for (int j = 1; j <= graph_size; j++) {
           if (!selected[j] &&
               graph.GetEdge(i, j)) {  // not in selected and there is an edge
             if (graph.GetEdge(i, j) < min) {
