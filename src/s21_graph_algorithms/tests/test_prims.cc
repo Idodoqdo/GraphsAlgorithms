@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "s21_graph_algorithms.h"
+#include "../s21_graph_algorithms.h"
 
 TEST(prims, test_1) {
   int graph5x5[] = {0, 9, 75, 0, 0,
