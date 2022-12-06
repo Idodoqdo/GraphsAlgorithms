@@ -13,8 +13,6 @@ Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
   int x = 0;  //  col number
   while (edge_count < graph_size - 1) {
     int min = std::numeric_limits<int>::max();
-    x = 0;
-    y = 0;
     for (int i = 0; i < graph_size; i++) {
       if (selected[static_cast<std::size_t>(i)]) {
         for (int j = 0; j < graph_size; j++) {
