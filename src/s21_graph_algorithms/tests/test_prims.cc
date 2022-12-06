@@ -12,10 +12,10 @@ TEST(prims, test_1) {
   s21::Graph result(5);
   s21::GraphAlgorithms graph_algorithms;
   result = graph_algorithms.getLeastSpanningTree(graph);
-  ASSERT_EQ(result(1, 2), 9);
-  ASSERT_EQ(result(2, 4), 19);
-  ASSERT_EQ(result(4, 5), 31);
-  ASSERT_EQ(result(4, 3), 51);
+  ASSERT_EQ(result(0, 1), 9);
+  ASSERT_EQ(result(1, 3), 19);
+  ASSERT_EQ(result(3, 4), 31);
+  ASSERT_EQ(result(3, 2), 51);
 }
 
 TEST(prims, test_2) {
@@ -28,8 +28,8 @@ TEST(prims, test_2) {
   s21::Graph result(5);
   s21::GraphAlgorithms graph_algorithms;
   result = graph_algorithms.getLeastSpanningTree(graph);
-  ASSERT_EQ(result(1, 2), 2);
-  ASSERT_EQ(result(2, 3), 3);
-  ASSERT_EQ(result(2, 5), 5);
-  ASSERT_EQ(result(1, 4), 6);
+  ASSERT_EQ(result(0, 1), 2);
+  ASSERT_EQ(result(1, 2), 3);
+  ASSERT_EQ(result(1, 4), 5);
+  ASSERT_EQ(result(0, 3), 6);
 }
