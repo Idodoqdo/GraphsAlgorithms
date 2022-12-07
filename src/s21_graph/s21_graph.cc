@@ -6,7 +6,7 @@
 #include <regex>
 
 namespace s21 {
-Graph::Graph(std::string filepath) {
+Graph::Graph(std::string& filepath) {
   LoadGraphFromFile(filepath);
 }
 
@@ -41,7 +41,7 @@ bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
   return result;
 }
 
-void Graph::LoadGraphFromFile(std::string filename) {
+void Graph::LoadGraphFromFile(std::string &filename) {
   std::ifstream file(filename);
   if (file.is_open()) {
     try {
@@ -71,7 +71,7 @@ void Graph::LoadGraphFromFile(std::string filename) {
   }
 }
 
-void Graph::ExportGraphToDot(std::string filename) {
+void Graph::ExportGraphToDot(std::string &filename) {
   std::cout << filename;
 }
 } // namespace s21
