@@ -22,13 +22,13 @@ class Ant {
     public:
     Ant(const Graph & graph_distance, std::unique_ptr<Graph> & graph_pheromones, int index_start) : graph_distance_(graph_distance), 
     graph_pheromones_(graph_pheromones), gen_(rd_()), distrib_(0, 1) {
-        tabu_.push_back(index_start);
+        run_result_.vertices.push_back(index_start);
         FillAvailablePlaces();
     };
     Ant() = delete;
     // пробег муравья по всем городам
     void Run();
-
+    void Reset(int &position);
     private:
     // переход в другой город
     void Transition(std::vector<double> & transition_probabilitys_vec);
@@ -39,8 +39,6 @@ class Ant {
     // посчитаем города, куда он может ещё пойти
     const Graph & graph_distance_;
     std::unique_ptr<Graph> & graph_pheromones_;
-    // куда муравей уже заходил
-    std::vector<int> tabu_{};
     // куда муравей может зайти
     std::set<int> available_places_{};
     // заполнение индексов мест, куда можно пойти
@@ -49,6 +47,8 @@ class Ant {
     std::random_device rd_;
     std::mt19937 gen_;
     std::uniform_real_distribution<double> distrib_;
+    // путь и размер дистацнии
+    TsmResult run_result_{};
 };
 
 class Colony {
@@ -62,12 +62,15 @@ class Colony {
     //конструторы удалены, поскольку могут возникнуть проблемы при копировании объекта, содержащим unique_ptr
     Colony(const Colony&) = delete;
     Colony& operator=(const Colony&) = delete;
+    void FindingShortestPath();
 
     private:
     // добавление нового муравья в колонию
     void CreateAnt(int index_start);
     // заполним граф феромонами
     void FillFeromone();
+    // феромон постепенно испаряется
+    void EvaporationPheromones();
     TsmResult result{};
     // храним расстояние между точками
     const Graph & distance_between_points_graph_;
@@ -75,6 +78,8 @@ class Colony {
     std::unique_ptr<Graph> pheromones_graph_{};
     // муравьишки, которые будут бегать по Игорю
     std::vector<std::unique_ptr<Ant>> ants_{};
+    // коэф испарения
+    double coeff_evaporation_ = 0.64;
 };
 
 }
