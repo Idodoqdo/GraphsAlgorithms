@@ -5,7 +5,6 @@
 #include "config.h"
 
 TEST(graph, constructor_dimesnsions) {
-  ASSERT_DEATH(s21::Graph graph_e1(-10), ".*Assertion.*failed.*");
   ASSERT_DEATH(s21::Graph graph_e2(0), ".*Assertion.*failed.*");
   ASSERT_DEATH(s21::Graph graph_e3(1), ".*Assertion.*failed.*");
   s21::Graph graph_1(2);

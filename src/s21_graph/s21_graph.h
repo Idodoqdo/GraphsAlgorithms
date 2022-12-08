@@ -20,8 +20,8 @@ class Graph {
     return const_cast<double&>(const_cast<const Graph*>(this)->operator()(x, y));
   }
   const double& operator ()(size_t x, size_t y) const {
-    // size_t size = Size();
-    // assert(x >= 0 && y >= 0 && x < size && y < size);
+    size_t size = Size();
+    assert(x < size && y < size);
     return matrix_[y][x];
   }  
   size_t Size() const { return matrix_.size(); }

@@ -12,7 +12,7 @@ TEST(graph, dot_to_file) {
 }
 
 TEST(graph, dot_to_file_fork) {
-  int graph_raw[] = {0, 0, 0, 1,
+  double graph_raw[] = {0, 0, 0, 1,
                       0, 0, 0, 1,
                       0, 0, 0 ,1,
                       1, 1, 1, 0};
@@ -22,7 +22,7 @@ TEST(graph, dot_to_file_fork) {
 }
 
 TEST(graph, dot_to_file_cycled) {
-  int graph_raw[] = {0, 1, 0, 1,
+  double graph_raw[] = {0, 1, 0, 1,
                       1, 0, 1, 0,
                       0, 1, 0 ,1,
                       1, 0, 1, 0};
@@ -32,7 +32,7 @@ TEST(graph, dot_to_file_cycled) {
 }
 
 TEST(graph, dot_to_file_intersect) {
-  int graph_raw[] = {0, 1, 1, 1,
+  double graph_raw[] = {0, 1, 1, 1,
                       1, 0, 1, 1,
                       1, 1, 0 ,1,
                       1, 1, 1, 0};
@@ -42,7 +42,7 @@ TEST(graph, dot_to_file_intersect) {
 }
 
 TEST(graph, dot_to_file_no_connection) {
-  int graph_raw[] = {0, 0, 1, 0,
+  double graph_raw[] = {0, 0, 1, 0,
                       0, 0, 0, 1,
                       1, 0, 0 ,0,
                       0, 1, 0, 0};
@@ -52,7 +52,7 @@ TEST(graph, dot_to_file_no_connection) {
 }
 
 TEST(graph, dot_to_file_crisscross) {
-  int graph_raw[] = {0, 0, 1, 1,
+  double graph_raw[] = {0, 0, 1, 1,
                       0, 0, 1, 1,
                       1, 1, 0 ,0,
                       1, 1, 0, 0};
