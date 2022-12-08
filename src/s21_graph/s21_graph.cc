@@ -6,7 +6,7 @@
 #include <regex>
 
 namespace s21 {
-Graph::Graph(std::string& filepath) {
+Graph::Graph(const std::string &filepath) {
   LoadGraphFromFile(filepath);
 }
 
@@ -31,7 +31,7 @@ void Graph::AllocateMatrix(int size) {
   }
 }
 
-bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
+bool Graph::CheckFormat(std::ifstream &stream, std::string reg) const {
   std::regex r(reg);
   std::string line;
   std::streampos pos = stream.tellg();
@@ -41,7 +41,7 @@ bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
   return result;
 }
 
-void Graph::LoadGraphFromFile(std::string &filename) {
+void Graph::LoadGraphFromFile(const std::string &filename) {
   std::ifstream file(filename);
   if (file.is_open()) {
     try {
@@ -71,7 +71,33 @@ void Graph::LoadGraphFromFile(std::string &filename) {
   }
 }
 
-void Graph::ExportGraphToDot(std::string &filename) {
-  std::cout << filename;
+std::multimap<int, std::pair<int, int>> Graph::GetAllPathsSortedByWeight() const {
+  std::multimap<int, std::pair<int, int>> ms;
+  int size = Size();
+  for (int y = 0; y < size; y++) {
+    for (int x = 0; x < y; x++) {
+      int weight = this->operator()(x, y);
+      if (weight) {
+        ms.insert({weight, std::make_pair(x, y)});
+      }
+    }
+  }
+  return ms;
+}
+
+void Graph::ExportGraphToDot(const std::string& filename) const {
+  std::ofstream file;
+  file.open (filename);
+  if (file.is_open()) {
+    file << "digraph graphname {\n";
+    file << "\tedge [arrowhead=none];\n";
+    auto ms_sorted = GetAllPathsSortedByWeight();
+    for (auto i(ms_sorted.begin()), end(ms_sorted.end());  i != end; i++) {
+      file << "\t" << i->second.first + 1 << " -> " << i->second.second + 1 << "\n";
+    }
+          
+    file << "}";
+  }
+  file.close();
 }
 } // namespace s21

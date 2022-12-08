@@ -25,8 +25,8 @@ if (GTEST_FOUND)
         "${CMAKE_CURRENT_SOURCE_DIR}/*.cc" "${CMAKE_CURRENT_SOURCE_DIR}/../*.cc"
     )
     add_executable(${PROJECT_NAME} ${TEST_SRC})
-    configure_file(config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/config.h)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../ ${gtest_SOURCE_DIR}/include ${gmock_SOURCE_DIR}/include)
+    configure_file(config.h.in ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+    include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../ ${gtest_SOURCE_DIR}/include ${gmock_SOURCE_DIR}/include)
     
     set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
     set_property(TARGET ${PROJECT_NAME} PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -43,7 +43,7 @@ if (GTEST_FOUND)
     set_property(
         TARGET ${PROJECT_NAME}
         APPEND
-        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/Temporary ${CMAKE_BINARY_DIR}/Testing ${CMAKE_BINARY_DIR}/TAG ${CMAKE_CURRENT_BINARY_DIR}/coverage ${TEST_CLEAN_FILES}
+        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test_crisscross.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_cycled.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_fork.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_intersect.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_no_connection.dot ${CMAKE_CURRENT_SOURCE_DIR}/test.dot ${CMAKE_BINARY_DIR}/Temporary ${CMAKE_BINARY_DIR}/Testing ${CMAKE_BINARY_DIR}/TAG ${CMAKE_CURRENT_BINARY_DIR}/coverage ${TEST_CLEAN_FILES}
     )
     add_test(UNIT_TESTS ${PROJECT_NAME})
 endif()
