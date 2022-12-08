@@ -4,7 +4,7 @@
 namespace s21 {
 class GraphAlgorithms {
     public:
-    TsmResult solveTravelingSalesmanProblem(std::vector<std::vector<bool>> &graph);
+    TsmResult solveTravelingSalesmanProblem(const Graph &graph);
     private:
 };
 }

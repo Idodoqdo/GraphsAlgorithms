@@ -1,17 +1,20 @@
 #include "s21_graph_algorithms.h"
 #include "TravelingSalesmanProblem.h"
 namespace s21 {
-TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(std::vector<std::vector<bool>> & graph) {
-    
+TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(const Graph & graph) {
+    TsmResult res{};
+    Colony col(graph);
+    col.FindingShortestPath(); 
+    return res; // пока что это не работает
 }
 
-void Colony::CreateAnt(int index_start) {
+void Colony::CreateAnt(size_t index_start) {
     ants_.push_back(std::make_unique<Ant>(distance_between_points_graph_, pheromones_graph_, index_start));
 }
 
 void Colony::EvaporationPheromones() {
-    for (auto i = 0; i < pheromones_graph_->Size(); ++i) {
-        for (auto j = 0; j < pheromones_graph_->Size(); ++i) {
+    for (size_t i = 0; i < pheromones_graph_->Size(); ++i) {
+        for (size_t j = 0; j < pheromones_graph_->Size(); ++i) {
             pheromones_graph_->operator()(i, j) *= coeff_evaporation_;
         }        
     }
@@ -19,12 +22,12 @@ void Colony::EvaporationPheromones() {
 
 void Colony::FindingShortestPath() {
     for (unsigned short l = 0; l < 10; ++l) {
-        for (int i = 0; i < distance_between_points_graph_.Size(); ++i) {
+        for (size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
             CreateAnt(i);
             ants_[i]->Run();
         }
         EvaporationPheromones();
-        for (int i = 0; i < distance_between_points_graph_.Size(); ++i) {
+        for (size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
             ants_[i]->SecretePheromones();
             ants_[i]->Reset(i);
         }
@@ -44,7 +47,7 @@ void Ant::TransitionDesireCalculation(std::vector<double> & transition_probabili
 }
 
 void Ant::Run() {
-    for (auto k = 0; k < graph_distance_.Size(); ++k) {
+    for (size_t k = 0; k < graph_distance_.Size(); ++k) {
         if (k == graph_distance_.Size() - 1) available_places_.insert(run_result_.vertices[0]);
         std::vector<double> trans_prob{};
         TransitionDesireCalculation(trans_prob);
@@ -52,7 +55,7 @@ void Ant::Run() {
     }
 }
 
-void Ant::Reset(int &position) {
+void Ant::Reset(size_t &position) {
     available_places_.clear();
     run_result_.distance = 0;
     run_result_.vertices.clear();
@@ -76,13 +79,13 @@ void Ant::Transition(std::vector<double> & transition_probabilitys_vec) {
 
 void Ant::SecretePheromones() {
     double pheromone = q_coeff / run_result_.distance;
-    for (auto i = 0; i < run_result_.vertices.size() - 1; ++i) {
+    for (size_t i = 0; i < run_result_.vertices.size() - 1; ++i) {
         graph_pheromones_->operator()(run_result_.vertices[i], run_result_.vertices[i+1]) += pheromone;
     }
 }
 
 void Ant::FillAvailablePlaces() {
-    for (auto i = 0; i < graph_distance_.Size(); ++i) {
+    for (size_t i = 0; i < graph_distance_.Size(); ++i) {
         if (i != run_result_.vertices[0]) {
             available_places_.insert(i);
         }
@@ -90,13 +93,13 @@ void Ant::FillAvailablePlaces() {
     // available_places_.erase(available_places_.find(run_result_.vertices[0]));  - оставим под вопросом
 }
 
-void Ant::CalculateDesire(int index, double & result) {
+void Ant::CalculateDesire(size_t index, double & result) {
     result += std::pow(graph_pheromones_->operator()(run_result_.vertices.back(), index), alfa_coeff)  * (1 / std::pow(graph_distance_(run_result_.vertices.back(), index), beta_coeff));
 }
 
 void Colony::FillFeromone() {
-    for (auto i = 0; i < pheromones_graph_->Size(); ++i) {
-        for (auto j = 0; j < pheromones_graph_->Size(); ++j) {
+    for (size_t i = 0; i < pheromones_graph_->Size(); ++i) {
+        for (size_t j = 0; j < pheromones_graph_->Size(); ++j) {
             if (i != j) {
                 pheromones_graph_->operator()(i, j) = 0.2;
             }

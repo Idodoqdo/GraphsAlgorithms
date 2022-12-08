@@ -9,29 +9,22 @@
 namespace s21 {
 class Graph {
  public:
-  using matrix = std::vector<std::vector<int>>;
+  using matrix = std::vector<std::vector<double>>;
   Graph() = delete;
   explicit Graph(const std::string &filepath);
-  explicit Graph(int size);
-  explicit Graph(int *matrix, int size);
+  explicit Graph(size_t size);
+  explicit Graph(double *matrix, size_t size);
   Graph(const Graph & other);
 
-  int& operator ()(int x, int y) {
-    return const_cast<int&>(const_cast<const Graph*>(this)->operator()(x, y));
+  double& operator ()(size_t x, size_t y) {
+    return const_cast<double&>(const_cast<const Graph*>(this)->operator()(x, y));
   }
-  const int& operator ()(int x, int y) const {
-    int size = Size();
-    assert(x >= 0 && y >= 0 && x < size && y < size);
-    return matrix_[static_cast<std::size_t>(y)][static_cast<std::size_t>(x)];
-  }
-
-  const int& operator ()(int x, int y) const {
-    int size = Size();
-    assert(x >= 0 && y >= 0 && x < size && y < size);
-    return matrix_[static_cast<std::size_t>(y)][static_cast<std::size_t>(x)];
-  }
-  
-  int Size() const { return static_cast<int>(matrix_.size()); }
+  const double& operator ()(size_t x, size_t y) const {
+    // size_t size = Size();
+    // assert(x >= 0 && y >= 0 && x < size && y < size);
+    return matrix_[y][x];
+  }  
+  size_t Size() const { return matrix_.size(); }
   /**
       @brief Loading a graph from a file in the adjacency matrix format
 
@@ -45,9 +38,9 @@ class Graph {
   */
   void ExportGraphToDot(const std::string& filename) const;
  private:
-  void AllocateMatrix(int size);
+  void AllocateMatrix(size_t size);
   bool CheckFormat(std::ifstream &stream, std::string reg) const;
-  std::multimap<int, std::pair<int, int>> GetAllPathsSortedByWeight() const;
+  std::multimap<double, std::pair<size_t, size_t>> GetAllPathsSortedByWeight() const;
   matrix matrix_;
 };
 }

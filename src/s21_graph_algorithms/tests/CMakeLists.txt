@@ -38,6 +38,7 @@ if (GTEST_FOUND)
         m
         gtest_main
         Threads::Threads
+        s21_graph_algorithms.a
     )
 
     set_property(

@@ -11,13 +11,13 @@
 namespace s21 {
 
 struct TsmResult {
-std::vector<int> vertices;
+std::vector<size_t> vertices;
 double distance;
 };
 
 class Ant {
     public:
-    Ant(const Graph &graph_distance, std::unique_ptr<Graph> &graph_pheromones, int &index_start) : graph_distance_(graph_distance), 
+    Ant(const Graph &graph_distance, std::unique_ptr<Graph> &graph_pheromones, size_t &index_start) : graph_distance_(graph_distance), 
     graph_pheromones_(graph_pheromones), gen_(rd_()), distrib_(0, 1) {
         run_result_.vertices.push_back(index_start);
         FillAvailablePlaces();
@@ -26,7 +26,7 @@ class Ant {
     // пробег муравья по всем городам
     void Run();
     // сброс муравья до первоначального состояния
-    void Reset(int &position);
+    void Reset(size_t &position);
     // выделение феромонов муравём
     void SecretePheromones();
     TsmResult get_result_() { return run_result_; }
@@ -36,12 +36,12 @@ class Ant {
     // расчёт вероятности перехода
     void TransitionDesireCalculation(std::vector<double> & transition_probabilitys_vec);
     // расчет желания перехода в другой город
-    void CalculateDesire(int index, double & result);
+    void CalculateDesire(size_t index, double & result);
     // посчитаем города, куда он может ещё пойти
     const Graph & graph_distance_;
     std::unique_ptr<Graph> & graph_pheromones_;
     // куда муравей может зайти
-    std::set<int> available_places_{};
+    std::set<size_t> available_places_{};
     // заполнение индексов мест, куда можно пойти
     void FillAvailablePlaces();
     // для генерации случайного числа
@@ -71,7 +71,7 @@ class Colony {
 
     private:
     // добавление нового муравья в колонию
-    void CreateAnt(int index_start);
+    void CreateAnt(size_t index_start);
     // заполним граф феромонами
     void FillFeromone();
     // феромон постепенно испаряется
