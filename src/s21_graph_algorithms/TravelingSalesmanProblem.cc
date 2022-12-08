@@ -24,6 +24,10 @@ void Colony::FindingShortestPath() {
             ants_[i]->Run();
         }
         EvaporationPheromones();
+        for (int i = 0; i < distance_between_points_graph_.Size(); ++i) {
+            ants_[i]->SecretePheromones();
+            ants_[i]->Reset(i);
+        }
     }
 }
 
@@ -67,6 +71,13 @@ void Ant::Transition(std::vector<double> & transition_probabilitys_vec) {
             available_places_.erase(it);
             break;
         }
+    }
+}
+
+void Ant::SecretePheromones() {
+    double pheromone = q_coeff / run_result_.distance;
+    for (auto i = 0; i < run_result_.vertices.size() - 1; ++i) {
+        graph_pheromones_->operator()(run_result_.vertices[i], run_result_.vertices[i+1]) += pheromone;
     }
 }
 

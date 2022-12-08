@@ -15,12 +15,9 @@ std::vector<int> vertices;
 double distance;
 };
 
-double alfa_coeff = 1;
-double beta_coeff = 1;
-
 class Ant {
     public:
-    Ant(const Graph & graph_distance, std::unique_ptr<Graph> & graph_pheromones, int index_start) : graph_distance_(graph_distance), 
+    Ant(const Graph &graph_distance, std::unique_ptr<Graph> &graph_pheromones, int &index_start) : graph_distance_(graph_distance), 
     graph_pheromones_(graph_pheromones), gen_(rd_()), distrib_(0, 1) {
         run_result_.vertices.push_back(index_start);
         FillAvailablePlaces();
@@ -28,7 +25,11 @@ class Ant {
     Ant() = delete;
     // пробег муравья по всем городам
     void Run();
+    // сброс муравья до первоначального состояния
     void Reset(int &position);
+    // выделение феромонов муравём
+    void SecretePheromones();
+    TsmResult get_result_() { return run_result_; }
     private:
     // переход в другой город
     void Transition(std::vector<double> & transition_probabilitys_vec);
@@ -49,6 +50,10 @@ class Ant {
     std::uniform_real_distribution<double> distrib_;
     // путь и размер дистацнии
     TsmResult run_result_{};
+    // коэфы для рассчетов 
+    double alfa_coeff = 1;
+    double beta_coeff = 1;
+    double q_coeff = 4;
 };
 
 class Colony {
