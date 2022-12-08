@@ -8,11 +8,11 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1,
   std::vector<int> dist(static_cast<std::size_t>(graph_size), max);
   std::vector<bool> not_visited(static_cast<std::size_t>(graph_size), true);
   dist[static_cast<std::size_t>(vertex1 - 1)] = 0;
-  int temp, minindex, min;
+  int minindex;
 
   do {
     minindex = graph_size;
-    min = max;
+    int min = max;
     for (int i = 0; i < graph_size; i++) {
       // Если вершину ещё не обошли и вес меньше min
       if ((not_visited[static_cast<std::size_t>(i)]) && (dist[static_cast<std::size_t>(i)] < min)) {
@@ -27,7 +27,7 @@ int GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1,
     if (minindex != graph_size) {
       for (int i = 0; i < graph_size; i++) {
         if (graph(minindex, i) > 0) {
-          temp = min + graph(minindex, i);
+          int temp = min + graph(minindex, i);
           if (temp < dist[static_cast<std::size_t>(i)])
             dist[static_cast<std::size_t>(i)] = temp;
         }
