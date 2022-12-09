@@ -6,32 +6,31 @@
 #include <regex>
 
 namespace s21 {
-Graph::Graph(std::string filepath) {
+Graph::Graph(const std::string &filepath) {
   LoadGraphFromFile(filepath);
 }
 
-Graph::Graph(int size) {
+Graph::Graph(size_t size) {
   AllocateMatrix(size);
 }
 
-Graph::Graph(int *matrix, int size) : Graph(size) {
-  for(int y = 0; y < size; y++) {
-    for(int x = 0; x < size; x++) {
+Graph::Graph(double *matrix, size_t size) : Graph(size) {
+  for(size_t y = 0; y < size; y++) {
+    for(size_t x = 0; x < size; x++) {
       this->operator()(x, y) = matrix[x + size * y];
     }
   }
 }
 
-void Graph::AllocateMatrix(int size) {
+void Graph::AllocateMatrix(size_t size) {
   assert(size >= 2);
-  std::size_t ssize = static_cast<std::size_t>(size);
-  matrix_.resize(ssize);
-  for (std::size_t i = 0; i < ssize; i++) {
-    matrix_[i].resize(ssize, 0);
+  matrix_.resize(size);
+  for (std::size_t i = 0; i < size; i++) {
+    matrix_[i].resize(size, 0);
   }
 }
 
-bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
+bool Graph::CheckFormat(std::ifstream &stream, std::string reg) const {
   std::regex r(reg);
   std::string line;
   std::streampos pos = stream.tellg();
@@ -41,7 +40,7 @@ bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
   return result;
 }
 
-void Graph::LoadGraphFromFile(std::string filename) {
+void Graph::LoadGraphFromFile(const std::string &filename) {
   std::ifstream file(filename);
   if (file.is_open()) {
     try {
@@ -50,7 +49,7 @@ void Graph::LoadGraphFromFile(std::string filename) {
       std::size_t size;
       file >> size;
       file.ignore(1);
-      AllocateMatrix(static_cast<int>(size));
+      AllocateMatrix(size);
       std::size_t line_num = 0;
       while(!file.eof()) {
         if (!CheckFormat(file, "^([0-9]+ +){" + std::to_string(size - 1) + "}[0-9]+$"))

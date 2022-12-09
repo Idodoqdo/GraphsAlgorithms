@@ -4,28 +4,33 @@
 #include <string>
 #include <vector>
 #include <cassert>
+#include <map>
 
 namespace s21 {
 class Graph {
  public:
-  using matrix = std::vector<std::vector<int>>;
+  using matrix = std::vector<std::vector<double>>;
   Graph() = delete;
-  explicit Graph(std::string filepath);
-  explicit Graph(int size);
-  explicit Graph(int *matrix, int size);
+  explicit Graph(const std::string &filepath);
+  explicit Graph(size_t size);
+  explicit Graph(double *matrix, size_t size);
+  Graph(const Graph & other);
 
-  int& operator ()(int x, int y) {
-    int size = Size();
-    assert(x >= 0 && y >= 0 && x < size && y < size);
-    return matrix_[static_cast<std::size_t>(y)][static_cast<std::size_t>(x)];
+  double& operator ()(size_t x, size_t y) {
+    return const_cast<double&>(const_cast<const Graph*>(this)->operator()(x, y));
   }
-  int Size() const { return static_cast<int>(matrix_.size()); }
+  const double& operator ()(size_t x, size_t y) const {
+    size_t size = Size();
+    assert(x < size && y < size);
+    return matrix_[y][x];
+  }  
+  size_t Size() const { return matrix_.size(); }
   /**
       @brief Loading a graph from a file in the adjacency matrix format
 
     @param filename Absolute Path to file
   */
-  void LoadGraphFromFile(std::string filename);
+  void LoadGraphFromFile(const std::string& filename);
   /**
       @brief Exporting a graph to a dot file (see materials)
       
@@ -33,8 +38,9 @@ class Graph {
   */
   void ExportGraphToDot(std::string filename);
  private:
-  void AllocateMatrix(int size);
-  bool CheckFormat(std::ifstream &stream, std::string reg);
+  void AllocateMatrix(size_t size);
+  bool CheckFormat(std::ifstream &stream, std::string reg) const;
+  std::multimap<double, std::pair<size_t, size_t>> GetAllPathsSortedByWeight() const;
   matrix matrix_;
 };
 }

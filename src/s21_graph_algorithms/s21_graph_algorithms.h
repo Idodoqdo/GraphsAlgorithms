@@ -6,7 +6,7 @@
 namespace s21 {
 class GraphAlgorithms {
  public:
-  int getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
-  Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph);
+  double getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
+  Graph getLeastSpanningTree(Graph &graph);
 };
 }  // namespace s21
