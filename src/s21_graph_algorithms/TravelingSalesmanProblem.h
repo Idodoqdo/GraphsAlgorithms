@@ -68,6 +68,7 @@ class Colony {
     Colony(const Colony&) = delete;
     Colony& operator=(const Colony&) = delete;
     void FindingShortestPath();
+    TsmResult get_result_() { return result_;}
 
     private:
     // добавление нового муравья в колонию
@@ -76,7 +77,7 @@ class Colony {
     void FillFeromone();
     // феромон постепенно испаряется
     void EvaporationPheromones();
-    TsmResult result{};
+    TsmResult result_{};
     // храним расстояние между точками
     const Graph & distance_between_points_graph_;
     // между городами будет раскидан феромон

@@ -2,10 +2,9 @@
 #include "TravelingSalesmanProblem.h"
 namespace s21 {
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(const Graph & graph) {
-    TsmResult res{};
     Colony col(graph);
     col.FindingShortestPath(); 
-    return res; // пока что это не работает
+    return col.get_result_();
 }
 
 void Colony::CreateAnt(size_t index_start) {
@@ -13,8 +12,8 @@ void Colony::CreateAnt(size_t index_start) {
 }
 
 void Colony::EvaporationPheromones() {
-    for (size_t i = 0; i < pheromones_graph_->Size(); ++i) {
-        for (size_t j = 0; j < pheromones_graph_->Size(); ++i) {
+    for (size_t i = 0; i < pheromones_graph_->Size(); i++) {
+        for (size_t j = 0; j < pheromones_graph_->Size(); j++) {
             pheromones_graph_->operator()(i, j) *= coeff_evaporation_;
         }        
     }
@@ -25,6 +24,8 @@ void Colony::FindingShortestPath() {
         for (size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
             CreateAnt(i);
             ants_[i]->Run();
+            if (ants_[i]->get_result_().distance < result_.distance)
+            result_ = ants_[i]->get_result_();
         }
         EvaporationPheromones();
         for (size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {

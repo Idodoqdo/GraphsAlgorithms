@@ -14,7 +14,6 @@ class Graph {
   explicit Graph(const std::string &filepath);
   explicit Graph(size_t size);
   explicit Graph(double *matrix, size_t size);
-  Graph(const Graph & other);
 
   double& operator ()(size_t x, size_t y) {
     return const_cast<double&>(const_cast<const Graph*>(this)->operator()(x, y));
