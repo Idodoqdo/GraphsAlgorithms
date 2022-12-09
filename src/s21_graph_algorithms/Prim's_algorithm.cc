@@ -1,7 +1,5 @@
 #include "s21_graph_algorithms.h"
 
-#include <bits/stdc++.h>
-
 namespace s21 {
 Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
   int edge_count = 0;
