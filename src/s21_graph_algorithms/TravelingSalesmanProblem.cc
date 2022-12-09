@@ -14,16 +14,17 @@ void Colony::CreateAnt(size_t index_start) {
 void Colony::EvaporationPheromones() {
     for (size_t i = 0; i < pheromones_graph_->Size(); i++) {
         for (size_t j = 0; j < pheromones_graph_->Size(); j++) {
-            pheromones_graph_->operator()(i, j) *= coeff_evaporation_;
+            pheromones_graph_->operator()(i, j) *= kEvaporation;
         }        
     }
 }
 
 void Colony::FindingShortestPath() {
-    for (unsigned short l = 0; l < 10; ++l) {
+    for (unsigned short l = 0; l < kNumber_iterations; ++l) {
         for (size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
             CreateAnt(i);
             ants_[i]->Run();
+            if (i == 0) result_ = ants_[i]->get_result_();
             if (ants_[i]->get_result_().distance < result_.distance)
             result_ = ants_[i]->get_result_();
         }
@@ -66,8 +67,10 @@ void Ant::Reset(size_t &position) {
 
 void Ant::Transition(std::vector<double> & transition_probabilitys_vec) {
     double random_choice = distrib_(gen_);
+    double choise_probability = 0;
     for (unsigned i = 0; i < transition_probabilitys_vec.size(); ++i) {
-        if (random_choice <= transition_probabilitys_vec[i]) {
+        choise_probability += transition_probabilitys_vec[i]; 
+        if (random_choice <= choise_probability) {
             auto it = available_places_.begin();
             std::advance(it, i);
             run_result_.distance += graph_distance_(run_result_.vertices.back(), *it);
@@ -79,7 +82,7 @@ void Ant::Transition(std::vector<double> & transition_probabilitys_vec) {
 }
 
 void Ant::SecretePheromones() {
-    double pheromone = q_coeff / run_result_.distance;
+    double pheromone = kQ / run_result_.distance;
     for (size_t i = 0; i < run_result_.vertices.size() - 1; ++i) {
         graph_pheromones_->operator()(run_result_.vertices[i], run_result_.vertices[i+1]) += pheromone;
     }
@@ -91,21 +94,19 @@ void Ant::FillAvailablePlaces() {
             available_places_.insert(i);
         }
     }
-    // available_places_.erase(available_places_.find(run_result_.vertices[0]));  - оставим под вопросом
 }
 
 void Ant::CalculateDesire(size_t index, double & result) {
-    result += std::pow(graph_pheromones_->operator()(run_result_.vertices.back(), index), alfa_coeff)  * (1 / std::pow(graph_distance_(run_result_.vertices.back(), index), beta_coeff));
+    result += std::pow(graph_pheromones_->operator()(run_result_.vertices.back(), index), kAlpha)  * (1 / std::pow(graph_distance_(run_result_.vertices.back(), index), kBeta));
 }
 
 void Colony::FillFeromone() {
     for (size_t i = 0; i < pheromones_graph_->Size(); ++i) {
         for (size_t j = 0; j < pheromones_graph_->Size(); ++j) {
             if (i != j) {
-                pheromones_graph_->operator()(i, j) = 0.2;
+                pheromones_graph_->operator()(i, j) = kPheromones_start;
             }
         }
     }
 }
-
 }

@@ -51,9 +51,9 @@ class Ant {
     // путь и размер дистацнии
     TsmResult run_result_{};
     // коэфы для рассчетов 
-    double alfa_coeff = 1;
-    double beta_coeff = 1;
-    double q_coeff = 4;
+    const double kAlpha = 1;
+    const double kBeta = 1;
+    const double kQ = 1;
 };
 
 class Colony {
@@ -85,7 +85,8 @@ class Colony {
     // муравьишки, которые будут бегать по Игорю
     std::vector<std::unique_ptr<Ant>> ants_{};
     // коэф испарения
-    double coeff_evaporation_ = 0.64;
+    const double kEvaporation = 0.64;
+    const unsigned short kNumber_iterations = 100;
+    const double kPheromones_start = 0.75;
 };
-
 }
