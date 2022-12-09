@@ -6,32 +6,31 @@
 #include <regex>
 
 namespace s21 {
-Graph::Graph(std::string filepath) {
+Graph::Graph(const std::string &filepath) {
   LoadGraphFromFile(filepath);
 }
 
-Graph::Graph(int size) {
+Graph::Graph(std::size_t size) {
   AllocateMatrix(size);
 }
 
-Graph::Graph(int *matrix, int size) : Graph(size) {
-  for(int y = 0; y < size; y++) {
-    for(int x = 0; x < size; x++) {
+Graph::Graph(double *matrix, std::size_t size) : Graph(size) {
+  for(std::size_t y = 0; y < size; y++) {
+    for(std::size_t x = 0; x < size; x++) {
       this->operator()(x, y) = matrix[x + size * y];
     }
   }
 }
 
-void Graph::AllocateMatrix(int size) {
+void Graph::AllocateMatrix(std::size_t size) {
   assert(size >= 2);
-  std::size_t ssize = static_cast<std::size_t>(size);
-  matrix_.resize(ssize);
-  for (std::size_t i = 0; i < ssize; i++) {
-    matrix_[i].resize(ssize, 0);
+  matrix_.resize(size);
+  for (std::size_t i = 0; i < size; i++) {
+    matrix_[i].resize(size, 0);
   }
 }
 
-bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
+bool Graph::CheckFormat(std::ifstream &stream, std::string reg) const {
   std::regex r(reg);
   std::string line;
   std::streampos pos = stream.tellg();
@@ -41,7 +40,7 @@ bool Graph::CheckFormat(std::ifstream &stream, std::string reg) {
   return result;
 }
 
-void Graph::LoadGraphFromFile(std::string filename) {
+void Graph::LoadGraphFromFile(const std::string &filename) {
   std::ifstream file(filename);
   if (file.is_open()) {
     try {
@@ -50,7 +49,7 @@ void Graph::LoadGraphFromFile(std::string filename) {
       std::size_t size;
       file >> size;
       file.ignore(1);
-      AllocateMatrix(static_cast<int>(size));
+      AllocateMatrix(size);
       std::size_t line_num = 0;
       while(!file.eof()) {
         if (!CheckFormat(file, "^([0-9]+ +){" + std::to_string(size - 1) + "}[0-9]+$"))
@@ -71,7 +70,32 @@ void Graph::LoadGraphFromFile(std::string filename) {
   }
 }
 
-void Graph::ExportGraphToDot(std::string filename) {
-  std::cout << filename;
+std::multimap<double, std::pair<std::size_t, std::size_t>> Graph::GetAllPathsSortedByWeight() const {
+  std::multimap<double, std::pair<std::size_t, std::size_t>> ms;
+  std::size_t size = Size();
+  for (std::size_t y = 0; y < size; y++) {
+    for (std::size_t x = 0; x < y; x++) {
+      double weight = this->operator()(x, y);
+      if (weight > std::numeric_limits<double>::epsilon()) {
+        ms.insert({weight, std::make_pair(x, y)});
+      }
+    }
+  }
+  return ms;
+}
+
+void Graph::ExportGraphToDot(const std::string& filename) const {
+  std::ofstream file;
+  file.open (filename);
+  if (file.is_open()) {
+    file << "graph {\n";
+    auto ms_sorted = GetAllPathsSortedByWeight();
+    for (auto i(ms_sorted.begin()), end(ms_sorted.end());  i != end; i++) {
+      file << "\t" << i->second.first + 1 << " -- " << i->second.second + 1 << "\n";
+    }
+          
+    file << "}";
+  }
+  file.close();
 }
 } // namespace s21
