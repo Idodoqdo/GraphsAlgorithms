@@ -88,7 +88,7 @@ void Graph::ExportGraphToDot(const std::string& filename) const {
   std::ofstream file;
   file.open (filename);
   if (file.is_open()) {
-    file << "digraph graphname {\n";
+    file << "graph {\n";
     auto ms_sorted = GetAllPathsSortedByWeight();
     for (auto i(ms_sorted.begin()), end(ms_sorted.end());  i != end; i++) {
       file << "\t" << i->second.first + 1 << " -- " << i->second.second + 1 << "\n";
