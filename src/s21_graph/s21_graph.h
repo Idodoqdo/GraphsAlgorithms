@@ -9,21 +9,21 @@
 namespace s21 {
 class Graph {
  public:
-  using matrix = std::vector<std::vector<int>>;
+  using matrix = std::vector<std::vector<double>>;
   Graph() = delete;
   explicit Graph(const std::string &filepath);
-  explicit Graph(int size);
-  explicit Graph(int *matrix, int size);
+  explicit Graph(std::size_t size);
+  explicit Graph(double *matrix, std::size_t size);
 
-  int& operator ()(int x, int y) {
-    return const_cast<int&>(const_cast<const Graph*>(this)->operator()(x, y));
+  double& operator ()(std::size_t x, std::size_t y) {
+    return const_cast<double&>(const_cast<const Graph*>(this)->operator()(x, y));
   }
-  const int& operator ()(int x, int y) const {
-    int size = Size();
-    assert(x >= 0 && y >= 0 && x < size && y < size);
-    return matrix_[static_cast<std::size_t>(y)][static_cast<std::size_t>(x)];
-  }
-  int Size() const { return static_cast<int>(matrix_.size()); }
+  const double& operator ()(std::size_t x, std::size_t y) const {
+    std::size_t size = Size();
+    assert(x < size && y < size);
+    return matrix_[y][x];
+  }  
+  std::size_t Size() const { return matrix_.size(); }
   /**
       @brief Loading a graph from a file in the adjacency matrix format
 
@@ -37,9 +37,9 @@ class Graph {
   */
   void ExportGraphToDot(const std::string& filename) const;
  private:
-  void AllocateMatrix(int size);
+  void AllocateMatrix(std::size_t size);
   bool CheckFormat(std::ifstream &stream, std::string reg) const;
-  std::multimap<int, std::pair<int, int>> GetAllPathsSortedByWeight() const;
+  std::multimap<double, std::pair<std::size_t, std::size_t>> GetAllPathsSortedByWeight() const;
   matrix matrix_;
 };
 }
