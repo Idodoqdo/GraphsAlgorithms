@@ -36,13 +36,13 @@ void Colony::FindingShortestPath() {
     }
 }
 
-void Ant::TransitionDesireCalculation(std::vector<double> & transition_probabilitys_vec) {
-    for (auto j = available_places_.begin(); j != available_places_.end(); ++j) {
+void Ant::TransitionDesireCalculation(std::vector<double> & transition_probabilitys_vec, std::vector<int> & where_can_go) {
+    for (auto j = where_can_go.begin(); j != where_can_go.end(); ++j) {
         double desire = 0;
         double sum_all_desires = 0;
-        CalculateDesire(*j, desire);
-        for (auto m = available_places_.begin(); m != available_places_.end(); ++m) {
-            CalculateDesire(*m, sum_all_desires);
+        CalculateDesire(static_cast<size_t>(*j), desire);
+        for (auto m = where_can_go.begin(); m != where_can_go.end(); ++m) {
+            CalculateDesire(static_cast<size_t>(*m), sum_all_desires);
         }
         transition_probabilitys_vec.push_back(desire/sum_all_desires);
     }
@@ -52,8 +52,18 @@ void Ant::Run() {
     for (size_t k = 0; k < graph_distance_.Size(); ++k) {
         if (k == graph_distance_.Size() - 1) available_places_.insert(run_result_.vertices[0]);
         std::vector<double> trans_prob{};
-        TransitionDesireCalculation(trans_prob);
-        Transition(trans_prob);
+        std::vector<int> where_can_go{};
+        FillingConnectedPoints(where_can_go);
+        TransitionDesireCalculation(trans_prob, where_can_go);
+        Transition(trans_prob, where_can_go);
+    }
+}   
+
+void Ant::FillingConnectedPoints(std::vector<int> & where) {
+    for (auto i = available_places_.begin(); i != available_places_.end(); ++i) {
+        if (graph_distance_(run_result_.vertices.back(), *i) > 0) {
+            where.push_back(static_cast<int>(*i));    
+        }
     }
 }
 
@@ -65,17 +75,15 @@ void Ant::Reset(size_t &position) {
     FillAvailablePlaces();
 }
 
-void Ant::Transition(std::vector<double> & transition_probabilitys_vec) {
+void Ant::Transition(std::vector<double> & transition_probabilitys_vec, std::vector<int> & where_can_go) {
     double random_choice = distrib_(gen_);
     double choise_probability = 0;
-    for (unsigned i = 0; i < transition_probabilitys_vec.size(); ++i) {
+    for (size_t i = 0; i < transition_probabilitys_vec.size(); ++i) {
         choise_probability += transition_probabilitys_vec[i]; 
         if (random_choice <= choise_probability) {
-            auto it = available_places_.begin();
-            std::advance(it, i);
-            run_result_.distance += graph_distance_(run_result_.vertices.back(), *it);
-            run_result_.vertices.push_back(*it);
-            available_places_.erase(it);
+            run_result_.distance += graph_distance_(run_result_.vertices.back(), static_cast<size_t>(where_can_go[i]));
+            run_result_.vertices.push_back(static_cast<size_t>(where_can_go[i]));
+            available_places_.erase(available_places_.find(static_cast<size_t>(where_can_go[i])));
             break;
         }
     }
