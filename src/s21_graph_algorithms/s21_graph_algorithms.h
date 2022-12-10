@@ -2,7 +2,6 @@
 #pragma once
 #include <vector>
 #include "TravelingSalesmanProblem.h"
-#include <bits/stdc++.h>
 
 #include "../s21_graph/s21_graph.h"
 namespace s21 {
