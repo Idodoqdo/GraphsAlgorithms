@@ -12,18 +12,18 @@ class Graph {
   using matrix = std::vector<std::vector<double>>;
   Graph() = delete;
   explicit Graph(const std::string &filepath);
-  explicit Graph(size_t size);
-  explicit Graph(double *matrix, size_t size);
+  explicit Graph(std::size_t size);
+  explicit Graph(double *matrix, std::size_t size);
 
-  double& operator ()(size_t x, size_t y) {
+  double& operator ()(std::size_t x, std::size_t y) {
     return const_cast<double&>(const_cast<const Graph*>(this)->operator()(x, y));
   }
-  const double& operator ()(size_t x, size_t y) const {
-    size_t size = Size();
+  const double& operator ()(std::size_t x, std::size_t y) const {
+    std::size_t size = Size();
     assert(x < size && y < size);
     return matrix_[y][x];
   }  
-  size_t Size() const { return matrix_.size(); }
+  std::size_t Size() const { return matrix_.size(); }
   /**
       @brief Loading a graph from a file in the adjacency matrix format
 
@@ -37,9 +37,9 @@ class Graph {
   */
   void ExportGraphToDot(const std::string& filename) const;
  private:
-  void AllocateMatrix(size_t size);
+  void AllocateMatrix(std::size_t size);
   bool CheckFormat(std::ifstream &stream, std::string reg) const;
-  std::multimap<double, std::pair<size_t, size_t>> GetAllPathsSortedByWeight() const;
+  std::multimap<double, std::pair<std::size_t, std::size_t>> GetAllPathsSortedByWeight() const;
   matrix matrix_;
 };
 }

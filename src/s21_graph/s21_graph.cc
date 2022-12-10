@@ -10,19 +10,19 @@ Graph::Graph(const std::string &filepath) {
   LoadGraphFromFile(filepath);
 }
 
-Graph::Graph(size_t size) {
+Graph::Graph(std::size_t size) {
   AllocateMatrix(size);
 }
 
-Graph::Graph(double *matrix, size_t size) : Graph(size) {
-  for(size_t y = 0; y < size; y++) {
-    for(size_t x = 0; x < size; x++) {
+Graph::Graph(double *matrix, std::size_t size) : Graph(size) {
+  for(std::size_t y = 0; y < size; y++) {
+    for(std::size_t x = 0; x < size; x++) {
       this->operator()(x, y) = matrix[x + size * y];
     }
   }
 }
 
-void Graph::AllocateMatrix(size_t size) {
+void Graph::AllocateMatrix(std::size_t size) {
   assert(size >= 2);
   matrix_.resize(size);
   for (std::size_t i = 0; i < size; i++) {
@@ -70,13 +70,15 @@ void Graph::LoadGraphFromFile(const std::string &filename) {
   }
 }
 
-std::multimap<double, std::pair<size_t, size_t>> Graph::GetAllPathsSortedByWeight() const {
-  std::multimap<double, std::pair<size_t, size_t>> ms;
-  size_t size = Size();
-  for (size_t y = 0; y < size; y++) {
-    for (size_t x = 0; x < y; x++) {
+std::multimap<double, std::pair<std::size_t, std::size_t>> Graph::GetAllPathsSortedByWeight() const {
+  std::multimap<double, std::pair<std::size_t, std::size_t>> ms;
+  std::size_t size = Size();
+  for (std::size_t y = 0; y < size; y++) {
+    for (std::size_t x = 0; x < y; x++) {
       double weight = this->operator()(x, y);
+      if (weight > std::numeric_limits<double>::epsilon()) {
         ms.insert({weight, std::make_pair(x, y)});
+      }
     }
   }
   return ms;
@@ -86,11 +88,10 @@ void Graph::ExportGraphToDot(const std::string& filename) const {
   std::ofstream file;
   file.open (filename);
   if (file.is_open()) {
-    file << "digraph graphname {\n";
-    file << "\tedge [arrowhead=none];\n";
+    file << "graph {\n";
     auto ms_sorted = GetAllPathsSortedByWeight();
     for (auto i(ms_sorted.begin()), end(ms_sorted.end());  i != end; i++) {
-      file << "\t" << i->second.first + 1 << " -> " << i->second.second + 1 << "\n";
+      file << "\t" << i->second.first + 1 << " -- " << i->second.second + 1 << "\n";
     }
           
     file << "}";
