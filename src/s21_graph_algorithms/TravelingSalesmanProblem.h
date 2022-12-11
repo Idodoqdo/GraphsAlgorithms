@@ -79,7 +79,7 @@ class Colony {
     // заполним граф феромонами
     void FillFeromone();
     // феромон постепенно испаряется
-    void EvaporationPheromones();
+    void EvaporatePheromones();
     TsmResult result_{};
     // храним расстояние между точками
     const Graph & distance_between_points_graph_;

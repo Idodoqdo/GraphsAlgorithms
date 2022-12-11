@@ -11,7 +11,7 @@ void Colony::CreateAnt(std::size_t index_start) {
     ants_.push_back(std::make_unique<Ant>(distance_between_points_graph_, pheromones_graph_, index_start));
 }
 
-void Colony::EvaporationPheromones() {
+void Colony::EvaporatePheromones() {
     for (std::size_t i = 0; i < pheromones_graph_->Size(); i++) {
         for (std::size_t j = 0; j < pheromones_graph_->Size(); j++) {
             pheromones_graph_->operator()(i, j) *= kEvaporation;
@@ -28,7 +28,7 @@ void Colony::FindingShortestPath() {
             if (ants_[i]->get_result_().distance < result_.distance)
             result_ = ants_[i]->get_result_();
         }
-        EvaporationPheromones();
+        EvaporatePheromones();
         for (std::size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
             ants_[i]->SecretePheromones();
             ants_[i]->Reset(i);
