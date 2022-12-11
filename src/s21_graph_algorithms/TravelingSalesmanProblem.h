@@ -32,12 +32,12 @@ class Ant {
     TsmResult get_result_() { return run_result_; }
     private:
     // переход в другой город
-    void Transition(std::vector<double> & transition_probabilitys_vec, std::vector<int> & where_can_go);
+    void Transition(std::vector<double> & transition_probabilities_vec, std::vector<int> & where_can_go);
 
     // а куда он вообще сейчас может пойти?
     void FillingConnectedPoints(std::vector<int> & where);
     // расчёт вероятности перехода
-    void TransitionDesireCalculation(std::vector<double> & transition_probabilitys_vec, std::vector<int> & where_can_go);
+    void TransitionDesireCalculation(std::vector<double> & transition_probabilities_vec, std::vector<int> & where_can_go);
     // расчет желания перехода в другой город
     void CalculateDesire(std::size_t index, double & result);
     // посчитаем города, куда он может ещё пойти

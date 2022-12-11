@@ -36,7 +36,7 @@ void Colony::FindingShortestPath() {
     }
 }
 
-void Ant::TransitionDesireCalculation(std::vector<double> & transition_probabilitys_vec, std::vector<int> & where_can_go) {
+void Ant::TransitionDesireCalculation(std::vector<double> & transition_probabilities_vec, std::vector<int> & where_can_go) {
     for (auto j = where_can_go.begin(); j != where_can_go.end(); ++j) {
         double desire = 0;
         double sum_all_desires = 0;
@@ -44,7 +44,7 @@ void Ant::TransitionDesireCalculation(std::vector<double> & transition_probabili
         for (auto m = where_can_go.begin(); m != where_can_go.end(); ++m) {
             CalculateDesire(static_cast<std::size_t>(*m), sum_all_desires);
         }
-        transition_probabilitys_vec.push_back(desire/sum_all_desires);
+        transition_probabilities_vec.push_back(desire/sum_all_desires);
     }
 }
 
@@ -75,11 +75,11 @@ void Ant::Reset(std::size_t &position) {
     FillAvailablePlaces();
 }
 
-void Ant::Transition(std::vector<double> & transition_probabilitys_vec, std::vector<int> & where_can_go) {
+void Ant::Transition(std::vector<double> & transition_probabilities_vec, std::vector<int> & where_can_go) {
     double random_choice = distrib_(gen_);
     double choise_probability = 0;
-    for (std::size_t i = 0; i < transition_probabilitys_vec.size(); ++i) {
-        choise_probability += transition_probabilitys_vec[i]; 
+    for (std::size_t i = 0; i < transition_probabilities_vec.size(); ++i) {
+        choise_probability += transition_probabilities_vec[i]; 
         if (random_choice <= choise_probability) {
             run_result_.distance += graph_distance_(run_result_.vertices.back(), static_cast<std::size_t>(where_can_go[i]));
             run_result_.vertices.push_back(static_cast<std::size_t>(where_can_go[i]));
