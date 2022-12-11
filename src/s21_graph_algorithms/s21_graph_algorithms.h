@@ -8,5 +8,6 @@ class GraphAlgorithms {
  public:
   double getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
   Graph getLeastSpanningTree(Graph &graph);
+  std::vector<std::vector<double>> getShortestPathsBetweenAllVertices(Graph &graph);
 };
 }  // namespace s21
