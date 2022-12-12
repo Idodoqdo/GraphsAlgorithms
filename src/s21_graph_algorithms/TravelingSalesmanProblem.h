@@ -1,5 +1,5 @@
 #pragma once
-#include "../s21_graph/s21_graph.h"
+#include "s21_graph.h"
 #include <memory>
 #include <cmath>
 #include <random>
