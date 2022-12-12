@@ -108,7 +108,7 @@ void Ant::CalculateDesire(std::size_t index, double & result) {
     result += std::pow(graph_pheromones_->operator()(run_result_.vertices.back(), index), kAlpha)  * (1 / std::pow(graph_distance_(run_result_.vertices.back(), index), kBeta));
 }
 
-void Colony::FillFeromone() {
+void Colony::FillPheromone() {
     for (std::size_t i = 0; i < pheromones_graph_->Size(); ++i) {
         for (std::size_t j = 0; j < pheromones_graph_->Size(); ++j) {
             if (i != j) {

@@ -63,7 +63,7 @@ class Colony {
     public:
     Colony(const Graph & graph) : distance_between_points_graph_(graph) {
         pheromones_graph_ = std::make_unique<Graph>(graph.Size());
-        FillFeromone();
+        FillPheromone();
     };
 
     Colony() = delete;
@@ -77,7 +77,7 @@ class Colony {
     // добавление нового муравья в колонию
     void CreateAnt(std::size_t index_start);
     // заполним граф феромонами
-    void FillFeromone();
+    void FillPheromone();
     // феромон постепенно испаряется
     void EvaporatePheromones();
     TsmResult result_{};
