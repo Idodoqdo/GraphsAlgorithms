@@ -27,4 +27,9 @@ std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int sta
   return visited;
 }
 
+std::vector<std::size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, int startVertex) {
+  std::cout << graph.Size() << startVertex;
+  return std::vector<std::size_t>();
+}
+
 } // namespace s21

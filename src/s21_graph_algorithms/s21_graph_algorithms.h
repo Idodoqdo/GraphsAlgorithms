@@ -15,5 +15,13 @@ class GraphAlgorithms {
       @return std::vector<std::size_t> an array that contains the traversed vertices in the order they were traversed
   */
   std::vector<std::size_t> DepthFirstSearch(Graph &graph, int startVertex);
+  /**
+      @brief Breadth-first search in the graph from a given vertex.
+      
+      @param graph 
+      @param startVertex 
+      @return std::vector<std::size_t> 
+  */
+  std::vector<std::size_t> BreadthFirstSearch(Graph &graph, int startVertex);
 };
 }  // namespace s21
