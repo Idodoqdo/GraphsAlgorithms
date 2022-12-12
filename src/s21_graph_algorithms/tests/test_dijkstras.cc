@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../s21_graph_algorithms.h"
+#include "s21_graph_algorithms.h"
 
 TEST(dijkstra, test_1) {
   double graph6x6[] = {0, 7, 9, 0, 0, 14,

@@ -39,6 +39,7 @@ if (GTEST_FOUND)
         gtest_main
         Threads::Threads
         s21_graph.a
+        s21_containers
     )
 
     set_property(
