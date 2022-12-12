@@ -1,5 +1,9 @@
 #include "s21_graph_algorithms.h"
 #include "TravelingSalesmanProblem.h"
+
+#include <memory>
+#include <cmath>
+
 namespace s21 {
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(const Graph & graph) {
     Colony col(graph);

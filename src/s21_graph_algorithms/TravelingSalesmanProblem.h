@@ -1,7 +1,5 @@
 #pragma once
 #include "s21_graph.h"
-#include <memory>
-#include <cmath>
 #include <random>
 #include <set>
 
