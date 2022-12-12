@@ -4,7 +4,6 @@
 #include <set>
 #include <algorithm>
 #include <exception>
-#include <iostream>
 namespace s21 {
 std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int startVertex) {
   startVertex--; // cuz readme constrains
@@ -26,11 +25,6 @@ std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int sta
       }
   }
   return visited;
-}
-
-std::vector<std::size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, int startVertex) {
-  std::cout << graph.Size() << startVertex;
-  return std::vector<std::size_t>();
 }
 
 } // namespace s21

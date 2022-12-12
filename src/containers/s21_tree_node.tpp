@@ -3,14 +3,13 @@
 
 #if defined(BOOST_FOUND)
 #include <boost/lexical_cast.hpp>
-#include <memory>
 #include <sstream>
 #include <stdexcept>
 #include <string>
 #else
 #include <iostream>
 #endif  // BOOST_FOUND
-
+#include <memory>
 #include "s21_tree_node.h"
 
 namespace s21 {
