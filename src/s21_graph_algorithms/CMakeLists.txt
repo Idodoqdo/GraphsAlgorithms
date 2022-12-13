@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SRC_FILES "*.cc")
 
 add_library(${PROJECT_NAME} STATIC ${SRC_FILES})
+target_link_libraries(${PROJECT_NAME} PUBLIC s21_graph.a)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 

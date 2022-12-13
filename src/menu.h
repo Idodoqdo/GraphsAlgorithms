@@ -18,7 +18,7 @@ class Menu {
     Quit = 9
   };
 
-  int GetVariant(int capacity);
+  std::size_t GetVariant(std::size_t capacity);
   void PrintMenu();
   void LoadGraphFromFile(Graph &graph);
   void BreadthFirstSearch();

@@ -3,7 +3,7 @@
 
 namespace s21 {
 void Menu::Start() {
-  int variant;  // выбранный пункт меню
+  std::size_t variant;  // выбранный пункт меню
   Graph graph(2);
   GraphAlgorithms alg;
   do {
@@ -64,12 +64,12 @@ void Menu::PrintMenu() {
   std::cout << ">";
 }
 
-int Menu::GetVariant(int capacity) {
-  int variant;
+std::size_t Menu::GetVariant(std::size_t capacity) {
+  std::size_t variant;
   std::string str;  // строка для считывания введённых данных
   std::getline(std::cin, str);  // считываем строку
   // пока ввод некорректен, сообщаем об этом и просим повторить его
-  while (sscanf(str.c_str(), "%d", &variant) != 1 || variant < 1 ||
+  while (sscanf(str.c_str(), "%lu", &variant) != 1 || variant < 1 ||
          variant >= capacity) {
     std::cout << "Incorrect input. Try again: ";  // выводим сообщение об ошибке
     std::getline(std::cin, str);  // считываем строку повторно
@@ -96,10 +96,10 @@ void Menu::DepthFirstSearch() { std::cout << "ToDo" << std::endl; }
 void Menu::ShortestPathBetweenTwoVertices(Graph &graph, GraphAlgorithms &alg) {
   Menu tmp;
   std::cout << "vertex1: ";
-  int vertex1 = tmp.GetVariant(graph.Size());
+  int vertex1 = static_cast<int>(tmp.GetVariant(graph.Size()));
   std::cout << "vertex2: ";
-  int vertex2 = tmp.GetVariant(graph.Size());
-  int result = alg.getShortestPathBetweenVertices(graph, vertex1, vertex2);
+  int vertex2 = static_cast<int>(tmp.GetVariant(graph.Size()));
+  double result = alg.getShortestPathBetweenVertices(graph, vertex1, vertex2);
   std::cout << result;
 }
 
