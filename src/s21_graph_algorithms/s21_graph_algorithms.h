@@ -1,5 +1,4 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
-#include <bits/stdc++.h>
 
 #include "../s21_graph/s21_graph.h"
 
