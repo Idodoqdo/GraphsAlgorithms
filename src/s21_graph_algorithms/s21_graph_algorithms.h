@@ -1,5 +1,6 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
-#pragma once
+#ifndef SRC_S21_GRAPH_ALGORITHMS_H_
+#define SRC_S21_GRAPH_ALGORITHMS_H_
 #include <vector>
 #include "TravelingSalesmanProblem.h"
 
@@ -17,3 +18,4 @@ class GraphAlgorithms {
 };
 }
 
+#endif  // SRC_S21_GRAPH_ALGORITHMS_H_

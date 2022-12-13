@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SRC_TRAVELING_SALESMAN_PROBLEM_H_
+#define SRC_TRAVELING_SALESMAN_PROBLEM_H_
+
 #include "s21_graph.h"
 #include <random>
 #include <set>
@@ -91,3 +93,5 @@ class Colony {
     const double kPheromones_start = 0.75;
 };
 }
+
+#endif  // SRC_TRAVELING_SALESMAN_PROBLEM_H_
