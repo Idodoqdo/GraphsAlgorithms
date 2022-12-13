@@ -4,10 +4,6 @@
 #include "s21_graph.h"
 #include <random>
 #include <set>
-
-
-
-
 namespace s21 {
 
 struct TsmResult {
