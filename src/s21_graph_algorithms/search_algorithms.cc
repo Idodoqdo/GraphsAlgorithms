@@ -13,8 +13,7 @@ std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int sta
   std::vector<std::size_t> visited;
   stack.push(static_cast<std::size_t>(startVertex));
   while (!stack.empty()) {
-      std::size_t step = 0;
-      step = stack.top();
+      std::size_t step = stack.top();
       stack.pop();
       visited.push_back(step + 1);
       auto connected = graph.GetConnectedNodes(step);
