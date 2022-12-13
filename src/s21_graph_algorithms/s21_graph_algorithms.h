@@ -16,6 +16,6 @@ class GraphAlgorithms {
 
   
 };
-}
+}  // namespace s21
 
 #endif  // SRC_S21_GRAPH_ALGORITHMS_H_

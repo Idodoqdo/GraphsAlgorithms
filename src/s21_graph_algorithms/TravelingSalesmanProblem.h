@@ -92,6 +92,6 @@ class Colony {
     const unsigned short kNumber_iterations = 100;
     const double kPheromones_start = 0.75;
 };
-}
+}  // namespace s21
 
 #endif  // SRC_TRAVELING_SALESMAN_PROBLEM_H_
