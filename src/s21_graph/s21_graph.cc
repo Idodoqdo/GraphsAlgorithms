@@ -49,7 +49,6 @@ std::vector<std::size_t> Graph::GetConnectedNodes(std::size_t index) {
     if (this->operator()(x, index) > std::numeric_limits<double>::epsilon())
       paths.push_back(x);
   }
-  
   return paths;
 }
 
