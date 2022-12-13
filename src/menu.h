@@ -1,18 +1,31 @@
+// Copyright <lwolmer, lshiela, jgerrick> 2022
 #include "s21_graph_algorithms.h"
 
+namespace s21 {
 class Menu {
  public:
-  Menu() { graph_ = s21::Graph tmp(2); }
-  void PrintMenu();
-  int GetVariant(int capacity);
-  void LoadGraphFromFile();
-  void BreadthFirstSearch();
-  void DepthFirstSearch();
-  void ShortestPathBetweenTwoVertices();
-  void ShortestPathsBetweenAllVertices();
-  void LeastSpanningTree();
-  void SolveTravelingSalesmanProblem();
+  void Start();
 
  private:
-  s21::Graph graph_;
+  enum MenuChoice {
+    kLoadGraphFromFile = 1,
+    kBreadthFirstSearch,
+    kDepthFirstSearch,
+    kShortestPathBetweenTwoVertices,
+    kShortestPathsBetweenAllVertices,
+    kLeastSpanningTree,
+    kSolveTravelingSalesmanProblem,
+    Quit = 9
+  };
+
+  int GetVariant(int capacity);
+  void PrintMenu();
+  void LoadGraphFromFile(Graph &graph);
+  void BreadthFirstSearch();
+  void DepthFirstSearch();
+  void ShortestPathBetweenTwoVertices(Graph &graph, GraphAlgorithms &alg);
+  void ShortestPathsBetweenAllVertices(Graph &graph, GraphAlgorithms &alg);
+  void LeastSpanningTree(Graph &graph, GraphAlgorithms &alg);
+  void SolveTravelingSalesmanProblem();
 };
+}  // namespace s21

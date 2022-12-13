@@ -1,4 +1,42 @@
+// Copyright <lwolmer, lshiela, jgerrick> 2022
 #include "menu.h"
+
+namespace s21 {
+void Menu::Start() {
+  int variant;  // выбранный пункт меню
+  Graph graph(2);
+  GraphAlgorithms alg;
+  do {
+    this->PrintMenu();  // выводим меню на экран
+    variant = this->GetVariant(7);  // получаем номер выбранного пункта меню
+    switch (variant) {
+      case kLoadGraphFromFile:
+        this->LoadGraphFromFile(graph);
+        break;
+      case kBreadthFirstSearch:
+        this->BreadthFirstSearch();
+        break;
+      case kDepthFirstSearch:
+        this->DepthFirstSearch();
+        break;
+      case kShortestPathBetweenTwoVertices:
+        this->ShortestPathBetweenTwoVertices(graph, alg);
+        break;
+      case kShortestPathsBetweenAllVertices:
+        this->ShortestPathsBetweenAllVertices(graph, alg);
+        break;
+      case kLeastSpanningTree:
+        this->LeastSpanningTree(graph, alg);
+        break;
+      case kSolveTravelingSalesmanProblem:
+        this->SolveTravelingSalesmanProblem();
+        break;
+    }
+    if (variant != Quit)
+      system("pause");  // задерживаем выполнение, чтобы пользователь мог
+                        // увидеть результат выполнения выбранного пункта
+  } while (variant != Quit);
+}
 
 void Menu::PrintMenu() {
   std::cout << "Enter the number of the selected menu item." << std::endl;
@@ -39,13 +77,13 @@ int Menu::GetVariant(int capacity) {
   return variant;
 }
 
-void Menu::LoadGraphFromFile() {
+void Menu::LoadGraphFromFile(Graph &graph) {
   try {
     std::string filename;
     std::cout << "Input filename: ";
     getline(std::cin, filename);
-    graph_.LoadGraphFromFile(filename);
-  } catch (const std::exception& err) {
+    graph.LoadGraphFromFile(filename);
+  } catch (const std::exception &err) {
     std::cout << "Load error: " << err.what() << std::endl;
     throw;
   }
@@ -55,45 +93,39 @@ void Menu::BreadthFirstSearch() { std::cout << "ToDo" << std::endl; }
 
 void Menu::DepthFirstSearch() { std::cout << "ToDo" << std::endl; }
 
-void Menu::ShortestPathBetweenTwoVertices() {
-  s21::GraphAlgorithms alg;
+void Menu::ShortestPathBetweenTwoVertices(Graph &graph, GraphAlgorithms &alg) {
   Menu tmp;
-  std::cout << "vertex1>";
-  int vertex1 = tmp.GetVariant(graph_.Size());
-  std::cout << "vertex2>";
-  int vertex2 = tmp.GetVariant(graph_.Size());
-  int result = alg.getShortestPathBetweenVertices(graph_, vertex1, vertex2);
+  std::cout << "vertex1: ";
+  int vertex1 = tmp.GetVariant(graph.Size());
+  std::cout << "vertex2: ";
+  int vertex2 = tmp.GetVariant(graph.Size());
+  int result = alg.getShortestPathBetweenVertices(graph, vertex1, vertex2);
   std::cout << result;
 }
 
-void Menu::ShortestPathsBetweenAllVertices() {
-  s21::GraphAlgorithms alg;
-  // char str[32];
+void Menu::ShortestPathsBetweenAllVertices(Graph &graph, GraphAlgorithms &alg) {
   std::vector<std::vector<double>> result =
-      alg.getShortestPathsBetweenAllVertices(graph_);
-  std::size_t size = graph_.Size();
+      alg.getShortestPathsBetweenAllVertices(graph);
+  std::size_t size = graph.Size();
   for (std::size_t i = 0; i < size; i++) {
     for (std::size_t j = 0; j < size; j++) {
-      // sprintf(str, " %5lf", result[i][j]); // для красивого вывода с ровными столбиками
-      std::cout << result[i][j] << " ";
+      std::cout << std::setw(5) << result[i][j];
     }
     std::cout << std::endl;
   }
 }
 
-void Menu::LeastSpanningTree() {
-  s21::GraphAlgorithms alg;
-  // char str[32];
-  std::size_t size = graph_.Size();
-  s21::Graph result(size);
-  result = alg.getLeastSpanningTree(graph_);
+void Menu::LeastSpanningTree(Graph &graph, GraphAlgorithms &alg) {
+  std::size_t size = graph.Size();
+  Graph result(size);
+  result = alg.getLeastSpanningTree(graph);
   for (std::size_t i = 0; i < size; i++) {
     for (std::size_t j = 0; j < size; j++) {
-      // sprintf(str, " %5lf", graph_(i, j)); // для красивого вывода с ровными столбиками
-      std::cout << graph_(i, j) << " ";
+      std::cout << std::setw(5) << graph(i, j);
     }
     std::cout << std::endl;
   }
 }
 
 void Menu::SolveTravelingSalesmanProblem() { std::cout << "ToDo" << std::endl; }
+}  // namespace s21
