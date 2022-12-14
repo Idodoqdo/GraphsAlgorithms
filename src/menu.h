@@ -15,7 +15,7 @@ class Menu {
     kShortestPathsBetweenAllVertices,
     kLeastSpanningTree,
     kSolveTravelingSalesmanProblem,
-    Quit = 9
+    Quit
   };
 
   std::size_t GetVariant(std::size_t capacity);

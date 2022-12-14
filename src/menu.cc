@@ -8,7 +8,7 @@ void Menu::Start() {
   GraphAlgorithms alg;
   do {
     this->PrintMenu();  // выводим меню на экран
-    variant = this->GetVariant(7);  // получаем номер выбранного пункта меню
+    variant = this->GetVariant(Quit);  // получаем номер выбранного пункта меню
     switch (variant) {
       case kLoadGraphFromFile:
         this->LoadGraphFromFile(graph);
@@ -32,9 +32,10 @@ void Menu::Start() {
         this->SolveTravelingSalesmanProblem();
         break;
     }
-    if (variant != Quit)
-      system("pause");  // задерживаем выполнение, чтобы пользователь мог
-                        // увидеть результат выполнения выбранного пункта
+    if (variant != Quit) {
+      std::cout << "Press Enter to continue" << std::endl;
+      std::cin.get();
+    }
   } while (variant != Quit);
 }
 
@@ -60,7 +61,7 @@ void Menu::PrintMenu() {
   std::cout << "7: solving the salesman problem with the output of the "
                "resulting route and its length to the console."
             << std::endl;
-  std::cout << "9: Quit" << std::endl;
+  std::cout << "8: Quit" << std::endl;
   std::cout << ">";
 }
 
@@ -70,7 +71,7 @@ std::size_t Menu::GetVariant(std::size_t capacity) {
   std::getline(std::cin, str);  // считываем строку
   // пока ввод некорректен, сообщаем об этом и просим повторить его
   while (sscanf(str.c_str(), "%lu", &variant) != 1 || variant < 1 ||
-         variant >= capacity) {
+         variant > capacity) {
     std::cout << "Incorrect input. Try again: ";  // выводим сообщение об ошибке
     std::getline(std::cin, str);  // считываем строку повторно
   }
@@ -94,13 +95,12 @@ void Menu::BreadthFirstSearch() { std::cout << "ToDo" << std::endl; }
 void Menu::DepthFirstSearch() { std::cout << "ToDo" << std::endl; }
 
 void Menu::ShortestPathBetweenTwoVertices(Graph &graph, GraphAlgorithms &alg) {
-  Menu tmp;
   std::cout << "vertex1: ";
-  int vertex1 = static_cast<int>(tmp.GetVariant(graph.Size()));
+  int vertex1 = static_cast<int>(this->GetVariant(graph.Size()));
   std::cout << "vertex2: ";
-  int vertex2 = static_cast<int>(tmp.GetVariant(graph.Size()));
+  int vertex2 = static_cast<int>(this->GetVariant(graph.Size()));
   double result = alg.getShortestPathBetweenVertices(graph, vertex1, vertex2);
-  std::cout << result;
+  std::cout << result << std::endl;
 }
 
 void Menu::ShortestPathsBetweenAllVertices(Graph &graph, GraphAlgorithms &alg) {
