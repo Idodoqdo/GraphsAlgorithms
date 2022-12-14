@@ -77,7 +77,7 @@ void Ant::Reset(std::size_t &position) {
 }
 
 void Ant::Transition(std::vector<double> & transition_probabilities_vec, std::vector<std::size_t> & where_can_go) {
-    double random_choice = rand_.GenerateRandomChance();
+    double random_choice = rand_.GenerateRandomDouble(0, 1);
     double choise_probability = 0;
     for (std::size_t i = 0; i < transition_probabilities_vec.size(); ++i) {
         choise_probability += transition_probabilities_vec[i]; 
