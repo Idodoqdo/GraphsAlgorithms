@@ -17,8 +17,6 @@ TEST(graph_search_depth, fork) {
   }
 }
 
-
-
 TEST(graph_search_depth, geeks_example) {
   double graph_raw[] = {0, 1, 1, 1, 1,
                         1, 0, 0, 0, 0,
@@ -35,7 +33,7 @@ TEST(graph_search_depth, geeks_example) {
   }
 }
 
-TEST(graph_search_depth, geeks_example2) {
+TEST(graph_search_depth, geeks_example_tree) {
   double graph_raw[] = {0, 1, 1, 0, 0,
                         1, 0, 0, 1, 0,
                         1, 0, 0, 0, 0,
@@ -53,9 +51,9 @@ TEST(graph_search_depth, geeks_example2) {
 
 TEST(graph_search_depth, not_connected) {
   double graph_raw[] = {0, 0, 1, 0,
-                      0, 0, 0, 1,
-                      1, 0, 0 ,0,
-                      0, 1, 0, 0};
+                        0, 0, 0, 1,
+                        1, 0, 0 ,0,
+                        0, 1, 0, 0};
   s21::Graph graph(graph_raw, 4);
   s21::GraphAlgorithms graph_algorithms;
   auto depth_path = graph_algorithms.DepthFirstSearch(graph, 1);
@@ -81,8 +79,6 @@ TEST(graph_search_breadth, fork) {
   }
 }
 
-
-
 TEST(graph_search_breadth, geeks_example) {
   double graph_raw[] = {0, 1, 1, 1, 1,
                         1, 0, 0, 0, 0,
@@ -91,15 +87,15 @@ TEST(graph_search_breadth, geeks_example) {
                         1, 0, 0, 0, 0};
   s21::Graph graph(graph_raw, 5);
   s21::GraphAlgorithms graph_algorithms;
-  auto depth_path = graph_algorithms.BreadthFirstSearch(graph, 1);
-  std::size_t path[] = {1, 2, 3, 4, 5};
+  auto depth_path = graph_algorithms.BreadthFirstSearch(graph, 2);
+  std::size_t path[] = {2, 1, 3, 4, 5};
   EXPECT_EQ(depth_path.size(), 5);
   for (std::size_t i = 0; i < depth_path.size(); i++) {
     EXPECT_EQ(depth_path[i], path[i]);
   }
 }
 
-TEST(graph_search_breadth, geeks_example2) {
+TEST(graph_search_breadth, geeks_example_tree) {
   double graph_raw[] = {0, 1, 1, 0, 0,
                         1, 0, 0, 1, 0,
                         1, 0, 0, 0, 0,
@@ -108,7 +104,7 @@ TEST(graph_search_breadth, geeks_example2) {
   s21::Graph graph(graph_raw, 5);
   s21::GraphAlgorithms graph_algorithms;
   auto depth_path = graph_algorithms.BreadthFirstSearch(graph, 1);
-  std::size_t path[] = {1, 2, 4, 3};
+  std::size_t path[] = {1, 2, 3, 4};
   EXPECT_EQ(depth_path.size(), 4);
   for (std::size_t i = 0; i < depth_path.size(); i++) {
     EXPECT_EQ(depth_path[i], path[i]);
@@ -117,9 +113,9 @@ TEST(graph_search_breadth, geeks_example2) {
 
 TEST(graph_search_breadth, not_connected) {
   double graph_raw[] = {0, 0, 1, 0,
-                      0, 0, 0, 1,
-                      1, 0, 0 ,0,
-                      0, 1, 0, 0};
+                        0, 0, 0, 1,
+                        1, 0, 0 ,0,
+                        0, 1, 0, 0};
   s21::Graph graph(graph_raw, 4);
   s21::GraphAlgorithms graph_algorithms;
   auto depth_path = graph_algorithms.BreadthFirstSearch(graph, 1);

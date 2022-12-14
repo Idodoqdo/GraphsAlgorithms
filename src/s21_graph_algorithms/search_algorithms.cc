@@ -4,6 +4,7 @@
 #include <set>
 #include <algorithm>
 #include <exception>
+#include <queue>
 
 namespace s21 {
 std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int startVertex) {
@@ -39,7 +40,7 @@ std::vector<std::size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, int s
       not_visited.pop();
       visited.push_back(step_pos + 1);
       auto connected = graph.GetConnectedNodes(step_pos);
-      for (auto it = connected.rbegin(); it != connected.rend(); ++it) {
+      for (auto it = connected.begin(); it != connected.end(); ++it) {
         // push only not visited
         if (std::find(visited.begin(), visited.end(), *it + 1) == visited.end())
           not_visited.push(*it);
