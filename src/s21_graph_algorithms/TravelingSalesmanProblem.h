@@ -2,7 +2,6 @@
 #define SRC_TRAVELING_SALESMAN_PROBLEM_H_
 
 #include "s21_graph.h"
-#include <random>
 #include <memory>
 #include <set>
 namespace s21 {
@@ -15,7 +14,7 @@ double distance;
 class Ant {
     public:
     Ant(const Graph &graph_distance, std::unique_ptr<Graph> &graph_pheromones, std::size_t &index_start) : graph_distance_(graph_distance), 
-    graph_pheromones_(graph_pheromones), gen_(rd_()), distrib_(0, 1) {
+    graph_pheromones_(graph_pheromones) {
         run_result_.vertices.push_back(index_start);
         FillAvailablePlaces();
     };
@@ -45,9 +44,7 @@ class Ant {
     // заполнение индексов мест, куда можно пойти
     void FillAvailablePlaces();
     // для генерации случайного числа
-    std::random_device rd_;
-    std::mt19937 gen_;
-    std::uniform_real_distribution<double> distrib_;
+    RandomNumberGenerator rand_;
     // путь и размер дистацнии
     TsmResult run_result_{};
     // коэфы для рассчетов 
