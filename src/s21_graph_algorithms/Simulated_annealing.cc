@@ -9,7 +9,15 @@ TsmResult GraphAlgorithms::SimulatedAnnealint(const Graph &graph) {
 }
 
 void SimulatedAnnealing::FindSolution() {
-    RouteGeneration();    
+    RouteGeneration(); 
+}
+
+void SimulatedAnnealing::FindShortestPath() {
+    
+}
+
+void SimulatedAnnealing::ChangeTwoPoints() {
+    
 }
 
 void SimulatedAnnealing::FillingWhereCanGo(std::vector<size_t> & where_can_go, const std::set<size_t> & available) {
@@ -38,6 +46,7 @@ std::set<size_t> SimulatedAnnealing::FillingAvailablePlaces() {
 
 void SimulatedAnnealing::ChooseRandomPlace(std::set<size_t> & available, const std::vector<size_t> & where_can_go) {
     size_t choice = static_cast<size_t>(rand_.GenerateRandomInt(0, static_cast<int>(where_can_go.size() - 1)));
+    result_.distance += graph_(result_.vertices.back(), where_can_go[choice]);
     result_.vertices.push_back(where_can_go[choice]);
     available.erase(available.find(where_can_go[choice]));
 }

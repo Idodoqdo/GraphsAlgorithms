@@ -15,6 +15,8 @@ class SimulatedAnnealing {
     std::set<size_t> FillingAvailablePlaces();
     void ChooseRandomPlace(std::set<size_t> & available, const std::vector<size_t> & where_can_go);
     void FillingWhereCanGo(std::vector<size_t> & where_can_go, const std::set<size_t> & available);
+    void FindShortestPath();
+    void ChangeTwoPoints();
     void RouteGeneration();
     const Graph & graph_;
     TsmResult result_{};
