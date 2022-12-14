@@ -24,3 +24,11 @@ TEST(graph_algorithms, Ant2) {
   result = testAlg.solveTravelingSalesmanProblem(graph);
   EXPECT_EQ(result.distance, 80);
 }
+
+TEST(graph_algorithms, simulated_annealing) {
+  s21::TsmResult result{};
+  s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR"/graph_raw_file");
+  s21::GraphAlgorithms testAlg;
+  result = testAlg.SimulatedAnnealint(graph);
+  EXPECT_LE(result.vertices[0], 0);
+}

@@ -48,9 +48,9 @@ class Ant {
     // путь и размер дистацнии
     TsmResult run_result_{};
     // коэфы для рассчетов 
-    const double kAlpha = 1;
-    const double kBeta = 1;
-    const double kQ = 1;
+    static constexpr double kAlpha = 1;
+    static constexpr double kBeta = 1;
+    static constexpr double kQ = 1;
 };
 
 class Colony {
