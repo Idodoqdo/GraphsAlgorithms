@@ -66,3 +66,13 @@ TEST(graph, dot_to_file_crisscross) {
   EXPECT_TRUE(FileExists(CMAKE_CURRENT_SOURCE_DIR"/test_crisscross.dot"));
 }
 
+TEST(graph, dot_to_file_tree) {
+  double graph_raw[] = {0, 1, 1, 0, 0,
+                        1, 0, 0, 1, 0,
+                        1, 0, 0, 0, 0,
+                        0, 1, 0, 0, 0,
+                        0, 0, 0, 0, 0};
+  s21::Graph graph(graph_raw, 5);
+  graph.ExportGraphToDot(CMAKE_CURRENT_SOURCE_DIR"/test_tree.dot");
+  EXPECT_TRUE(FileExists(CMAKE_CURRENT_SOURCE_DIR"/test_tree.dot"));
+}
