@@ -3,6 +3,7 @@
 
 #include "s21_graph.h"
 #include <random>
+#include <memory>
 #include <set>
 namespace s21 {
 

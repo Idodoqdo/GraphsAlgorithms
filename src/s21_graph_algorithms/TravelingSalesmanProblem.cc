@@ -1,7 +1,4 @@
 #include "s21_graph_algorithms.h"
-#include "TravelingSalesmanProblem.h"
-
-#include <memory>
 #include <cmath>
 
 namespace s21 {

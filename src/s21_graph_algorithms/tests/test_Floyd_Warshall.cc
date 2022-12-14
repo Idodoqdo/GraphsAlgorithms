@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../s21_graph_algorithms.h"
+#include "s21_graph_algorithms.h"
 
 TEST(Floyd_Warshall, test_1) {
   double graph4x4[] = {0, 5, 0, 10,

@@ -49,6 +49,10 @@ endif ()
 #                     Dependencies                          #
 #                                                           #
 #############################################################
+IF (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/containers)
+    add_subdirectory(containers)
+ENDIF()
+
 IF (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/s21_graph)
     add_subdirectory(s21_graph)
 ENDIF()

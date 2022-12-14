@@ -40,6 +40,7 @@ if (GTEST_FOUND)
         Threads::Threads
         s21_graph_algorithms.a
         s21_graph.a
+        s21_containers
     )
 
     set_property(
