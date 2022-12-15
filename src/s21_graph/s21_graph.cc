@@ -23,7 +23,6 @@ Graph::Graph(double *matrix, std::size_t size) : Graph(size) {
 }
 
 void Graph::AllocateMatrix(std::size_t size) {
-  assert(size >= 2);
   matrix_.resize(size);
   for (std::size_t i = 0; i < size; i++) {
     matrix_[i].resize(size, 0);
@@ -38,6 +37,18 @@ bool Graph::CheckFormat(std::ifstream &stream, std::string reg) const {
   bool result = std::regex_match(line, r);
   stream.seekg(pos);
   return result;
+}
+
+std::vector<std::size_t> Graph::GetConnectedNodes(std::size_t index) {
+  std::size_t size = Size();
+  std::vector<std::size_t> paths;
+  for (std::size_t x = 0; x < size; x++) {
+    if (x == index)
+      continue;
+    if (this->operator()(x, index) > std::numeric_limits<double>::epsilon())
+      paths.push_back(x);
+  }
+  return paths;
 }
 
 void Graph::LoadGraphFromFile(const std::string &filename) {

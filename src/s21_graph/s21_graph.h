@@ -36,6 +36,7 @@ class Graph {
       @param filename Absolute Path to file
   */
   void ExportGraphToDot(const std::string& filename) const;
+  std::vector<std::size_t> GetConnectedNodes(std::size_t index);
  private:
   void AllocateMatrix(std::size_t size);
   bool CheckFormat(std::ifstream &stream, std::string reg) const;
