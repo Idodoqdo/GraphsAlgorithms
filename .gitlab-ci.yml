@@ -39,7 +39,7 @@ build_graph_tests:
 build_graph_algorithms_tests:
   stage: compile
   script:
-    - make -C build unit_tests
+    - make -C build graph_algorithms_tests
 
 build_container_tests:
   stage: compile
