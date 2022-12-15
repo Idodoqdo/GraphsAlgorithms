@@ -1,4 +1,5 @@
 #include "s21_graph_algorithms.h"
+#include <limits>
 
 namespace s21 {
 double GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph, int vertex1,
