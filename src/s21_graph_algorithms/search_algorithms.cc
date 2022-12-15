@@ -4,7 +4,6 @@
 #include <set>
 #include <algorithm>
 #include <exception>
-#include <queue>
 
 namespace s21 {
 std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int startVertex) {

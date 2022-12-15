@@ -79,6 +79,8 @@ void queue<T>::pop() {
   head_->next = head_->next->next;
   delete tmp;
   --cur_size_;
+  if (empty())
+  create();
 }
 
 template <class T>

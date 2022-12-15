@@ -1,7 +1,7 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
 #ifndef SRC_S21_GRAPH_ALGORITHMS_H_
 #define SRC_S21_GRAPH_ALGORITHMS_H_
-#include <vector>
+
 #include "TravelingSalesmanProblem.h"
 
 #include "s21_graph.h"
