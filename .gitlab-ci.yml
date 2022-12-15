@@ -75,6 +75,7 @@ graph_coverage:
     - pwd
     - ls
     - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf ./graph_tests_coverage.tar.gz .
+  resource_group: graph
   artifacts:
     paths:
       - ./graph_tests_coverage.tar.gz
@@ -84,8 +85,9 @@ graph_algorithms_coverage:
   script:
     - make -C build graph_algorithms_tests_coverage
     - pwd
-    - ls
+    - ls build/s21_graph_algorithms/tests
     - cd build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage && tar -cjf ./graph_algorithms_tests_coverage.tar.gz .
+  resource_group: algorithms
   artifacts:
     paths:
       - ./graph_algorithms_tests_coverage.tar.gz
