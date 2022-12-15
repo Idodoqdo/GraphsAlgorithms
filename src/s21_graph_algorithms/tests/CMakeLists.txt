@@ -78,8 +78,7 @@ endif()
 if (GTEST_FOUND)
     add_custom_target(${PROJECT_NAME}_memcheck
         COMMAND ${CMAKE_CTEST_COMMAND}
-            --verbose
-            --force-new-ctest-process --test-action memcheck
-        COMMAND cat "${CMAKE_CURRENT_BINARY_DIR}/Testing/Temporary/MemoryChecker.*.log"
+        --test-action memcheck
+        COMMAND cat "${CMAKE_CURRENT_BINARY_DIR}/Testing/Temporary/MemoryChecker.*.log" || false
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
