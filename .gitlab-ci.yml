@@ -72,6 +72,8 @@ graph_coverage:
   stage: coverage
   script:
     - make -C build graph_tests_coverage
+    - pwd
+    - ls
     - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf ./graph_tests_coverage.tar.gz .
   artifacts:
     paths:
@@ -81,6 +83,8 @@ graph_algorithms_coverage:
   stage: coverage
   script:
     - make -C build graph_algorithms_tests_coverage
+    - pwd
+    - ls
     - cd build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage && tar -cjf ./graph_algorithms_tests_coverage.tar.gz .
   artifacts:
     paths:
