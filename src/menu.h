@@ -1,4 +1,7 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
+#include <iostream>
+#include <iomanip>
+
 #include "s21_graph_algorithms.h"
 
 namespace s21 {

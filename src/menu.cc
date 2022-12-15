@@ -86,7 +86,6 @@ void Menu::LoadGraphFromFile(Graph &graph) {
     graph.LoadGraphFromFile(filename);
   } catch (const std::exception &err) {
     std::cout << "Load error: " << err.what() << std::endl;
-    throw;
   }
 }
 
