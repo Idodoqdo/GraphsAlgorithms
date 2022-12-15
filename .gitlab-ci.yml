@@ -55,12 +55,12 @@ run_tests:
 graph_memcheck:
   stage: test
   script:
-    - make -C build graph_tests_coverage
+    - make -C build graph_tests_memcheck
 
 graph_algorithms_memcheck:
   stage: test
   script:
-    - make -C build graph_tests_coverage
+    - make -C build graph_algorithms_tests_memcheck
 
 style_check:
   stage: test
