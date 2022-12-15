@@ -23,7 +23,7 @@ build_graph:
 build_graph_algorithms:
   stage: compile
   script:
-    - make -C build graph_algorithms.a
+    - make -C build s21_graph_algorithms.a
 
 build_menu:
   stage: compile
