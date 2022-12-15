@@ -78,6 +78,8 @@ void Graph::LoadGraphFromFile(const std::string &filename) {
       throw;
     }
     file.close();
+  } else {
+    throw std::runtime_error("The file does not exist.");
   }
 }
 
