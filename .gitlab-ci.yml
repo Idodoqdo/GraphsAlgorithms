@@ -41,6 +41,11 @@ build_graph_algorithms_tests:
   script:
     - make -C build unit_tests
 
+build_container_tests:
+  stage: compile
+  script:
+    - make -C build containers_tests
+
 # run tests using the binary built before
 run_tests:
   stage: test

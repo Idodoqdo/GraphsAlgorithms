@@ -66,19 +66,19 @@ target_include_directories(s21_containers INTERFACE
 if (GTEST_FOUND)
     set(CMAKE_CXX_FLAGS "-Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -g ${CMAKE_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fprofile-arcs -ftest-coverage -Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo ${CMAKE_CXX_FLAGS_DEBUG}")
-    project(unit_tests VERSION 1.0 LANGUAGES CXX)
+    project(containers_tests VERSION 1.0 LANGUAGES CXX)
     option(CodeCoverage "CodeCoverage" ON)
     include(CTest)
     file(GLOB TEST_SRC
         "tests/*.cc"
     )
-    add_executable(unit_tests ${TEST_SRC})
-    set_property(TARGET unit_tests PROPERTY CXX_STANDARD 17)
-    set_property(TARGET unit_tests PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON)
+    add_executable(containers_tests ${TEST_SRC})
+    set_property(TARGET containers_tests PROPERTY CXX_STANDARD 17)
+    set_property(TARGET containers_tests PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON)
 
-    set_property(TARGET unit_tests PROPERTY THREADS_PREFER_PTHREAD_FLAG ON)
+    set_property(TARGET containers_tests PROPERTY THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
-    target_link_libraries(unit_tests
+    target_link_libraries(containers_tests
         gtest
         stdc++
         m
@@ -91,11 +91,11 @@ if (GTEST_FOUND)
         "*.dot"
     )
     set_property(
-        TARGET unit_tests
+        TARGET containers_tests
         APPEND
         PROPERTY ADDITIONAL_CLEAN_FILES Temporary Testing TAG coverage ${TEST_CLEAN_FILES}
     )
-    add_test(UNIT_TESTS unit_tests)
+    add_test(UNIT_TESTS containers_tests)
 endif()
 
 #############################################################
@@ -107,9 +107,9 @@ endif()
 if (GTEST_FOUND)
     if (CodeCoverage MATCHES ON)
         include(CodeCoverage)
-        setup_target_for_coverage(coverage unit_tests coverage)
+        setup_target_for_coverage(containers_coverage containers_tests containers_coverage)
         set_property(
-            TARGET coverage
+            TARGET containers_coverage
             APPEND
             PROPERTY ADDITIONAL_CLEAN_FILES DartConfiguration.tcl
         )
