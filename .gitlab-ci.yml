@@ -64,6 +64,7 @@ graph_algorithms_memcheck:
 
 style_check:
   stage: test
+  allow_failure: true
   script:
     - make -C build stylecheck
 
