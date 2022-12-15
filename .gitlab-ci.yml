@@ -27,6 +27,7 @@ build_graph_algorithms:
 
 build_menu:
   stage: compile
+  allow_failure: true
   script:
     - make -C build menu
 
