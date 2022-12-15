@@ -12,6 +12,7 @@ cmake:
 build_graph:
   stage: compile
   script:
+    - ls
     - make -C build s21_graph.a
 
 build_graph_algorithms:
