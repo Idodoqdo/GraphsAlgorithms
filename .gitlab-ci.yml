@@ -1,0 +1,15 @@
+stages:
+  - Build
+  - test
+
+build:
+  stage: Build
+  script:
+    - cmake ./src -B build -DCMAKE_BUILD_TYPE=Release
+    - make -C build all
+
+# run tests using the binary built before
+test:
+  stage: test
+  script:
+    - echo "hello world"
