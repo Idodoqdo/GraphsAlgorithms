@@ -4,6 +4,10 @@ stages:
   - test
   - coverage
 
+cache:
+  paths:
+    - build/
+
 cmake:
   stage: configure
   script:
