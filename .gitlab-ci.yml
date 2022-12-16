@@ -1,8 +1,9 @@
 stages:
   - configure
   - dependencies
-  - compile_base
+  - compile_early
   - compile
+  - compile_late
   - test
   - coverage
 
@@ -24,39 +25,39 @@ googletest:
     - make -C build gtest
 
 build_graph:
-  stage: compile_base
+  stage: compile_early
   needs: ["googletest"]
   script:
     - ls
     - make -C build s21_graph.a
 
 build_graph_algorithms:
-  stage: compile_base
+  stage: compile
   needs: ["build_graph"]
   script:
     - make -C build s21_graph_algorithms.a
 
 build_menu:
-  stage: compile
+  stage: compile_late
   allow_failure: true
   needs: ["build_graph", "build_graph_algorithms"]
   script:
     - make -C build menu
 
 build_graph_tests:
-  stage: compile
+  stage: compile_late
   needs: ["build_graph"]
   script:
     - make -C build graph_tests
 
 build_graph_algorithms_tests:
-  stage: compile
+  stage: compile_late
   needs: ["build_graph_algorithms"]
   script:
     - make -C build graph_algorithms_tests
 
 build_container_tests:
-  stage: compile
+  stage: compile_late
   script:
     - make -C build containers_tests
 
