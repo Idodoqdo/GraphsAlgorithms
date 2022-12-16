@@ -17,7 +17,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules")
 if(NOT CMAKE_CXX_EXTENSIONS)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
-enable_testing()
 enable_language(CXX)
 if(ENABLE_CODE_COVERAGE)
     include(CodeCoverage)
@@ -37,6 +36,8 @@ if(ENABLE_CODE_ANALYSIS)
                 "--inline-suppr"
                 "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt"
         )
+    else()
+        MESSAGE(WARNING "CppCheck not found. Continuing without code analysis...")
     endif()
 endif(ENABLE_CODE_ANALYSIS)
 

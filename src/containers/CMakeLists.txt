@@ -10,23 +10,7 @@ cmake_minimum_required(VERSION 3.13)
 if(NOT CMAKE_CXX_EXTENSIONS)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
-enable_testing()
 enable_language(CXX)
-if(ENABLE_CODE_ANALYSIS)
-    find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
-    if (CMAKE_CXX_CPPCHECK)
-        list(
-            APPEND CMAKE_CXX_CPPCHECK 
-                "--enable=warning"
-                "--inconclusive"
-                "--force" 
-                "--inline-suppr"
-                "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt"
-        )
-    else()
-        MESSAGE(WARNING "CppCheck not found. Continuing without code analysis...")
-    endif()
-endif(ENABLE_CODE_ANALYSIS)
 
 #############################################################
 #                                                           #
@@ -34,7 +18,6 @@ endif(ENABLE_CODE_ANALYSIS)
 #                                                           #
 #############################################################
 project(s21_containers VERSION 1.0 LANGUAGES CXX)
-include (CTest)
 set(CMAKE_CXX_FLAGS "-Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo ${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fprofile-arcs -ftest-coverage -Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo ${CMAKE_CXX_FLAGS_DEBUG}")
 file(GLOB SRC
