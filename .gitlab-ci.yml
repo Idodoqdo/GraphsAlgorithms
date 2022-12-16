@@ -1,6 +1,7 @@
 stages:
   - configure
   - dependencies
+  - compile_base
   - compile
   - test
   - coverage
@@ -23,14 +24,14 @@ googletest:
     - make -C build gtest
 
 build_graph:
-  stage: compile
+  stage: compile_base
   needs: ["googletest"]
   script:
     - ls
     - make -C build s21_graph.a
 
 build_graph_algorithms:
-  stage: compile
+  stage: compile_base
   needs: ["build_graph"]
   script:
     - make -C build s21_graph_algorithms.a
