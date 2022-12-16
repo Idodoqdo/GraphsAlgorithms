@@ -6,6 +6,7 @@ stages:
 
 default:
   cache:
+    key: $CI_COMMIT_REF_NAME
     paths:
       - build/
 
