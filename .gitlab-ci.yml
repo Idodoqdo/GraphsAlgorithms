@@ -73,6 +73,8 @@ graph_coverage:
   script:
     - make -C build graph_tests_coverage
     - ls build/s21_graph/tests
+    - echo "$CI_PROJECT_PATH"
+    - echo "$CI_BUILDS_DIR"
     - ls build/s21_graph/tests/graph_tests_coverage
     - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf "$CI_BUILDS_DIR/graph_tests_coverage.tar.gz" .
   resource_group: graph
