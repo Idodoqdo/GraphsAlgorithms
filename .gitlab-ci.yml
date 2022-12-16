@@ -9,7 +9,7 @@ stages:
 
 default:
   cache:
-    key: $CI_COMMIT_SHORT_SHA
+    key: $CI_COMMIT_REF_NAME
     paths:
       - build/
 
@@ -20,39 +20,33 @@ cmake:
 
 googletest:
   stage: dependencies
-  needs: ["cmake"]
   script:
     - make -C build gtest
 
 build_graph:
   stage: compile_early
-  needs: ["googletest"]
   script:
     - ls
     - make -C build s21_graph.a
 
 build_graph_algorithms:
   stage: compile
-  needs: ["build_graph"]
   script:
     - make -C build s21_graph_algorithms.a
 
 build_menu:
   stage: compile_late
   allow_failure: true
-  needs: ["build_graph", "build_graph_algorithms"]
   script:
     - make -C build menu
 
 build_graph_tests:
   stage: compile_late
-  needs: ["build_graph"]
   script:
     - make -C build graph_tests
 
 build_graph_algorithms_tests:
   stage: compile_late
-  needs: ["build_graph_algorithms"]
   script:
     - make -C build graph_algorithms_tests
 
