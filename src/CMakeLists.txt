@@ -44,15 +44,25 @@ endif(ENABLE_CODE_ANALYSIS)
 #                     GTEST COMPILE                         #
 #                                                           #
 #############################################################
-message("-- Added GTest target from source")
-if (NOT TARGET gtest_main)
-    unset(CMAKE_CXX_FLAGS)
-    unset(CMAKE_CXX_FLAGS_DEBUG)
-    set(_flag_sync_required TRUE)
-    add_subdirectory(googletest EXCLUDE_FROM_ALL)
-    set(GTEST_FOUND TRUE)
-endif ()
+find_package(GTest)
+if (NOT GTEST_FOUND)
+    IF (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/googletest)
+        message("-- Adding GTest target from source --")
+        if (NOT TARGET gtest_main)
+            unset(CMAKE_CXX_FLAGS)
+            unset(CMAKE_CXX_FLAGS_DEBUG)
+            set(_flag_sync_required TRUE)
+            add_subdirectory(googletest EXCLUDE_FROM_ALL)
+            set(GTEST_FOUND TRUE)
+        endif ()
+    else()
+        MESSAGE(WARNING "Googletest not found in system and googletest source code is missing from source folder. Tests wont be added.")
+    endif ()
+endif()
 
+if (GTEST_FOUND)
+    include(CTest)
+endif()
 #############################################################
 #                                                           #
 #                     Dependencies                          #
