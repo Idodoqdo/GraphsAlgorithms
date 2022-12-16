@@ -1,5 +1,6 @@
 stages:
   - configure
+  - dependencies
   - compile
   - test
   - coverage
@@ -16,13 +17,14 @@ cmake:
     - cmake -B build -S src -DCMAKE_BUILD_TYPE=Debug
 
 googletest:
-  stage: configure
+  stage: dependencies
   needs: ["cmake"]
   script:
     - make -C build gtest
 
 build_graph:
   stage: compile
+  needs: ["googletest"]
   script:
     - ls
     - make -C build s21_graph.a
