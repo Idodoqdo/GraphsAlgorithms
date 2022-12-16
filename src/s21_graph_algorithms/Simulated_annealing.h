@@ -20,7 +20,6 @@ class SimulatedAnnealing {
     void RouteGeneration();
     double DistanceCalculation(std::vector<size_t> const &vec) const;
     void ProbabilitydDependentChoice();
-    void MakeNewDecision(std::vector<size_t> const &new_path, double const &new_distance);
     const Graph & graph_;
     TsmResult result_{};
     RandomNumberGenerator rand_;
