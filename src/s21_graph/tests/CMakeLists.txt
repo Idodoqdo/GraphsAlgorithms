@@ -19,7 +19,6 @@ if (GTEST_FOUND)
 
     set(CMAKE_CXX_FLAGS "-Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -g ${CMAKE_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fprofile-arcs -ftest-coverage -Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo ${CMAKE_CXX_FLAGS_DEBUG}")
-    option(CodeCoverage "CodeCoverage" ON)
     include(CTest)
     file(GLOB TEST_SRC
         "${CMAKE_CURRENT_SOURCE_DIR}/*.cc" "${CMAKE_CURRENT_SOURCE_DIR}/../*.cc"
@@ -55,8 +54,7 @@ endif()
 #############################################################
 
 if (GTEST_FOUND)
-  if (CodeCoverage MATCHES ON)
-      include(CodeCoverage)
+  if (CODE_COVERAGE MATCHES ON)
       setup_target_for_coverage(${PROJECT_NAME}_coverage ${PROJECT_NAME} ${PROJECT_NAME}_coverage)
       set_property(
           TARGET ${PROJECT_NAME}_coverage
@@ -72,9 +70,10 @@ endif()
 #                    additional checks                      #
 #                                                           #
 #############################################################
-if (GTEST_FOUND)
+if (GTEST_FOUND AND MEMORYCHECK_COMMAND)
     add_custom_target(${PROJECT_NAME}_memcheck
         COMMAND ${CMAKE_CTEST_COMMAND}
         --test-action memcheck
+        --ValgrindCommandOptions
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 endif()

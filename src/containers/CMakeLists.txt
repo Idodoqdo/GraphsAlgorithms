@@ -4,10 +4,8 @@
 #                   GLOBAL CMAKE SETUP                      #
 #                                                           #
 #############################################################
-option(ENABLE_CODE_ANALYSIS "Run code cppcheck" ON)
+option(ENABLE_CODE_ANALYSIS "Run cppcheck for code" ON)
 cmake_minimum_required(VERSION 3.13)
-# Path to cmake modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 # disable extentions for pure C++
 if(NOT CMAKE_CXX_EXTENSIONS)
     set(CMAKE_CXX_EXTENSIONS OFF)
@@ -25,6 +23,8 @@ if(ENABLE_CODE_ANALYSIS)
                 "--inline-suppr"
                 "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt"
         )
+    else()
+        MESSAGE(WARNING "CppCheck not found. Continuing without code analysis...")
     endif()
 endif(ENABLE_CODE_ANALYSIS)
 
@@ -67,7 +67,6 @@ if (GTEST_FOUND)
     set(CMAKE_CXX_FLAGS "-Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -g ${CMAKE_CXX_FLAGS}")
     set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fprofile-arcs -ftest-coverage -Werror -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo ${CMAKE_CXX_FLAGS_DEBUG}")
     project(containers_tests VERSION 1.0 LANGUAGES CXX)
-    option(CodeCoverage "CodeCoverage" ON)
     include(CTest)
     file(GLOB TEST_SRC
         "tests/*.cc"
@@ -105,8 +104,7 @@ endif()
 #############################################################
 
 if (GTEST_FOUND)
-    if (CodeCoverage MATCHES ON)
-        include(CodeCoverage)
+    if (CODE_COVERAGE MATCHES ON)
         setup_target_for_coverage(containers_coverage containers_tests containers_coverage)
         set_property(
             TARGET containers_coverage

@@ -7,7 +7,8 @@
 #############################################################
 cmake_minimum_required(VERSION 3.5)
 project(A2_SimpleNavigator)
-option(ENABLE_CODE_ANALYSIS "Run code cppcheck" ON)
+option(CODE_COVERAGE "Add code coverage targets" ON)
+option(ENABLE_CODE_ANALYSIS "Run cppcheck for code" ON)
 # Path to cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules")
 # disable extentions for pure C++
@@ -16,6 +17,9 @@ if(NOT CMAKE_CXX_EXTENSIONS)
 endif()
 enable_testing()
 enable_language(CXX)
+if(NOT MEMORYCHECK_COMMAND)
+    MESSAGE(WARNING "Memory testing tool is not found. Memory testing targets won't be added.")
+endif()
 if(ENABLE_CODE_ANALYSIS)
     find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
     if (CMAKE_CXX_CPPCHECK)
