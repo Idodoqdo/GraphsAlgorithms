@@ -30,5 +30,5 @@ TEST(graph_algorithms, simulated_annealing) {
   s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR"/graph_raw_file");
   s21::GraphAlgorithms testAlg;
   result = testAlg.SimulatedAnnealint(graph);
-  EXPECT_LE(result.vertices[0], 0);
+  EXPECT_LE(0, result.vertices[0]);
 }

@@ -65,7 +65,7 @@ class Colony {
     Colony(const Colony&) = delete;
     Colony& operator=(const Colony&) = delete;
     void FindingShortestPath();
-    TsmResult get_result_() { return result_;}
+    TsmResult get_result_() const { return result_;}
 
     private:
     // добавление нового муравья в колонию

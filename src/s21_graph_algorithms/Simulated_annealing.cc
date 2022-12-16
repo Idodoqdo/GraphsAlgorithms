@@ -1,4 +1,6 @@
 #include "s21_graph_algorithms.h"
+#include <algorithm>
+#include <cmath>
 namespace s21 {
 
 TsmResult GraphAlgorithms::SimulatedAnnealint(const Graph &graph) {
@@ -9,15 +11,48 @@ TsmResult GraphAlgorithms::SimulatedAnnealint(const Graph &graph) {
 }
 
 void SimulatedAnnealing::FindSolution() {
-    RouteGeneration(); 
+    RouteGeneration();
+    FindShortestPath();
+}
+
+void SimulatedAnnealing::MakeNewDecision(std::vector<size_t> const &new_path, double const &new_distance) {
+    result_.distance = new_distance;
+    result_.vertices = new_path;
 }
 
 void SimulatedAnnealing::FindShortestPath() {
-    
+    double alfa = 0.5;
+    double temperature = 100;
+    for (size_t i = 0; i < 30; ++i, temperature *= alfa) {
+    std::vector<size_t> new_path = result_.vertices;
+    ChangeTwoPoints(new_path);
+    double new_distance = DistanceCalculation(new_path);
+    double delta = new_distance - result_.distance;
+    if (delta < 0) {
+        result_.distance = new_distance;
+        result_.vertices = new_path;
+    } else {
+        double P = 100 * std::pow(std::exp(1.0), -delta / temperature);
+        if (P > rand_.GenerateRandomDouble(1, 100)) {
+            
+        }
+    }
+    }
 }
 
-void SimulatedAnnealing::ChangeTwoPoints() {
-    
+
+double SimulatedAnnealing::DistanceCalculation(std::vector<size_t> const &vec) const {
+    double result = 0;
+    for (size_t i = 0; i < vec.size() - 1; ++i) {
+        result += graph_(vec[i], vec[i+1]);
+    }
+    return result;
+}
+
+void SimulatedAnnealing::ChangeTwoPoints(std::vector<size_t> & new_path) {
+    size_t first_index = static_cast<size_t>(rand_.GenerateRandomInt(0, static_cast<int>(result_.vertices.size() - 1)));
+    size_t second_index = static_cast<size_t>(rand_.GenerateRandomInt(0, static_cast<int>(result_.vertices.size() - 1)));
+    std::swap(new_path[first_index], new_path[second_index]);
 }
 
 void SimulatedAnnealing::FillingWhereCanGo(std::vector<size_t> & where_can_go, const std::set<size_t> & available) {
