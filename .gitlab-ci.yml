@@ -16,7 +16,6 @@ cmake:
   stage: configure
   script:
     - cmake -B build -S src -DCMAKE_BUILD_TYPE=Debug
-    - export WORKING_DIR=$(pwd)
 
 build_graph:
   stage: compile
@@ -74,6 +73,8 @@ style_check:
 
 graph_coverage:
   stage: coverage
+  before_script:
+      - export WORKING_DIR=$(pwd)
   script:
     - make -C build graph_tests_coverage
     - ls build/s21_graph/tests
