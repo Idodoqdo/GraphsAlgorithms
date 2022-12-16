@@ -76,11 +76,11 @@ graph_coverage:
     - echo "$CI_PROJECT_PATH"
     - echo "$CI_BUILDS_DIR"
     - ls build/s21_graph/tests/graph_tests_coverage
-    - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf "$CI_BUILDS_DIR/graph_tests_coverage.tar.gz" .
+    - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf tmp/graph_tests_coverage.tar.gz .
   resource_group: graph
   artifacts:
     paths:
-      - "$CI_BUILDS_DIR/graph_tests_coverage.tar.gz"
+      - build/s21_graph/tests/graph_tests_coverage/tmp/graph_tests_coverage.tar.gz
 
 graph_algorithms_coverage:
   stage: coverage
