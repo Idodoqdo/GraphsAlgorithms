@@ -104,7 +104,7 @@ endif()
 #############################################################
 
 if (GTEST_FOUND)
-    if (CODE_COVERAGE MATCHES ON)
+    if (ENABLE_CODE_COVERAGE MATCHES ON)
         setup_target_for_coverage(containers_coverage containers_tests containers_coverage)
         set_property(
             TARGET containers_coverage

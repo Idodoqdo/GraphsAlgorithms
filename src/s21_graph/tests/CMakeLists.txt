@@ -54,7 +54,7 @@ endif()
 #############################################################
 
 if (GTEST_FOUND)
-  if (CODE_COVERAGE MATCHES ON)
+  if (ENABLE_CODE_COVERAGE MATCHES ON)
       setup_target_for_coverage(${PROJECT_NAME}_coverage ${PROJECT_NAME} ${PROJECT_NAME}_coverage)
       set_property(
           TARGET ${PROJECT_NAME}_coverage
