@@ -16,29 +16,29 @@ void SimulatedAnnealing::FindSolution() {
 }
 
 void SimulatedAnnealing::FindShortestPath() {
-    double alfa = 0.3;
+    double alpha = 0.3;
     double temperature = 100;
-    for (size_t i = 0; i < 100; ++i, temperature *= alfa) {
-    TsmResult new_result = result_;
-    ChangeTwoPoints(new_result.vertices);
-    new_result.distance = DistanceCalculation(new_result.vertices);
-    double delta = new_result.distance - result_.distance;
-    if (delta < 0) {
-        result_ = new_result;
-    } else {
-        double P = 100 * std::pow(std::exp(1.0), -delta / temperature);
-        if (P > rand_.GenerateRandomDouble(1, 100) && new_result.distance < std::numeric_limits<double>::infinity()) {
+    for (size_t i = 0; i < 100; ++i, temperature *= alpha) {
+        TsmResult new_result = result_;
+        ChangeTwoPoints(new_result.vertices);
+        new_result.distance = DistanceCalculation(new_result.vertices);
+        if (new_result.distance < std::numeric_limits<double>::infinity()) continue;
+        double delta = new_result.distance - result_.distance;
+        if (delta < 0) {
             result_ = new_result;
+        } else {
+            double P = 100 * std::pow(std::exp(1.0), -delta / temperature);
+            if (P > rand_.GenerateRandomDouble(1, 100)) {
+                result_ = new_result;
+            }
         }
     }
-    }
 }
-
 
 double SimulatedAnnealing::DistanceCalculation(std::vector<size_t> const &vec) const {
     double result = 0;
     for (size_t i = 0; i < vec.size() - 1; ++i) {
-        if (graph_(vec[i], vec[i+1]) > 0) result += graph_(vec[i], vec[i+1]); // будет ли ориентированный граф?
+        if (graph_(vec[i], vec[i+1]) > 0) result += graph_(vec[i], vec[i+1]);
         else result += std::numeric_limits<double>::infinity();
     }
     return result;
