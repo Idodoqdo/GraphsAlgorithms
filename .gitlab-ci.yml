@@ -29,22 +29,26 @@ build_graph:
 
 build_graph_algorithms:
   stage: compile
+  needs: ["build_graph"]
   script:
     - make -C build s21_graph_algorithms.a
 
 build_menu:
   stage: compile
   allow_failure: true
+  needs: ["build_graph", "build_graph_algorithms"]
   script:
     - make -C build menu
 
 build_graph_tests:
   stage: compile
+  needs: ["build_graph"]
   script:
     - make -C build graph_tests
 
 build_graph_algorithms_tests:
   stage: compile
+  needs: ["build_graph_algorithms"]
   script:
     - make -C build graph_algorithms_tests
 
