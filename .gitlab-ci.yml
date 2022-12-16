@@ -78,7 +78,7 @@ graph_coverage:
   resource_group: graph
   artifacts:
     paths:
-      - $WORKING_DIR/graph_tests_coverage.tar.gz
+      - build/graph_tests_coverage.tar.gz
 
 graph_algorithms_coverage:
   stage: coverage
@@ -86,11 +86,8 @@ graph_algorithms_coverage:
     - export WORKING_DIR=$(pwd)/build
   script:
     - make -C build graph_algorithms_tests_coverage
-    - ls $WORKING_DIR
-    - ls build/s21_graph_algorithms/tests/graph_algorithms_tests
-    - ls build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage
     - cd build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage && tar -cjf $WORKING_DIR/graph_algorithms_tests_coverage.tar.gz .
   resource_group: algorithms
   artifacts:
     paths:
-      - $WORKING_DIR/graph_algorithms_tests_coverage.tar.gz
+      - build/graph_algorithms_tests_coverage.tar.gz
