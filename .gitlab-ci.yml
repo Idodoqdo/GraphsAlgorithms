@@ -9,10 +9,14 @@ default:
     paths:
       - build/
 
+variables:
+  WORKING_DIR: None
+
 cmake:
   stage: configure
   script:
     - cmake -B build -S src -DCMAKE_BUILD_TYPE=Debug
+    - export WORKING_DIR=$(pwd)
 
 build_graph:
   stage: compile
@@ -73,8 +77,8 @@ graph_coverage:
   script:
     - make -C build graph_tests_coverage
     - ls build/s21_graph/tests
-    - echo "$CI_PROJECT_PATH"
-    - echo "$CI_BUILDS_DIR"
+    - echo "$WORKING_DIR"
+    - echo "$$WORKING_DIR"
     - ls build/s21_graph/tests/graph_tests_coverage
     - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf tmp/graph_tests_coverage.tar.gz .
   resource_group: graph
