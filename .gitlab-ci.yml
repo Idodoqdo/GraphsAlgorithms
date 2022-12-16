@@ -6,7 +6,7 @@ stages:
 
 default:
   cache:
-    key: $CI_COMMIT_REF_NAME
+    key: $CI_COMMIT_SHORT_SHA
     paths:
       - build/
 
@@ -14,6 +14,11 @@ cmake:
   stage: configure
   script:
     - cmake -B build -S src -DCMAKE_BUILD_TYPE=Debug
+
+googletest:
+  stage: configure
+  script:
+    - make -C build gtest
 
 build_graph:
   stage: compile
