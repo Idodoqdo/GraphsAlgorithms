@@ -9,9 +9,6 @@ default:
     paths:
       - build/
 
-variables:
-  WORKING_DIR: None
-
 cmake:
   stage: configure
   script:
@@ -74,10 +71,11 @@ style_check:
 graph_coverage:
   stage: coverage
   before_script:
-      - export WORKING_DIR=$(pwd)
+      - export WORKING_DIR=$(pwd)$CI_BUILDS_DIR
   script:
     - make -C build graph_tests_coverage
     - ls build/s21_graph/tests
+    - echo $WORKING_DIR
     - echo "$WORKING_DIR"
     - echo "$$WORKING_DIR"
     - ls build/s21_graph/tests/graph_tests_coverage
@@ -92,6 +90,7 @@ graph_algorithms_coverage:
   script:
     - make -C build graph_algorithms_tests_coverage
     - ls build/s21_graph_algorithms/tests
+    - ls build/s21_graph_algorithms/tests/graph_algorithms_tests
     - ls build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage
     - cd build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage && tar -cjf "$CI_BUILDS_DIR/graph_algorithms_tests_coverage.tar.gz" .
   resource_group: algorithms
