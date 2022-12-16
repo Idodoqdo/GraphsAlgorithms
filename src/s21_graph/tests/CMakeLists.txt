@@ -43,7 +43,7 @@ if (GTEST_FOUND)
         APPEND
         PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_CURRENT_BINARY_DIR}/Temporary ${CMAKE_CURRENT_BINARY_DIR}/Testing ${CMAKE_BINARY_DIR}/TAG ${CMAKE_CURRENT_BINARY_DIR}/coverage ${TEST_CLEAN_FILES}
     )
-    add_test(NAME ${PROJECT_NAME})
+    add_test(${PROJECT_NAME} ${PROJECT_NAME})
 endif()
 
 #############################################################
