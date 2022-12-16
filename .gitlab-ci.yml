@@ -73,9 +73,9 @@ graph_coverage:
   variables:
     PWD: 'pwd'
   script:
+    - make -C build graph_tests_coverage
     - ls
     - ls "$PWD"
-    - make -C build graph_tests_coverage
     - cd build/s21_graph/tests/graph_tests/graph_tests_coverage && tar -cjf "$PWD/graph_tests_coverage.tar.gz" .
   resource_group: graph
   artifacts:
@@ -87,9 +87,9 @@ graph_algorithms_coverage:
   variables:
     PWD: 'pwd'
   script:
+    - make -C build graph_algorithms_tests_coverage
     - ls
     - ls "$PWD"
-    - make -C build graph_algorithms_tests_coverage
     - cd build/s21_graph_algorithms/tests/graph_algorithms_tests/graph_algorithms_tests_coverage && tar -cjf "$PWD/graph_algorithms_tests_coverage.tar.gz" .
   resource_group: algorithms
   artifacts:
