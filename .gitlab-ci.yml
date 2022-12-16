@@ -17,6 +17,7 @@ cmake:
 
 googletest:
   stage: configure
+  needs: ["cmake"]
   script:
     - make -C build gtest
 
