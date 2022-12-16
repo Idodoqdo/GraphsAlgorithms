@@ -4,7 +4,6 @@
 namespace s21 {
 
 TsmResult GraphAlgorithms::SimulatedAnnealint(const Graph &graph) {
-        
     SimulatedAnnealing result(graph);
     result.FindSolution();
     return result.get_result_();
