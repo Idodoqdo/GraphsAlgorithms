@@ -66,7 +66,6 @@ IF(NOT GENHTML_PATH)
 	set(ENABLE_CODE_COVERAGE OFF)
 	MESSAGE(WARNING "genhtml not found")
 ENDIF() # NOT GENHTML_PATH
-MESSAGE("${ENABLE_CODE_COVERAGE} IN MODULE")
 IF (ENABLE_CODE_COVERAGE MATCHES OFF)
 	MESSAGE(WARNING "Missing requirements for code coverage targets. Continuing without coverage...")
 ELSE()
