@@ -37,6 +37,7 @@ if(ENABLE_CODE_ANALYSIS)
                 "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt"
         )
     else()
+        set(CMAKE_CXX_CPPCHECK "")
         MESSAGE(WARNING "CppCheck not found. Continuing without code analysis...")
     endif()
 endif(ENABLE_CODE_ANALYSIS)
