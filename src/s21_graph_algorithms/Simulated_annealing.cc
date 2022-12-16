@@ -16,9 +16,9 @@ void SimulatedAnnealing::FindSolution() {
 }
 
 void SimulatedAnnealing::FindShortestPath() {
-    double alfa = 0.5;
+    double alfa = 0.3;
     double temperature = 100;
-    for (size_t i = 0; i < 30; ++i, temperature *= alfa) {
+    for (size_t i = 0; i < 100; ++i, temperature *= alfa) {
     TsmResult new_result = result_;
     ChangeTwoPoints(new_result.vertices);
     new_result.distance = DistanceCalculation(new_result.vertices);
