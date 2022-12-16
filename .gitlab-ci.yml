@@ -4,10 +4,10 @@ stages:
   - test
   - coverage
 
-default:
-  cache:
-    paths:
-      - build/
+# default:
+#   cache:
+#     paths:
+#       - build/
 
 cmake:
   stage: configure
