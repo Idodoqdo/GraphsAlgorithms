@@ -76,7 +76,7 @@ if (GTEST_FOUND)
         APPEND
         PROPERTY ADDITIONAL_CLEAN_FILES Temporary Testing TAG coverage ${TEST_CLEAN_FILES}
     )
-    add_test(UNIT_TESTS containers_tests)
+    add_test(NAME ${PROJECT_NAME})
 endif()
 
 #############################################################
