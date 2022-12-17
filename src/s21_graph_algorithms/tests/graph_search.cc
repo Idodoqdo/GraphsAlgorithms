@@ -1,4 +1,4 @@
-// Copgraph_search_depthyright <lwolmer, lshiela, jgerrick> 2022
+// Copyright <lwolmer, lshiela, jgerrick> 2022
 #include <gtest/gtest.h>
 #include "s21_graph_algorithms.h"
 
@@ -16,8 +16,6 @@ TEST(graph_search_depth, fork) {
     EXPECT_EQ(depth_path[i], path[i]);
   }
 }
-
-
 
 TEST(graph_search_depth, geeks_example) {
   double graph_raw[] = {0, 1, 1, 1, 1,
