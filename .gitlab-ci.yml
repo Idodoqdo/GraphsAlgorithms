@@ -60,6 +60,9 @@ run_tests:
   stage: test
   script:
     - make -C build test
+  artifacts:
+    paths:
+      - build/Testing/Temporary/LastTest.log
 
 graph_memcheck:
   stage: test
