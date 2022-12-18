@@ -1,0 +1,93 @@
+stages:
+  - configure
+  - compile
+  - test
+  - coverage
+
+default:
+  cache:
+    paths:
+      - build/
+
+cmake:
+  stage: configure
+  script:
+    - cmake -B build -S src -DCMAKE_BUILD_TYPE=Debug
+
+build_graph:
+  stage: compile
+  script:
+    - ls
+    - make -C build s21_graph.a
+
+build_graph_algorithms:
+  stage: compile
+  script:
+    - make -C build s21_graph_algorithms.a
+
+build_menu:
+  stage: compile
+  allow_failure: true
+  script:
+    - make -C build menu
+
+build_graph_tests:
+  stage: compile
+  script:
+    - make -C build graph_tests
+
+build_graph_algorithms_tests:
+  stage: compile
+  script:
+    - make -C build graph_algorithms_tests
+
+build_container_tests:
+  stage: compile
+  script:
+    - make -C build containers_tests
+
+# run tests using the binary built before
+run_tests:
+  stage: test
+  script:
+    - make -C build test
+
+graph_memcheck:
+  stage: test
+  script:
+    - make -C build graph_tests_memcheck
+
+graph_algorithms_memcheck:
+  stage: test
+  script:
+    - make -C build graph_algorithms_tests_memcheck
+
+style_check:
+  stage: test
+  allow_failure: true
+  script:
+    - make -C build stylecheck
+
+graph_coverage:
+  stage: coverage
+  before_script:
+      - export WORKING_DIR=$(pwd)/build
+  script:
+    - make -C build graph_tests_coverage
+    - cd build/s21_graph/tests/graph_tests_coverage && tar -cjf $WORKING_DIR/graph_tests_coverage.tar.gz .
+  resource_group: graph
+  artifacts:
+    paths:
+      - build/graph_tests_coverage.tar.gz
+
+graph_algorithms_coverage:
+  stage: coverage
+  before_script:
+    - export WORKING_DIR=$(pwd)/build
+  script:
+    - make -C build graph_algorithms_tests_coverage
+    - cd build/s21_graph_algorithms/tests/graph_algorithms_tests_coverage && tar -cjf $WORKING_DIR/graph_algorithms_tests_coverage.tar.gz .
+  resource_group: algorithms
+  artifacts:
+    paths:
+      - build/graph_algorithms_tests_coverage.tar.gz

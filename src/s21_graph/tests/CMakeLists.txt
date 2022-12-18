@@ -43,7 +43,7 @@ if (GTEST_FOUND)
     set_property(
         TARGET ${PROJECT_NAME}
         APPEND
-        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_CURRENT_SOURCE_DIR}/test_crisscross.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_cycled.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_fork.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_intersect.dot ${CMAKE_CURRENT_SOURCE_DIR}/test_no_connection.dot ${CMAKE_CURRENT_SOURCE_DIR}/test.dot ${CMAKE_BINARY_DIR}/Temporary ${CMAKE_BINARY_DIR}/Testing ${CMAKE_BINARY_DIR}/TAG ${CMAKE_CURRENT_BINARY_DIR}/coverage ${TEST_CLEAN_FILES}
+        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_CURRENT_BINARY_DIR}/Temporary ${CMAKE_CURRENT_BINARY_DIR}/Testing ${CMAKE_BINARY_DIR}/TAG ${CMAKE_CURRENT_BINARY_DIR}/coverage ${TEST_CLEAN_FILES}
     )
     add_test(UNIT_TESTS ${PROJECT_NAME})
 endif()
@@ -73,15 +73,8 @@ endif()
 #                                                           #
 #############################################################
 if (GTEST_FOUND)
-        add_custom_target(${PROJECT_NAME}_memcheck
-            COMMAND CK_FORK=no leaks --atExit --  ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-            WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
-        add_dependencies(${PROJECT_NAME}_memcheck ${PROJECT_NAME})
-
-    # Proper way but there are still reachable blocks
-    # add_custom_target(memcheck
-    #     COMMAND ${CMAKE_CTEST_COMMAND}
-    #         --force-new-ctest-process --test-action memcheck
-    #     COMMAND cat "${CMAKE_BINARY_DIR}/Testing/Temporary/MemoryChecker.*.log"
-    #     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+    add_custom_target(${PROJECT_NAME}_memcheck
+        COMMAND ${CMAKE_CTEST_COMMAND}
+        --test-action memcheck
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 endif()

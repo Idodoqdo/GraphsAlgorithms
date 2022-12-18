@@ -17,7 +17,7 @@ class list : public Container<T> {
     node() : value_(), next(nullptr), prev(nullptr) {}
     explicit node(const T& val) : value_(val), next(nullptr), prev(nullptr) {}
   };
-  class List_Iterator : public std::iterator<std::input_iterator_tag, T> {
+  class List_Iterator {
    public:
     node* target_;
 

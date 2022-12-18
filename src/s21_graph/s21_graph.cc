@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <regex>
+#include <limits>
 
 namespace s21 {
 Graph::Graph(const std::string &filepath) {
