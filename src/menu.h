@@ -1,34 +1,45 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
 #include <iostream>
 #include <iomanip>
-
+#include <functional>
 #include "s21_graph_algorithms.h"
 
 namespace s21 {
 class Menu {
  public:
   void Start();
+  Graph *GetGraph() const { return graph_.get(); };
 
  private:
   enum MenuChoice {
-    kLoadGraphFromFile = 1,
+    Quit = 0,
+    kLoadGraphFromFile,
     kBreadthFirstSearch,
     kDepthFirstSearch,
     kShortestPathBetweenTwoVertices,
     kShortestPathsBetweenAllVertices,
     kLeastSpanningTree,
     kSolveTravelingSalesmanProblem,
-    Quit
+    kCompareAlgorithms
   };
 
-  std::size_t GetVariant(std::size_t capacity);
+  enum class TSMSolutionType {
+    Ant,
+    Annealing
+  };
+
+  int GetVariant(int min, int max);
+  std::unique_ptr<Graph> graph_;
+  GraphAlgorithms graph_algrthm_;
   void PrintMenu();
-  void LoadGraphFromFile(Graph &graph);
+  void LoadGraphFromFile();
   void BreadthFirstSearch();
   void DepthFirstSearch();
-  void ShortestPathBetweenTwoVertices(Graph &graph, GraphAlgorithms &alg);
-  void ShortestPathsBetweenAllVertices(Graph &graph, GraphAlgorithms &alg);
-  void LeastSpanningTree(Graph &graph, GraphAlgorithms &alg);
-  void SolveTravelingSalesmanProblem();
+  void ShortestPathBetweenTwoVertices();
+  void ShortestPathsBetweenAllVertices();
+  void LeastSpanningTree();
+  void SolveTravelingSalesmanProblem(TSMSolutionType al_type,bool show_result = true);
+  void MeasureTSMAlgorithmTime(std::function<void(TSMSolutionType, bool)> func, TSMSolutionType type, std::size_t n);
+  void CompareAlgorithms();
 };
 }  // namespace s21

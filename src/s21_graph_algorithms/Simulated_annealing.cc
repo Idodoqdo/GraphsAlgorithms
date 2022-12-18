@@ -15,7 +15,7 @@ void SimulatedAnnealing::FindSolution() {
 }
 
 void SimulatedAnnealing::FindShortestPath() {
-    double alpha = 0.3;
+    double alpha = 0.9;
     double temperature = 100;
     for (size_t i = 0; i < 100; ++i, temperature *= alpha) {
         TsmResult new_result = result_;
