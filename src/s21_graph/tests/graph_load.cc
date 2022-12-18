@@ -66,9 +66,6 @@ TEST(graph, constructor_from_file_fail_2) {
 
 TEST(graph, constructor_from_file_fail_3) {
   EXPECT_ANY_THROW(s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR"/graph_raw_file_broken3"));
-  double *dbl = new double;
-  EXPECT_EQ(*dbl, 0.0);
-  // ACHTUNG !!! IF YOU SEE THIS I FORGOR TELL ME TO DELETE
 }
 
 TEST(graph, constructor_from_file_fail_4) {
