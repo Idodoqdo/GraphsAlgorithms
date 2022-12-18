@@ -61,6 +61,7 @@ run_tests:
   script:
     - make -C build test
   artifacts:
+    when: on_failure
     paths:
       - build/Testing/Temporary/LastTest.log
 
