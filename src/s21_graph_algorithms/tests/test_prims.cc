@@ -1,3 +1,4 @@
+// Copyright <lwolmer, lshiela, jgerrick> 2022
 #include <gtest/gtest.h>
 
 #include "s21_graph_algorithms.h"
