@@ -1,9 +1,10 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
 #ifndef SRC_S21_GRAPH_ALGORITHMS_H_
 #define SRC_S21_GRAPH_ALGORITHMS_H_
-
+#include <vector>
+#include "RandGenerator.h"
 #include "TravelingSalesmanProblem.h"
-
+#include "Simulated_annealing.h"
 #include "s21_graph.h"
 namespace s21 {
 class GraphAlgorithms {
@@ -28,7 +29,9 @@ class GraphAlgorithms {
       @return std::vector<std::size_t> 
   */
   std::vector<std::size_t> BreadthFirstSearch(Graph &graph, int startVertex);
+  TsmResult SimulatedAnnealint(const Graph &graph);
 };
+
 }  // namespace s21
 
 #endif  // SRC_S21_GRAPH_ALGORITHMS_H_

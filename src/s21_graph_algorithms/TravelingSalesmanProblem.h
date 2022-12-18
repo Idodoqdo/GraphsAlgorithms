@@ -2,7 +2,6 @@
 #define SRC_TRAVELING_SALESMAN_PROBLEM_H_
 
 #include "s21_graph.h"
-#include <random>
 #include <memory>
 #include <set>
 namespace s21 {
@@ -15,7 +14,7 @@ double distance;
 class Ant {
     public:
     Ant(const Graph &graph_distance, std::unique_ptr<Graph> &graph_pheromones, std::size_t &index_start) : graph_distance_(graph_distance), 
-    graph_pheromones_(graph_pheromones), gen_(rd_()), distrib_(0, 1) {
+    graph_pheromones_(graph_pheromones) {
         run_result_.vertices.push_back(index_start);
         FillAvailablePlaces();
     };
@@ -45,15 +44,13 @@ class Ant {
     // заполнение индексов мест, куда можно пойти
     void FillAvailablePlaces();
     // для генерации случайного числа
-    std::random_device rd_;
-    std::mt19937 gen_;
-    std::uniform_real_distribution<double> distrib_;
+    RandomNumberGenerator rand_;
     // путь и размер дистацнии
     TsmResult run_result_{};
     // коэфы для рассчетов 
-    const double kAlpha = 1;
-    const double kBeta = 1;
-    const double kQ = 1;
+    static constexpr double kAlpha = 1;
+    static constexpr double kBeta = 1;
+    static constexpr double kQ = 1;
 };
 
 class Colony {
@@ -68,7 +65,7 @@ class Colony {
     Colony(const Colony&) = delete;
     Colony& operator=(const Colony&) = delete;
     void FindingShortestPath();
-    TsmResult get_result_() { return result_;}
+    TsmResult get_result_() const { return result_;}
 
     private:
     // добавление нового муравья в колонию

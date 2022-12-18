@@ -77,14 +77,14 @@ void Ant::Reset(std::size_t &position) {
 }
 
 void Ant::Transition(std::vector<double> & transition_probabilities_vec, std::vector<std::size_t> & where_can_go) {
-    double random_choice = distrib_(gen_);
+    double random_choice = rand_.GenerateRandomDouble(0, 1);
     double choise_probability = 0;
     for (std::size_t i = 0; i < transition_probabilities_vec.size(); ++i) {
         choise_probability += transition_probabilities_vec[i]; 
         if (random_choice <= choise_probability) {
-            run_result_.distance += graph_distance_(run_result_.vertices.back(), static_cast<std::size_t>(where_can_go[i]));
-            run_result_.vertices.push_back(static_cast<std::size_t>(where_can_go[i]));
-            available_places_.erase(available_places_.find(static_cast<std::size_t>(where_can_go[i])));
+            run_result_.distance += graph_distance_(run_result_.vertices.back(), where_can_go[i]);
+            run_result_.vertices.push_back(where_can_go[i]);
+            available_places_.erase(available_places_.find(where_can_go[i]));
             break;
         }
     }
