@@ -69,3 +69,48 @@ TEST(graph_algorithms, brute_force_2) {
   EXPECT_LE(result.distance, 300);
 }
 
+TEST(graph_algorithms, simulated_annealing_3) {
+    s21::TsmResult result{};
+  double matrix [] = {
+    0, 10, 0, 7, 0,
+    10, 0, 15, 0, 0,
+    0, 15, 0, 0, 3,
+    7, 0, 0, 0, 8,
+    0, 0, 3, 8, 0 
+  };
+  s21::Graph graph(matrix, 5);
+  s21::GraphAlgorithms testAlg;
+  result = testAlg.SimulatedAnnealint(graph);
+  EXPECT_EQ(result.distance, 43);
+}
+
+TEST(graph_algorithms, Ant3) {
+  s21::TsmResult result{};
+  double matrix [] = {
+    0, 10, 0, 7, 0,
+    10, 0, 15, 0, 0,
+    0, 15, 0, 0, 3,
+    7, 0, 0, 0, 8,
+    0, 0, 3, 8, 0 
+  };
+  s21::Graph graph(matrix, 5);
+  s21::GraphAlgorithms testAlg;
+  result = testAlg.solveTravelingSalesmanProblem(graph);
+  EXPECT_EQ(result.distance, 43);
+}
+
+TEST(graph_algorithms, brute_force_3) {
+  s21::TsmResult result{};
+  double matrix [] = {
+    0, 10, 0, 7, 0,
+    10, 0, 15, 0, 0,
+    0, 15, 0, 0, 3,
+    7, 0, 0, 0, 8,
+    0, 0, 3, 8, 0 
+  };
+  s21::Graph graph(matrix, 5);
+  s21::GraphAlgorithms testAlg;
+  result = testAlg.BruteForceAlg(graph);
+  EXPECT_EQ(result.distance, 43);
+}
+
