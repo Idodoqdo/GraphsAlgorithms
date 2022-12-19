@@ -21,7 +21,7 @@ void SimulatedAnnealing::FindShortestPath() {
         TsmResult new_result = result_;
         ChangeTwoPoints(new_result.vertices);
         new_result.distance = DistanceCalculation(new_result.vertices);
-        if (new_result.distance < std::numeric_limits<double>::infinity()) continue;
+        if (new_result.distance >= std::numeric_limits<double>::infinity()) continue;
         double delta = new_result.distance - result_.distance;
         if (delta < 0) {
             result_ = new_result;
