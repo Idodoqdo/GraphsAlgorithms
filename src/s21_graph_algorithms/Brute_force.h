@@ -13,7 +13,7 @@ class BruteForce {
     for (std::size_t i = 1; i < graph_.Size(); ++i) {
       result_.vertices.push_back(i);
     }
-    result_.distance = INT_MAX;
+    result_.distance = std::numeric_limits<double>::max();
     while (std::next_permutation(result_.vertices.begin(), result_.vertices.end())) {
       std::size_t j = source;
       double temp_path = 0;
@@ -22,7 +22,7 @@ class BruteForce {
         temp_path += graph_(j, result_.vertices[i]);
         j = result_.vertices[i];
         } else {
-          temp_path += INT_MAX;
+          temp_path = std::numeric_limits<double>::max();
           break;
         }
       }
