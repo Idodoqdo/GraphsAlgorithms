@@ -1,14 +1,12 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
 #include "menu.h"
 #include <chrono>
-#include <containers>
-
+#include <iterator>
 namespace {
 template<typename Iterator>
-typename std::iterator_traits<Iterator>::reference
 void SeparatedContainerPrint(Iterator begin, Iterator end, std::string separator) {
   if (begin != end) {
-    auto last = --end();
+    auto last = --end;
     for (auto i = begin; i != end; --i) {
       std::cout << *i;
       if (i != last)
@@ -137,9 +135,8 @@ void Menu::DepthFirstSearch() {
   std::cout << "Input starting index: " << std::endl;
   int n = GetVariant(1, static_cast<int>(graph->Size()));
   auto depth_path = graph_algrthm_.DepthFirstSearch(*graph, n);
-  std::size_t size = depth_path.size();
   std::cout << "Path: ";
-  SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(), "->");
+  SeparatedContainerPrint(depth_path.begin(), depth_path.end(), "->");
   std::cout << std::endl;
 }
 
