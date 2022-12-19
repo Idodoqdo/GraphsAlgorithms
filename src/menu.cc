@@ -154,6 +154,9 @@ void Menu::CompareAlgorithms() {
   std::cout << std::left << std::setw(25) << "Annealing algorithm: ";
   auto ann_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this, std::placeholders::_1, std::placeholders::_2);
   MeasureTSMAlgorithmTime(ann_fp, TSMSolutionType::Annealing, static_cast<std::size_t>(n));
+  std::cout << std::left << std::setw(25) << "Brute force algorithm: ";
+  auto brute_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this, std::placeholders::_1, std::placeholders::_2);
+  MeasureTSMAlgorithmTime(brute_fp, TSMSolutionType::Brute, static_cast<std::size_t>(n));
 }
 
 void Menu::MeasureTSMAlgorithmTime(std::function<void(TSMSolutionType, bool)> func, TSMSolutionType type, std::size_t n) {
