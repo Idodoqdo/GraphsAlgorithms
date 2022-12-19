@@ -18,8 +18,13 @@ class BruteForce {
       std::size_t j = source;
       double temp_path = 0;
       for (std::size_t i = 0; i < result_.vertices.size(); ++i) {
+        if (graph_(j, result_.vertices[i]) > 0) {
         temp_path += graph_(j, result_.vertices[i]);
         j = result_.vertices[i];
+        } else {
+          temp_path += INT_MAX;
+          break;
+        }
       }
       temp_path += graph_(j, source);
       result_.distance = std::min(result_.distance, temp_path);

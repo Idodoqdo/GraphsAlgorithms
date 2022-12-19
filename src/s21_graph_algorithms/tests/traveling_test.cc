@@ -61,3 +61,11 @@ TEST(graph_algorithms, brute_force) {
   EXPECT_EQ(result.distance, 80);
 }
 
+TEST(graph_algorithms, brute_force_2) {
+  s21::TsmResult result{};
+  s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR"/graph_raw_file");
+  s21::GraphAlgorithms testAlg;
+  result = testAlg.BruteForceAlg(graph);
+  EXPECT_LE(result.distance, 300);
+}
+
