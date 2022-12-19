@@ -25,7 +25,8 @@ class Menu {
 
   enum class TSMSolutionType {
     Ant,
-    Annealing
+    Annealing,
+    Brute
   };
 
   int GetVariant(int min, int max);

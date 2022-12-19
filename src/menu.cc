@@ -1,6 +1,22 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
 #include "menu.h"
 #include <chrono>
+#include <containers>
+
+namespace {
+template<typename Iterator>
+typename std::iterator_traits<Iterator>::reference
+void SeparatedContainerPrint(Iterator begin, Iterator end, std::string separator) {
+  if (begin != end) {
+    auto last = --end();
+    for (auto i = begin; i != end; --i) {
+      std::cout << *i;
+      if (i != last)
+        std::cout << separator;
+    }
+  }
+}
+}
 
 namespace s21 {
 void Menu::Start() {
@@ -28,7 +44,7 @@ void Menu::Start() {
         this->LeastSpanningTree();
         break;
       case kSolveTravelingSalesmanProblem:
-        this->SolveTravelingSalesmanProblem(TSMSolutionType::Annealing);
+        this->SolveTravelingSalesmanProblem(TSMSolutionType::Ant);
         break;
       case kCompareAlgorithms:
         this->CompareAlgorithms();
@@ -64,7 +80,7 @@ void Menu::PrintMenu() {
   std::cout << "7: solving the salesman problem with the output of the "
                "resulting route and its length to the console."
             << std::endl;
-  std::cout << "8: Compare ant algorithm, with the others."
+  std::cout << "8: Compare ant algorithm, with the annealing and brute force algorithms."
           << std::endl;
   std::cout << "0: Quit" << std::endl;
   std::cout << ">";
@@ -123,11 +139,7 @@ void Menu::DepthFirstSearch() {
   auto depth_path = graph_algrthm_.DepthFirstSearch(*graph, n);
   std::size_t size = depth_path.size();
   std::cout << "Path: ";
-  for (std::size_t i = 0; i < size; i++) {
-    std::cout << depth_path[i];
-    if (i != size - 1)
-      std::cout << "->";
-  }
+  SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(), "->");
   std::cout << std::endl;
 }
 
@@ -216,19 +228,18 @@ void Menu::SolveTravelingSalesmanProblem(TSMSolutionType al_type, bool show_resu
     result = graph_algrthm_.solveTravelingSalesmanProblem(*graph);
   else if (al_type == TSMSolutionType::Annealing)
     result = graph_algrthm_.SimulatedAnnealint(*graph);
+  else if (al_type == TSMSolutionType::Brute)
+    result = graph_algrthm_.BruteForceAlg(*graph);
   if (show_result) {
     if (al_type == TSMSolutionType::Ant)
       std::cout << "Ant algorithm:" << std::endl;
     else if (al_type == TSMSolutionType::Annealing)
       std::cout << "Annealing algorithm:" << std::endl;
+    else if (al_type == TSMSolutionType::Brute)
+      std::cout << "Brute force algorithm:" << std::endl;
     std::cout << "Distance: " << result.distance << std::endl;
     std::cout << "Path: ";
-    std::size_t size = result.vertices.size();
-    for (std::size_t i = 0; i < size; i++) {
-      std::cout <<result.vertices[i];
-      if (i != size - 1)
-        std::cout << "->";
-    }
+    SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(), "->");
     std::cout << std::endl;
   }
 }
