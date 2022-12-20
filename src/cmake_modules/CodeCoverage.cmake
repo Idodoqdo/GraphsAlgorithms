@@ -57,74 +57,78 @@ IF(NOT CMAKE_COMPILER_IS_GNUCXX)
 	ENDIF()
 ENDIF() # NOT CMAKE_COMPILER_IS_GNUCXX
 
-SET(CMAKE_CXX_FLAGS_COVERAGE
-    "-g -O0 --coverage -fprofile-arcs -ftest-coverage"
-    CACHE STRING "Flags used by the C++ compiler during coverage builds."
-    FORCE )
-SET(CMAKE_C_FLAGS_COVERAGE
-    "-g -O0 --coverage -fprofile-arcs -ftest-coverage"
-    CACHE STRING "Flags used by the C compiler during coverage builds."
-    FORCE )
-SET(CMAKE_EXE_LINKER_FLAGS_COVERAGE
-    ""
-    CACHE STRING "Flags used for linking binaries during coverage builds."
-    FORCE )
-SET(CMAKE_SHARED_LINKER_FLAGS_COVERAGE
-    ""
-    CACHE STRING "Flags used by the shared libraries linker during coverage builds."
-    FORCE )
-MARK_AS_ADVANCED(
-    CMAKE_CXX_FLAGS_COVERAGE
-    CMAKE_C_FLAGS_COVERAGE
-    CMAKE_EXE_LINKER_FLAGS_COVERAGE
-    CMAKE_SHARED_LINKER_FLAGS_COVERAGE )
+IF(NOT LCOV_PATH)
+	set(ENABLE_CODE_COVERAGE OFF)
+	MESSAGE(WARNING "lcov not found")
+ENDIF() # NOT LCOV_PATH
 
-IF ( NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "Coverage"))
-  MESSAGE( WARNING "Code coverage results with an optimized (non-Debug) build may be misleading" )
-ENDIF() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
+IF(NOT GENHTML_PATH)
+	set(ENABLE_CODE_COVERAGE OFF)
+	MESSAGE(WARNING "genhtml not found")
+ENDIF() # NOT GENHTML_PATH
+IF (ENABLE_CODE_COVERAGE MATCHES OFF)
+	MESSAGE(WARNING "Missing requirements for code coverage targets. Continuing without coverage...")
+ELSE()
+	SET(CMAKE_CXX_FLAGS_COVERAGE
+	"-g -O0 --coverage -fprofile-arcs -ftest-coverage"
+	CACHE STRING "Flags used by the C++ compiler during coverage builds."
+	FORCE )
+	SET(CMAKE_C_FLAGS_COVERAGE
+	"-g -O0 --coverage -fprofile-arcs -ftest-coverage"
+	CACHE STRING "Flags used by the C compiler during coverage builds."
+	FORCE )
+	SET(CMAKE_EXE_LINKER_FLAGS_COVERAGE
+	""
+	CACHE STRING "Flags used for linking binaries during coverage builds."
+	FORCE )
+	SET(CMAKE_SHARED_LINKER_FLAGS_COVERAGE
+	""
+	CACHE STRING "Flags used by the shared libraries linker during coverage builds."
+	FORCE )
+	MARK_AS_ADVANCED(
+	CMAKE_CXX_FLAGS_COVERAGE
+	CMAKE_C_FLAGS_COVERAGE
+	CMAKE_EXE_LINKER_FLAGS_COVERAGE
+	CMAKE_SHARED_LINKER_FLAGS_COVERAGE )
+
+	IF ( NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "Coverage"))
+	MESSAGE( WARNING "Code coverage results with an optimized (non-Debug) build may be misleading" )
+	ENDIF() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
 
 
-# Param _targetname     The name of new the custom make target
-# Param _testrunner     The name of the target which runs the tests.
-#						MUST return ZERO always, even on errors. 
-#						If not, no coverage report will be created!
-# Param _outputname     lcov output is generated as _outputname.info
-#                       HTML report is generated in _outputname/index.html
-# Optional fourth parameter is passed as arguments to _testrunner
-#   Pass them in list form, e.g.: "-j;2" for -j 2
-FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
-
-	IF(NOT LCOV_PATH)
-		MESSAGE(FATAL_ERROR "lcov not found! Aborting...")
-	ENDIF() # NOT LCOV_PATH
-
-	IF(NOT GENHTML_PATH)
-		MESSAGE(FATAL_ERROR "genhtml not found! Aborting...")
-	ENDIF() # NOT GENHTML_PATH
-
+	# Param _targetname     The name of new the custom make target
+	# Param _testrunner     The name of the target which runs the tests.
+	#						MUST return ZERO always, even on errors. 
+	#						If not, no coverage report will be created!
+	# Param _outputname     lcov output is generated as _outputname.info
+	#                       HTML report is generated in _outputname/index.html
+	# Optional fourth parameter is passed as arguments to _testrunner
+	#   Pass them in list form, e.g.: "-j;2" for -j 2
+	FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 	# Setup target
 	ADD_CUSTOM_TARGET(${_targetname}
-		
-		# Cleanup lcov
-		${LCOV_PATH} --directory . --zerocounters
-		
-		# Run tests
-		COMMAND ${_testrunner} ${ARGV3}
-		
-		# Capturing lcov counters and generating report
-		COMMAND ${LCOV_PATH} --directory ${CMAKE_CURRENT_BINARY_DIR} --capture --output-file ${_outputname}.info
-		COMMAND ${LCOV_PATH} --remove ${_outputname}.info --output-file ${_outputname}.info.cleaned 'build/*' '*/boost/*' '*/gtest/*' 'tests/*' '*/tests/*' '/usr/*' '*autogen*'
-		COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
-		COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
-		
-		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-		COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
-	)
-	
-	# Show info where to find the report
-	ADD_CUSTOM_COMMAND(TARGET ${_targetname} POST_BUILD
-		COMMAND ;
-		COMMENT "Open ./${_outputname}/index.html in your browser to view the coverage report."
+
+	# Cleanup lcov
+	${LCOV_PATH} --directory . --zerocounters
+
+	# Run tests
+	COMMAND ${_testrunner} ${ARGV3}
+
+	# Capturing lcov counters and generating report
+	COMMAND ${LCOV_PATH} --directory ${CMAKE_CURRENT_BINARY_DIR} --capture --output-file ${_outputname}.info
+	COMMAND ${LCOV_PATH} --remove ${_outputname}.info --output-file ${_outputname}.info.cleaned 'build/*' '*/boost/*' '*/gtest/*' 'tests/*' '*/tests/*' '/usr/*' '*autogen*'
+	COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
+	COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
+
+	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	COMMENT "Resetting code coverage counters to zero.\nProcessing code coverage counters and generating report."
 	)
 
-ENDFUNCTION() # SETUP_TARGET_FOR_COVERAGE
+	# Show info where to find the report
+	ADD_CUSTOM_COMMAND(TARGET ${_targetname} POST_BUILD
+	COMMAND ;
+	COMMENT "Open ./${_outputname}/index.html in your browser to view the coverage report."
+	)
+
+	ENDFUNCTION() # SETUP_TARGET_FOR_COVERAGE
+ENDIF() # ENABLE_CODE_COVERAGE MATCHES OFF
