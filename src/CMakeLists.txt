@@ -61,7 +61,7 @@ if (NOT GTEST_FOUND)
 endif()
 
 if (GTEST_FOUND)
-    include(CTest)
+    enable_testing()
 endif()
 #############################################################
 #                                                           #

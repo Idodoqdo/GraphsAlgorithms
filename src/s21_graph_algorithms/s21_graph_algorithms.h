@@ -5,6 +5,7 @@
 #include "RandGenerator.h"
 #include "TravelingSalesmanProblem.h"
 #include "Simulated_annealing.h"
+#include "Brute_force.h"
 #include "s21_graph.h"
 namespace s21 {
 class GraphAlgorithms {
@@ -30,6 +31,11 @@ class GraphAlgorithms {
   */
   std::vector<std::size_t> BreadthFirstSearch(Graph &graph, int startVertex);
   TsmResult SimulatedAnnealint(const Graph &graph);
+  TsmResult BruteForceAlg(const Graph & graph) {
+    BruteForce temp(graph);
+    temp.FindResult();
+    return temp.get_result_();
+  };
 };
 
 }  // namespace s21

@@ -1,6 +1,5 @@
 stages:
   - configure
-  - dependencies
   - compile_early
   - compile
   - compile_late
@@ -17,11 +16,6 @@ cmake:
   stage: configure
   script:
     - cmake -B build -S src -DCMAKE_BUILD_TYPE=Debug
-
-googletest:
-  stage: dependencies
-  script:
-    - make -C build gtest
 
 build_graph:
   stage: compile_early
