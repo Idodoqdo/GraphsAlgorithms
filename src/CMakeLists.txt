@@ -7,15 +7,21 @@
 #############################################################
 cmake_minimum_required(VERSION 3.5)
 project(A2_SimpleNavigator)
-option(ENABLE_CODE_ANALYSIS "Run code cppcheck" ON)
+option(ENABLE_CODE_COVERAGE "Add code coverage targets" ON)
+option(ENABLE_CODE_ANALYSIS "Run cppcheck for code" ON)
 # Path to cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake_modules")
 # disable extentions for pure C++
 if(NOT CMAKE_CXX_EXTENSIONS)
     set(CMAKE_CXX_EXTENSIONS OFF)
 endif()
-enable_testing()
 enable_language(CXX)
+if(ENABLE_CODE_COVERAGE)
+    include(CodeCoverage)
+endif()
+if(NOT MEMORYCHECK_COMMAND)
+    MESSAGE(WARNING "Memory testing tool is not found. Memory testing targets won't be added.")
+endif()
 if(ENABLE_CODE_ANALYSIS)
     find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
     if (CMAKE_CXX_CPPCHECK)
@@ -27,6 +33,9 @@ if(ENABLE_CODE_ANALYSIS)
                 "--inline-suppr"
                 "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt"
         )
+    else()
+        set(CMAKE_CXX_CPPCHECK "")
+        MESSAGE(WARNING "CppCheck not found. Continuing without code analysis...")
     endif()
 endif(ENABLE_CODE_ANALYSIS)
 
@@ -35,15 +44,25 @@ endif(ENABLE_CODE_ANALYSIS)
 #                     GTEST COMPILE                         #
 #                                                           #
 #############################################################
-message("-- Added GTest target from source")
-if (NOT TARGET gtest_main)
-    unset(CMAKE_CXX_FLAGS)
-    unset(CMAKE_CXX_FLAGS_DEBUG)
-    set(_flag_sync_required TRUE)
-    add_subdirectory(googletest EXCLUDE_FROM_ALL)
-    set(GTEST_FOUND TRUE)
-endif ()
+find_package(GTest)
+if (NOT GTEST_FOUND)
+    IF (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/googletest)
+        message("-- Adding GTest target from source --")
+        if (NOT TARGET gtest_main)
+            unset(CMAKE_CXX_FLAGS)
+            unset(CMAKE_CXX_FLAGS_DEBUG)
+            set(_flag_sync_required TRUE)
+            add_subdirectory(googletest EXCLUDE_FROM_ALL)
+            set(GTEST_FOUND TRUE)
+        endif ()
+    else()
+        MESSAGE(WARNING "Googletest not found in system and googletest source code is missing from source folder. Tests wont be added.")
+    endif ()
+endif()
 
+if (GTEST_FOUND)
+    include(CTest)
+endif()
 #############################################################
 #                                                           #
 #                     Dependencies                          #
