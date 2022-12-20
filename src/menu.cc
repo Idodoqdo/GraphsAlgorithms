@@ -18,64 +18,67 @@ void SeparatedContainerPrint(Iterator begin, Iterator end, std::string separator
 
 namespace s21 {
 void Menu::Start() {
-  int variant;  // выбранный пункт меню
+  MenuChoice variant;  // выбранный пункт меню
   do {
     this->PrintMenu();  // выводим меню на экран
-    variant = this->GetVariant(0, kCompareAlgorithms);  // получаем номер выбранного пункта меню
+    // получаем номер выбранного пункта меню
+    variant = static_cast<MenuChoice>(this->GetVariant(static_cast<int>(MenuChoice::Quit), static_cast<int>(MenuChoice::CompareAlgorithms)));
     switch (variant) {
-      case kLoadGraphFromFile:
+      case MenuChoice::LoadGraphFromFile:
         this->LoadGraphFromFile();
         break;
-      case kBreadthFirstSearch:
+      case MenuChoice::BreadthFirstSearch:
         this->BreadthFirstSearch();
         break;
-      case kDepthFirstSearch:
+      case MenuChoice::DepthFirstSearch:
         this->DepthFirstSearch();
         break;
-      case kShortestPathBetweenTwoVertices:
+      case MenuChoice::ShortestPathBetweenTwoVertices:
         this->ShortestPathBetweenTwoVertices();
         break;
-      case kShortestPathsBetweenAllVertices:
+      case MenuChoice::ShortestPathsBetweenAllVertices:
         this->ShortestPathsBetweenAllVertices();
         break;
-      case kLeastSpanningTree:
+      case MenuChoice::LeastSpanningTree:
         this->LeastSpanningTree();
         break;
-      case kSolveTravelingSalesmanProblem:
+      case MenuChoice::SolveTravelingSalesmanProblem:
         this->SolveTravelingSalesmanProblem(TSMSolutionType::Ant);
         break;
-      case kCompareAlgorithms:
+      case MenuChoice::CompareAlgorithms:
         this->CompareAlgorithms();
+        break;
+      case MenuChoice::Quit:
         break;
     }
     
-    if (variant != Quit) {
+    if (variant != MenuChoice::Quit) {
       std::cout << "Press Enter to continue" << std::endl;
       std::cin.get();
     }
-  } while (variant != Quit);
+  } while (variant != MenuChoice::Quit);
 }
 
 void Menu::PrintMenu() {
   std::cout << "Enter the number of the selected menu item." << std::endl;
-  std::cout << "1: loading the original graph from a file." << std::endl;
-  std::cout << "2: graph traversal in breadth with output of the result to the "
+  std::cout << "1: Loading the original graph from a file." << std::endl;
+  std::cout << "2: Graph traversal in breadth with output of the result to the "
                "console."
             << std::endl;
   std::cout
-      << "3: graph traversal in depth with output of the result to the console."
+      << "3: Graph traversal in depth with output of the result to the console."
       << std::endl;
-  std::cout << "4: searching for the shortest path between any two vertices "
+  std::cout << "4: Searching for the shortest path between any two vertices "
                "and displaying the result to the console."
             << std::endl;
   std::cout
-      << "5: searching for the shortest paths between all pairs of vertices in "
+      << "5: Searching for the shortest paths between all pairs of vertices in "
          "the graph with the output of the resulting matrix to the console."
       << std::endl;
-  std::cout << "6: searching for the minimal spanning tree in the graph with "
+  std::cout << "6: Searching for the minimal spanning tree in the graph with "
                "the output of the resulting adjacency matrix to the console."
             << std::endl;
-  std::cout << "7: solving the salesman problem with the output of the "
+  std::cout << "7: Solving the salesman problem with the output of the "
                "resulting route and its length to the console."
             << std::endl;
   std::cout << "8: Compare ant algorithm, with the annealing and brute force algorithms."

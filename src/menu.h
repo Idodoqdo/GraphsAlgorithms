@@ -11,16 +11,16 @@ class Menu {
   Graph *GetGraph() const { return graph_.get(); };
 
  private:
-  enum MenuChoice {
-    Quit = 0,
-    kLoadGraphFromFile,
-    kBreadthFirstSearch,
-    kDepthFirstSearch,
-    kShortestPathBetweenTwoVertices,
-    kShortestPathsBetweenAllVertices,
-    kLeastSpanningTree,
-    kSolveTravelingSalesmanProblem,
-    kCompareAlgorithms
+  enum class MenuChoice {
+    Quit,
+    LoadGraphFromFile,
+    BreadthFirstSearch,
+    DepthFirstSearch,
+    ShortestPathBetweenTwoVertices,
+    ShortestPathsBetweenAllVertices,
+    LeastSpanningTree,
+    SolveTravelingSalesmanProblem,
+    CompareAlgorithms
   };
 
   enum class TSMSolutionType {
