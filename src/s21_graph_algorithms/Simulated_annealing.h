@@ -10,7 +10,10 @@ class SimulatedAnnealing {
         result_.vertices.push_back(static_cast<size_t>(rand_.GenerateRandomInt(0, static_cast<int>(graph.Size() - 1))));
     };
     void FindSolution();
-    TsmResult get_result_() const {return result_;};
+    TsmResult get_result_() {
+      AddPlusOne();
+      return result_;
+    };
  private:
     std::set<size_t> FillingAvailablePlaces();
     void ChooseRandomPlace(std::set<size_t> & available, const std::vector<size_t> & where_can_go);
@@ -20,6 +23,7 @@ class SimulatedAnnealing {
     void RouteGeneration();
     double DistanceCalculation(std::vector<size_t> const &vec) const;
     void ProbabilitydDependentChoice();
+    void AddPlusOne();
     const Graph & graph_;
     TsmResult result_{};
     RandomNumberGenerator rand_;

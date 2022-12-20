@@ -43,6 +43,12 @@ double SimulatedAnnealing::DistanceCalculation(std::vector<size_t> const &vec) c
     return result;
 }
 
+void SimulatedAnnealing::AddPlusOne() {
+  for (size_t i = 0; i < result_.vertices.size(); ++i) {
+    result_.vertices[i] += 1;
+  }
+}
+
 void SimulatedAnnealing::ChangeTwoPoints(std::vector<size_t> & new_path) {
     size_t first_index = static_cast<size_t>(rand_.GenerateRandomInt(1, static_cast<int>(result_.vertices.size() - 2)));
     size_t second_index = static_cast<size_t>(rand_.GenerateRandomInt(1, static_cast<int>(result_.vertices.size() - 2)));
