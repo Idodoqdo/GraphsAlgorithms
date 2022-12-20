@@ -60,6 +60,9 @@ if (NOT GTEST_FOUND)
     endif ()
 endif()
 
+if (GTEST_FOUND)
+    enable_testing()
+endif()
 #############################################################
 #                                                           #
 #                     Dependencies                          #
