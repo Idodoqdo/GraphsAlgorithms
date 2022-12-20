@@ -1,3 +1,4 @@
+// Copyright <lwolmer, lshiela, jgerrick> 2022
 #ifndef SRC_S21_BRUTE_FORCE_H
 #define SRC_S21_BRUTE_FORCE_H
 #include "s21_graph.h"
