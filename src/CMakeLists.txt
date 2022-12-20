@@ -60,9 +60,6 @@ if (NOT GTEST_FOUND)
     endif ()
 endif()
 
-if (GTEST_FOUND)
-    include(CTest)
-endif()
 #############################################################
 #                                                           #
 #                     Dependencies                          #

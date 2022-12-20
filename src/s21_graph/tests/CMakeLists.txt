@@ -8,6 +8,7 @@
 if (GTEST_FOUND)
     cmake_minimum_required(VERSION 3.5)
     project(graph_tests LANGUAGES CXX)
+    include(CTest)
     set(GTestFiles ${GTestSrc}/src/gtest-all.cc)
     set(GTestIncludes ${GTestSrc} ${GTestSrc}/include)
     if (NOT ${GMockSrc} STREQUAL "")
