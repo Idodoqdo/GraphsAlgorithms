@@ -8,6 +8,12 @@ TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(const Graph & graph) {
     return col.get_result_();
 }
 
+void Colony::AddPlusOne() {
+  for (size_t i = 0; i < result_.vertices.size(); ++i) {
+    result_.vertices[i] += 1;
+  }
+}
+
 void Colony::CreateAnt(std::size_t index_start) {
     ants_.push_back(std::make_unique<Ant>(distance_between_points_graph_, pheromones_graph_, index_start));
 }

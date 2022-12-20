@@ -65,9 +65,13 @@ class Colony {
     Colony(const Colony&) = delete;
     Colony& operator=(const Colony&) = delete;
     void FindingShortestPath();
-    TsmResult get_result_() const { return result_;}
-
+    TsmResult get_result_() {
+      AddPlusOne();
+      return result_;
+      }
     private:
+    // добавим +1 к результатку
+    void AddPlusOne();
     // добавление нового муравья в колонию
     void CreateAnt(std::size_t index_start);
     // заполним граф феромонами
