@@ -66,7 +66,7 @@ TEST(graph_algorithms, brute_force_2) {
   s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR"/graph_raw_file");
   s21::GraphAlgorithms testAlg;
   result = testAlg.BruteForceAlg(graph);
-  EXPECT_LE(result.distance, 300);
+  EXPECT_EQ(result.distance, 253);
 }
 
 TEST(graph_algorithms, simulated_annealing_3) {
@@ -76,7 +76,7 @@ TEST(graph_algorithms, simulated_annealing_3) {
     10, 0, 15, 0, 0,
     0, 15, 0, 0, 3,
     7, 0, 0, 0, 8,
-    0, 0, 3, 8, 0 
+    0, 0, 3, 8, 0
   };
   s21::Graph graph(matrix, 5);
   s21::GraphAlgorithms testAlg;
@@ -91,7 +91,7 @@ TEST(graph_algorithms, Ant3) {
     10, 0, 15, 0, 0,
     0, 15, 0, 0, 3,
     7, 0, 0, 0, 8,
-    0, 0, 3, 8, 0 
+    0, 0, 3, 8, 0
   };
   s21::Graph graph(matrix, 5);
   s21::GraphAlgorithms testAlg;
@@ -106,11 +106,10 @@ TEST(graph_algorithms, brute_force_3) {
     10, 0, 15, 0, 0,
     0, 15, 0, 0, 3,
     7, 0, 0, 0, 8,
-    0, 0, 3, 8, 0 
+    0, 0, 3, 8, 0
   };
   s21::Graph graph(matrix, 5);
   s21::GraphAlgorithms testAlg;
   result = testAlg.BruteForceAlg(graph);
   EXPECT_EQ(result.distance, 43);
 }
-
