@@ -9,6 +9,10 @@ namespace s21 {
 struct TsmResult {
 std::vector<std::size_t> vertices;
 double distance;
+TsmResult operator++() {
+  for (size_t i = 0; i < vertices.size(); ++i) vertices[i]++;
+  return *this;
+}
 };
 
 class Ant {
@@ -65,13 +69,8 @@ class Colony {
     Colony(const Colony&) = delete;
     Colony& operator=(const Colony&) = delete;
     void FindingShortestPath();
-    TsmResult get_result_() {
-      AddPlusOne();
-      return result_;
-      }
+    TsmResult get_result_() const { return result_;}
     private:
-    // добавим +1 к результатку
-    void AddPlusOne();
     // добавление нового муравья в колонию
     void CreateAnt(std::size_t index_start);
     // заполним граф феромонами

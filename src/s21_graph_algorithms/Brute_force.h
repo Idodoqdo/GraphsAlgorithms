@@ -31,20 +31,11 @@ class BruteForce {
       result_.distance = std::min(result_.distance, temp_path);
     };
   }
-  TsmResult get_result_() {
-    AddPlusOne();
-    return result_ ;
-    }
+  TsmResult get_result_() const { return result_ ;}
 
  private:
   const Graph & graph_;
   TsmResult result_{};
-  void AddPlusOne() {
-    for (size_t i = 0; i < result_.vertices.size(); ++i) {
-      result_.vertices[i] += 1;
-    }
-  }
-
 };
 
 }

@@ -5,13 +5,7 @@ namespace s21 {
 TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(const Graph & graph) {
     Colony col(graph);
     col.FindingShortestPath(); 
-    return col.get_result_();
-}
-
-void Colony::AddPlusOne() {
-  for (size_t i = 0; i < result_.vertices.size(); ++i) {
-    result_.vertices[i] += 1;
-  }
+    return ++col.get_result_();
 }
 
 void Colony::CreateAnt(std::size_t index_start) {

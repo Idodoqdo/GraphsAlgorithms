@@ -6,7 +6,7 @@ namespace s21 {
 TsmResult GraphAlgorithms::SimulatedAnnealint(const Graph &graph) {
     SimulatedAnnealing result(graph);
     result.FindSolution();
-    return result.get_result_();
+    return ++result.get_result_();
 }
 
 void SimulatedAnnealing::FindSolution() {
@@ -41,12 +41,6 @@ double SimulatedAnnealing::DistanceCalculation(std::vector<std::size_t> const &v
         else result += std::numeric_limits<double>::infinity();
     }
     return result;
-}
-
-void SimulatedAnnealing::AddPlusOne() {
-  for (size_t i = 0; i < result_.vertices.size(); ++i) {
-    result_.vertices[i] += 1;
-  }
 }
 
 void SimulatedAnnealing::ChangeTwoPoints(std::vector<std::size_t> & new_path) {

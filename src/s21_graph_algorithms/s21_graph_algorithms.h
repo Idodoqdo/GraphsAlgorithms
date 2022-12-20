@@ -34,7 +34,7 @@ class GraphAlgorithms {
   TsmResult BruteForceAlg(const Graph & graph) {
     BruteForce temp(graph);
     temp.FindResult();
-    return temp.get_result_();
+    return ++temp.get_result_();
   };
 };
 
