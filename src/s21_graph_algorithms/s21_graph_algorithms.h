@@ -2,15 +2,16 @@
 #ifndef SRC_S21_GRAPH_ALGORITHMS_H_
 #define SRC_S21_GRAPH_ALGORITHMS_H_
 #include <vector>
+#include "ant_colony.h"
 #include "brute_force.h"
 #include "rand_generator.h"
 #include "s21_graph.h"
 #include "simulated_annealing.h"
 #include "tsm.h"
+
 namespace s21 {
 class GraphAlgorithms {
  public:
-  TsmResult solveTravelingSalesmanProblem(const Graph &graph);
   double getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
   Graph getLeastSpanningTree(Graph &graph);
   std::vector<std::vector<double>> getShortestPathsBetweenAllVertices(
@@ -33,12 +34,22 @@ class GraphAlgorithms {
       @return std::vector<std::size_t>
   */
   std::vector<std::size_t> BreadthFirstSearch(Graph &graph, int startVertex);
-  TsmResult SimulatedAnnealint(const Graph &graph);
   TsmResult BruteForceAlg(const Graph &graph) {
     BruteForce temp(graph);
     temp.FindResult();
-    return ++temp.get_result_();
+    return ++temp.result();
   };
+  TsmResult solveTravelingSalesmanProblem(const Graph &graph) {
+    Colony col(graph);
+    col.FindingShortestPath();
+    return ++col.result();
+  }
+
+  TsmResult SimulatedAnnealint(const Graph &graph) {
+    SimulatedAnnealing result(graph);
+    result.FindSolution();
+    return ++result.result();
+  }
 };
 
 }  // namespace s21

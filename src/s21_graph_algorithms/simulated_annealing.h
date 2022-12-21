@@ -1,7 +1,9 @@
 #ifndef SRC_S21_SIMULATED_ANNEALING_H_
 #define SRC_S21_SIMULATED_ANNEALING_H_
+#include <set>
+#include "rand_generator.h"
 #include "s21_graph.h"
-
+#include "tsm.h"
 namespace s21 {
 class SimulatedAnnealing {
  public:
@@ -11,7 +13,7 @@ class SimulatedAnnealing {
         rand_.GenerateRandomInt(0, static_cast<int>(graph.Size() - 1))));
   };
   void FindSolution();
-  TsmResult get_result_() const { return result_; };
+  TsmResult result() const { return result_; };
 
  private:
   std::set<std::size_t> FillingAvailablePlaces();

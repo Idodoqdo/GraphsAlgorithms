@@ -3,7 +3,7 @@
 #define SRC_S21_BRUTE_FORCE_H
 #include <algorithm>
 #include "s21_graph.h"
-#include "s21_graph_algorithms.h"
+#include "tsm.h"
 
 namespace s21 {
 class BruteForce {
@@ -32,7 +32,7 @@ class BruteForce {
       result_.distance = std::min(result_.distance, temp_path);
     };
   }
-  TsmResult get_result_() const { return result_; }
+  TsmResult result() const { return result_; }
 
  private:
   const Graph& graph_;
