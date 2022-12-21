@@ -30,13 +30,13 @@ class Graph {
 
     @param filename Absolute Path to file
   */
-  void LoadGraphFromFile(const std::string& filename);
+  void loadGraphFromFile(const std::string& filename);
   /**
       @brief Exporting a graph to a dot file (see materials)
 
       @param filename Absolute Path to file
   */
-  void ExportGraphToDot(const std::string& filename) const;
+  void exportGraphToDot(const std::string& filename) const;
   std::vector<std::size_t> GetConnectedNodes(std::size_t index);
 
  private:

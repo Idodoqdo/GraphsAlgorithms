@@ -6,7 +6,7 @@
 #include "s21_graph_algorithms.h"
 
 namespace s21 {
-std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph,
+std::vector<std::size_t> GraphAlgorithms::depthFirstSearch(Graph &graph,
                                                            int startVertex) {
   startVertex--;  // cuz readme constrains
   if (startVertex >= static_cast<int>(graph.Size()) || startVertex < 0)
@@ -35,7 +35,7 @@ std::vector<std::size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph,
   return visited;
 }
 
-std::vector<std::size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph,
+std::vector<std::size_t> GraphAlgorithms::breadthFirstSearch(Graph &graph,
                                                              int startVertex) {
   startVertex--;  // cuz readme constrains
   if (startVertex >= static_cast<int>(graph.Size()) || startVertex < 0)

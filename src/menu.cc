@@ -122,7 +122,7 @@ void Menu::BreadthFirstSearch() {
   }
   std::cout << "Input starting index: " << std::endl;
   int n = GetVariant(1, static_cast<int>(graph->Size()));
-  auto breadth_path = graph_algrthm_.BreadthFirstSearch(*graph, n);
+  auto breadth_path = graph_algrthm_.breadthFirstSearch(*graph, n);
   std::cout << "Path: ";
   std::size_t size = breadth_path.size();
   for (std::size_t i = 0; i < size; i++) {
@@ -140,7 +140,7 @@ void Menu::DepthFirstSearch() {
   }
   std::cout << "Input starting index: " << std::endl;
   int n = GetVariant(1, static_cast<int>(graph->Size()));
-  auto depth_path = graph_algrthm_.DepthFirstSearch(*graph, n);
+  auto depth_path = graph_algrthm_.depthFirstSearch(*graph, n);
   std::cout << "Path: ";
   SeparatedContainerPrint(depth_path.begin(), depth_path.end(), "->");
   std::cout << std::endl;

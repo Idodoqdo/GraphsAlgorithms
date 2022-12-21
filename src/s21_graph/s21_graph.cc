@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 namespace s21 {
-Graph::Graph(const std::string &filepath) { LoadGraphFromFile(filepath); }
+Graph::Graph(const std::string &filepath) { loadGraphFromFile(filepath); }
 
 Graph::Graph(std::size_t size) { AllocateMatrix(size); }
 
@@ -47,7 +47,7 @@ std::vector<std::size_t> Graph::GetConnectedNodes(std::size_t index) {
   return paths;
 }
 
-void Graph::LoadGraphFromFile(const std::string &filename) {
+void Graph::loadGraphFromFile(const std::string &filename) {
   std::ifstream file(filename);
   if (file.is_open()) {
     try {
@@ -94,7 +94,7 @@ Graph::GetAllPathsSortedByWeight() const {
   return ms;
 }
 
-void Graph::ExportGraphToDot(const std::string &filename) const {
+void Graph::exportGraphToDot(const std::string &filename) const {
   std::ofstream file;
   file.open(filename);
   if (file.is_open()) {

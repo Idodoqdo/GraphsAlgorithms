@@ -24,7 +24,7 @@ class GraphAlgorithms {
       @return std::vector<std::size_t> an array that contains the traversed
      vertices in the order they were traversed
   */
-  std::vector<std::size_t> DepthFirstSearch(Graph &graph, int startVertex);
+  std::vector<std::size_t> depthFirstSearch(Graph &graph, int startVertex);
   /**
       @brief Breadth-first search in the graph from a given vertex.
 
@@ -32,7 +32,7 @@ class GraphAlgorithms {
       @param startVertex
       @return std::vector<std::size_t>
   */
-  std::vector<std::size_t> BreadthFirstSearch(Graph &graph, int startVertex);
+  std::vector<std::size_t> breadthFirstSearch(Graph &graph, int startVertex);
   TsmResult SimulatedAnnealint(const Graph &graph);
   TsmResult BruteForceAlg(const Graph &graph) {
     BruteForce temp(graph);
