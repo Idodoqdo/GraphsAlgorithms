@@ -3,10 +3,7 @@
 #include "s21_graph.h"
 
 TEST(graph_misc, connected_nodes_fork) {
-  double graph_raw[] = {0, 0, 0, 1,
-                      0, 0, 0, 1,
-                      0, 0, 0 ,1,
-                      1, 1, 1, 0};
+  double graph_raw[] = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0};
   s21::Graph graph(graph_raw, 4);
   auto paths_1 = graph.GetConnectedNodes(1);
   EXPECT_EQ(paths_1.size(), 1);
@@ -20,10 +17,7 @@ TEST(graph_misc, connected_nodes_fork) {
 }
 
 TEST(graph_misc, connected_nodes_cycled) {
-  double graph_raw[] = {0, 1, 0, 1,
-                      1, 0, 1, 0,
-                      0, 1, 0 ,1,
-                      1, 0, 1, 0};
+  double graph_raw[] = {0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0};
   s21::Graph graph(graph_raw, 4);
   auto paths_1 = graph.GetConnectedNodes(1);
   EXPECT_EQ(paths_1.size(), 2);
@@ -39,10 +33,7 @@ TEST(graph_misc, connected_nodes_cycled) {
 }
 
 TEST(graph_misc, connected_nodes_crisscross) {
-  double graph_raw[] = {0, 0, 1, 1,
-                      0, 0, 1, 1,
-                      1, 1, 0 ,0,
-                      1, 1, 0, 0};
+  double graph_raw[] = {0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0};
   s21::Graph graph(graph_raw, 4);
   auto paths_0 = graph.GetConnectedNodes(0);
   std::size_t connected_nodes[] = {2, 3};
@@ -57,4 +48,3 @@ TEST(graph_misc, connected_nodes_crisscross) {
     EXPECT_EQ(paths_2[i], connected_nodes_2[i]);
   }
 }
-

@@ -100,7 +100,7 @@ void stack<T>::create() {
 
 template <class T>
 template <class... Args>
-void stack<T>::emplace_front(Args &&...args) {
+void stack<T>::emplace_front(Args &&... args) {
   if ((sizeof...(args)) == 0) {
     value_type _empty = {};
     push(_empty);

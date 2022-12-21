@@ -45,7 +45,7 @@ class set : private Sorted<Key, std::nullptr_t> {
   virtual std::pair<iterator, bool> insert(const value_type &value);
 
   template <typename... Args>
-  std::pair<iterator, bool> emplace(Args &&...args);
+  std::pair<iterator, bool> emplace(Args &&... args);
 };
 }  // namespace s21
 #include "s21_set.tpp"

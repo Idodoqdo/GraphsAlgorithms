@@ -97,8 +97,8 @@ BinaryTree<Key, Value>::iterator::iterator(iterator &&other) {
 }
 
 template <class Key, class Value>
-typename BinaryTree<Key, Value>::iterator &
-BinaryTree<Key, Value>::iterator::operator=(const iterator &other) {
+typename BinaryTree<Key, Value>::iterator &BinaryTree<Key, Value>::iterator::
+operator=(const iterator &other) {
   if (this != &other) {
     node_ = other.node_;
   }
@@ -106,8 +106,8 @@ BinaryTree<Key, Value>::iterator::operator=(const iterator &other) {
 }
 
 template <class Key, class Value>
-typename BinaryTree<Key, Value>::iterator &
-BinaryTree<Key, Value>::iterator::operator=(iterator &&other) {
+typename BinaryTree<Key, Value>::iterator &BinaryTree<Key, Value>::iterator::
+operator=(iterator &&other) {
   if (this != &other) {
     node_ = other.node_;
     other.node_ = nullptr;
@@ -116,8 +116,8 @@ BinaryTree<Key, Value>::iterator::operator=(iterator &&other) {
 }
 
 template <class Key, class Value>
-typename BinaryTree<Key, Value>::iterator &
-BinaryTree<Key, Value>::iterator::operator++() {
+typename BinaryTree<Key, Value>::iterator &BinaryTree<Key, Value>::iterator::
+operator++() {
   node_type next;
   if (!node_->right_->is_nil()) {
     next = node_->right_->get_minimum();
@@ -135,8 +135,8 @@ BinaryTree<Key, Value>::iterator::operator++() {
 }
 
 template <class Key, class Value>
-typename BinaryTree<Key, Value>::iterator &
-BinaryTree<Key, Value>::iterator::operator--() {
+typename BinaryTree<Key, Value>::iterator &BinaryTree<Key, Value>::iterator::
+operator--() {
   node_type prev;
   if (node_->is_nil()) {
     prev = node_->parent_;

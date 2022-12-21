@@ -47,7 +47,7 @@ class multiset : private set<Key> {
   void swap(multiset<key_type> &other);
 
   template <typename... Args>
-  std::pair<iterator, bool> emplace(Args &&...args);
+  std::pair<iterator, bool> emplace(Args &&... args);
 
   std::pair<iterator, iterator> equal_range(const key_type &key);
   iterator lower_bound(const key_type &key);

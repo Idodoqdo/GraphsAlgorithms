@@ -1,7 +1,6 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
-#include <RandGenerator.h>
 #include <gtest/gtest.h>
-
+#include <rand_generator.h>
 
 TEST(rand_gen, int_test_1) {
   s21::RandomNumberGenerator rng = s21::RandomNumberGenerator();

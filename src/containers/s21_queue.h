@@ -37,7 +37,7 @@ class queue : public Container<T> {
   void swap(queue &other);
 
   template <class... Args>
-  void emplace_back(Args &&...args);
+  void emplace_back(Args &&... args);
 
  private:
   size_type cur_size_;

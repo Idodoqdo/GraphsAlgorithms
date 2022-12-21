@@ -39,8 +39,8 @@ map<key_type, mapped_type>::at(const key_type &key) {
 }
 
 template <class key_type, class mapped_type>
-typename map<key_type, mapped_type>::mapped_type &
-map<key_type, mapped_type>::operator[](const key_type &key) {
+typename map<key_type, mapped_type>::mapped_type
+    &map<key_type, mapped_type>::operator[](const key_type &key) {
   std::pair<iterator, bool> it_pair = this->tree_.find(key);
   if (!it_pair.second) {
     it_pair = insert(key, mapped_type());
@@ -107,7 +107,7 @@ void map<key_type, mapped_type>::swap(map<key_type, mapped_type> &other) {
 template <class key_type, class mapped_type>
 template <class... Args>
 std::pair<typename map<key_type, mapped_type>::iterator, bool>
-map<key_type, mapped_type>::emplace(Args &&...args) {
+map<key_type, mapped_type>::emplace(Args &&... args) {
   std::pair<iterator, bool> return_value = std::make_pair(this->end(), false);
   std::initializer_list<value_type> arg{args...};
   if (arg.size() == 0) {

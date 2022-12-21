@@ -2,36 +2,39 @@
 #ifndef SRC_S21_GRAPH_ALGORITHMS_H_
 #define SRC_S21_GRAPH_ALGORITHMS_H_
 #include <vector>
-#include "RandGenerator.h"
-#include "TravelingSalesmanProblem.h"
-#include "Simulated_annealing.h"
-#include "Brute_force.h"
+#include "brute_force.h"
+#include "rand_generator.h"
 #include "s21_graph.h"
+#include "simulated_annealing.h"
+#include "tsm.h"
 namespace s21 {
 class GraphAlgorithms {
-  public:
+ public:
   TsmResult solveTravelingSalesmanProblem(const Graph &graph);
   double getShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
   Graph getLeastSpanningTree(Graph &graph);
-  std::vector<std::vector<double>> getShortestPathsBetweenAllVertices(Graph &graph);
+  std::vector<std::vector<double>> getShortestPathsBetweenAllVertices(
+      Graph &graph);
   /**
-      @brief A *non-recursive* depth-first search in the graph from a given vertex.
-      
+      @brief A *non-recursive* depth-first search in the graph from a given
+     vertex.
+
       @param graph Graph to search
       @param startVertex starting index
-      @return std::vector<std::size_t> an array that contains the traversed vertices in the order they were traversed
+      @return std::vector<std::size_t> an array that contains the traversed
+     vertices in the order they were traversed
   */
   std::vector<std::size_t> DepthFirstSearch(Graph &graph, int startVertex);
   /**
       @brief Breadth-first search in the graph from a given vertex.
-      
-      @param graph 
-      @param startVertex 
-      @return std::vector<std::size_t> 
+
+      @param graph
+      @param startVertex
+      @return std::vector<std::size_t>
   */
   std::vector<std::size_t> BreadthFirstSearch(Graph &graph, int startVertex);
   TsmResult SimulatedAnnealint(const Graph &graph);
-  TsmResult BruteForceAlg(const Graph & graph) {
+  TsmResult BruteForceAlg(const Graph &graph) {
     BruteForce temp(graph);
     temp.FindResult();
     return ++temp.get_result_();

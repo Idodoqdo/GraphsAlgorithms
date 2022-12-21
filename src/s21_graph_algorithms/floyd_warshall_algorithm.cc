@@ -12,8 +12,7 @@ GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
     result[i].resize(graph_size, 0);
   }
   for (std::size_t y = 0; y < graph_size; y++) {
-    for (std::size_t x = 0; x < graph_size; x++)
-      result[y][x] = graph(x, y);
+    for (std::size_t x = 0; x < graph_size; x++) result[y][x] = graph(x, y);
   }
   //Пробегаемся по всем вершинам и ищем более короткий путь
   //через вершину k

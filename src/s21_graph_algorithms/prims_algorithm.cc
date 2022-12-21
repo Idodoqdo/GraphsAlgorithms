@@ -1,5 +1,5 @@
-#include "s21_graph_algorithms.h"
 #include <limits>
+#include "s21_graph_algorithms.h"
 
 namespace s21 {
 Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
@@ -16,9 +16,9 @@ Graph GraphAlgorithms::getLeastSpanningTree(Graph &graph) {
       if (selected[i]) {
         for (size_t j = 0; j < graph_size; j++) {
           if (!selected[j] && graph(i, j) > 0 && graph(i, j) < min) {
-              min = graph(i, j);
-              y = i;
-              x = j;
+            min = graph(i, j);
+            y = i;
+            x = j;
           }
         }
       }

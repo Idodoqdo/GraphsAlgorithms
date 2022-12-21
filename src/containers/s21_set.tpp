@@ -72,7 +72,7 @@ void set<key_type>::merge(set<key_type> &other) {
 template <class key_type>
 template <class... Args>
 std::pair<typename set<key_type>::iterator, bool> set<key_type>::emplace(
-    Args &&...args) {
+    Args &&... args) {
   std::pair<iterator, bool> return_value = std::make_pair(this->end(), false);
   std::initializer_list<key_type> arg{args...};
   if (arg.size() == 0) {

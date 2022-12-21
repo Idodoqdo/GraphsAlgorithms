@@ -112,7 +112,7 @@ void queue<T>::create() {
 
 template <class T>
 template <class... Args>
-void queue<T>::emplace_back(Args &&...args) {
+void queue<T>::emplace_back(Args &&... args) {
   if ((sizeof...(args)) == 0) {
     value_type _empty = {};
     push(_empty);

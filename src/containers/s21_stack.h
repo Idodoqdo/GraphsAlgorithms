@@ -36,7 +36,7 @@ class stack : public Container<T> {
   void swap(stack &other);
 
   template <class... Args>
-  void emplace_front(Args &&...args);
+  void emplace_front(Args &&... args);
 
  private:
   size_type cur_size_;

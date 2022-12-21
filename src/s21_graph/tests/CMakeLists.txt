@@ -70,7 +70,9 @@ endif()
 #                    additional checks                      #
 #                                                           #
 #############################################################
-if (GTEST_FOUND AND MEMORYCHECK_COMMAND)
+if(NOT MEMORYCHECK_COMMAND)
+    MESSAGE(WARNING "Memory testing tool is not found. Memory testing target for ${PROJECT_NAME} won't be added.")
+elseif (GTEST_FOUND)
     add_custom_target(${PROJECT_NAME}_memcheck
         COMMAND ${CMAKE_CTEST_COMMAND}
         --test-action memcheck

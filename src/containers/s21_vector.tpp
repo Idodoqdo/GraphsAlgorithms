@@ -221,7 +221,7 @@ void vector<T>::swap(vector &other) {
 template <typename T>
 template <typename... Args>
 typename vector<T>::iterator vector<T>::emplace(const_iterator pos,
-                                                Args &&...args) {
+                                                Args &&... args) {
   const_iterator first = cbegin();
   size_type size = size_ + sizeof...(args);
   reserve(size);
@@ -254,7 +254,7 @@ typename vector<T>::iterator vector<T>::emplace(const_iterator pos,
 
 template <typename T>
 template <typename... Args>
-void vector<T>::emplace_back(Args &&...args) {
+void vector<T>::emplace_back(Args &&... args) {
   const_iterator last = cend();
   emplace(last, args...);
 }

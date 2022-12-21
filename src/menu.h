@@ -1,7 +1,7 @@
 // Copyright <lwolmer, lshiela, jgerrick> 2022
-#include <iostream>
-#include <iomanip>
 #include <functional>
+#include <iomanip>
+#include <iostream>
 #include "s21_graph_algorithms.h"
 
 namespace s21 {
@@ -23,11 +23,7 @@ class Menu {
     CompareAlgorithms
   };
 
-  enum class TSMSolutionType {
-    Ant,
-    Annealing,
-    Brute
-  };
+  enum class TSMSolutionType { Ant, Annealing, Brute };
 
   int GetVariant(int min, int max);
   std::unique_ptr<Graph> graph_;
@@ -39,8 +35,10 @@ class Menu {
   void ShortestPathBetweenTwoVertices();
   void ShortestPathsBetweenAllVertices();
   void LeastSpanningTree();
-  void SolveTravelingSalesmanProblem(TSMSolutionType al_type,bool show_result = true);
-  void MeasureTSMAlgorithmTime(std::function<void(TSMSolutionType, bool)> func, TSMSolutionType type, std::size_t n);
+  void SolveTravelingSalesmanProblem(TSMSolutionType al_type,
+                                     bool show_result = true);
+  void MeasureTSMAlgorithmTime(std::function<void(TSMSolutionType, bool)> func,
+                               TSMSolutionType type, std::size_t n);
   void CompareAlgorithms();
 };
 }  // namespace s21

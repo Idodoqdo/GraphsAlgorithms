@@ -278,7 +278,7 @@ void list<T>::sort() {
 
 template <class T>
 template <class... Args>
-void list<T>::emplace_front(Args &&...args) {
+void list<T>::emplace_front(Args &&... args) {
   if ((sizeof...(args)) == 0) {
     value_type _empty = {};
     push_front(_empty);
@@ -289,7 +289,7 @@ void list<T>::emplace_front(Args &&...args) {
 
 template <class T>
 template <class... Args>
-void list<T>::emplace_back(Args &&...args) {
+void list<T>::emplace_back(Args &&... args) {
   if ((sizeof...(args)) == 0) {
     value_type _empty = {};
     push_back(_empty);
@@ -301,7 +301,7 @@ void list<T>::emplace_back(Args &&...args) {
 template <class T>
 template <class... Args>
 typename list<T>::iterator list<T>::emplace(const_iterator pos,
-                                            Args &&...args) {
+                                            Args &&... args) {
   if ((sizeof...(args)) == 0) {
     value_type _empty = {};
     insert(pos, _empty);
