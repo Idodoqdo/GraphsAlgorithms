@@ -24,7 +24,7 @@ GraphAlgorithms::getShortestPathsBetweenAllVertices(Graph &graph) {
         //и суммой ребер i <-> k + k <-> j (если через k пройти быстрее)
         if ((result[i][j] > (result[i][k] + result[k][j]) ||
              (result[i][j] < std::numeric_limits<double>::epsilon())) &&
-            (result[k][j] > 0 && result[i][k] > 0))
+            (result[k][j] > 0 && result[i][k] > 0) && i != j)
           result[i][j] = result[i][k] + result[k][j];
       }
     }

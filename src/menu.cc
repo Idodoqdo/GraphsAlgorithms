@@ -214,7 +214,7 @@ void Menu::LeastSpanningTree() {
   result = graph_algrthm_.getLeastSpanningTree(*graph);
   for (std::size_t i = 0; i < size; i++) {
     for (std::size_t j = 0; j < size; j++) {
-      std::cout << std::setw(5) << graph->operator()(i, j);
+      std::cout << std::setw(5) << result(i, j);
     }
     std::cout << std::endl;
   }
