@@ -6,8 +6,8 @@ namespace {
 template<typename Iterator>
 void SeparatedContainerPrint(Iterator begin, Iterator end, std::string separator) {
   if (begin != end) {
-    auto last = --end;
-    for (auto i = begin; i != end; --i) {
+    Iterator last = std::prev(end);
+    for (Iterator i = begin; i != end; ++i) {
       std::cout << *i;
       if (i != last)
         std::cout << separator;
