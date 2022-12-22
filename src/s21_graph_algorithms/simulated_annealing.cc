@@ -1,14 +1,7 @@
+#include "simulated_annealing.h"
 #include <algorithm>
 #include <cmath>
-#include "s21_graph_algorithms.h"
 namespace s21 {
-
-TsmResult GraphAlgorithms::SimulatedAnnealint(const Graph &graph) {
-  SimulatedAnnealing result(graph);
-  result.FindSolution();
-  return ++result.get_result_();
-}
-
 void SimulatedAnnealing::FindSolution() {
   RouteGeneration();
   FindShortestPath();

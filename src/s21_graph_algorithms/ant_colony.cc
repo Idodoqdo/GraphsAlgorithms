@@ -1,13 +1,7 @@
+#include "ant_colony.h"
 #include <cmath>
-#include "s21_graph_algorithms.h"
 
 namespace s21 {
-TsmResult GraphAlgorithms::solveTravelingSalesmanProblem(const Graph &graph) {
-  Colony col(graph);
-  col.FindingShortestPath();
-  return ++col.get_result_();
-}
-
 void Colony::CreateAnt(std::size_t index_start) {
   ants_.push_back(std::make_unique<Ant>(distance_between_points_graph_,
                                         pheromones_graph_, index_start));
@@ -26,9 +20,9 @@ void Colony::FindingShortestPath() {
     for (std::size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
       CreateAnt(i);
       ants_[i]->Run();
-      if (i == 0) result_ = ants_[i]->get_result_();
-      if (ants_[i]->get_result_().distance < result_.distance)
-        result_ = ants_[i]->get_result_();
+      if (i == 0) result_ = ants_[i]->result();
+      if (ants_[i]->result().distance < result_.distance)
+        result_ = ants_[i]->result();
     }
     EvaporatePheromones();
     for (std::size_t i = 0; i < distance_between_points_graph_.Size(); ++i) {
