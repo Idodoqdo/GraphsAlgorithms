@@ -249,17 +249,21 @@ void Menu::SolveTravelingSalesmanProblem(TSMSolutionType al_type,
   else if (al_type == TSMSolutionType::Brute)
     result = graph_algrthm_.BruteForceAlg(*graph);
   if (show_result) {
-    if (al_type == TSMSolutionType::Ant)
-      std::cout << "Ant algorithm:" << std::endl;
-    else if (al_type == TSMSolutionType::Annealing)
-      std::cout << "Annealing algorithm:" << std::endl;
-    else if (al_type == TSMSolutionType::Brute)
-      std::cout << "Brute force algorithm:" << std::endl;
-    std::cout << "Distance: " << result.distance << std::endl;
-    std::cout << "Path: ";
-    SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(),
-                            "->");
-    std::cout << std::endl;
+    if (result.vertices.size() != graph->Size()) {
+      std::cout << "Error: it is impossible to build a route" << std::endl;
+    } else {
+      if (al_type == TSMSolutionType::Ant)
+        std::cout << "Ant algorithm:" << std::endl;
+      else if (al_type == TSMSolutionType::Annealing)
+        std::cout << "Annealing algorithm:" << std::endl;
+      else if (al_type == TSMSolutionType::Brute)
+        std::cout << "Brute force algorithm:" << std::endl;
+      std::cout << "Distance: " << result.distance << std::endl;
+      std::cout << "Path: ";
+      SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(),
+                              "->");
+      std::cout << std::endl;
+    }
   }
 }
 }  // namespace s21
