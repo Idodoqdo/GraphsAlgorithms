@@ -45,7 +45,11 @@ void Menu::Start() {
         this->LeastSpanningTree();
         break;
       case MenuChoice::SolveTravelingSalesmanProblem:
-        this->SolveTravelingSalesmanProblem(TSMSolutionType::Ant);
+        try {
+          this->SolveTravelingSalesmanProblem(TSMSolutionType::Ant);
+        } catch (const std::exception &e) {
+          std::cerr << e.what() << std::endl;
+        }
         break;
       case MenuChoice::CompareAlgorithms:
         this->CompareAlgorithms();
@@ -154,21 +158,25 @@ void Menu::CompareAlgorithms() {
   }
   std::cout << "Input number of operations(n): " << std::endl;
   int n = GetVariant(1, std::numeric_limits<int>::max());
-  std::cout << std::left << std::setw(25) << "Ant algorithm: ";
-  auto ant_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this,
-                          std::placeholders::_1, std::placeholders::_2);
-  MeasureTSMAlgorithmTime(ant_fp, TSMSolutionType::Ant,
-                          static_cast<std::size_t>(n));
-  std::cout << std::left << std::setw(25) << "Annealing algorithm: ";
-  auto ann_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this,
-                          std::placeholders::_1, std::placeholders::_2);
-  MeasureTSMAlgorithmTime(ann_fp, TSMSolutionType::Annealing,
-                          static_cast<std::size_t>(n));
-  std::cout << std::left << std::setw(25) << "Brute force algorithm: ";
-  auto brute_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this,
+  try {
+    std::cout << std::left << std::setw(25) << "Ant algorithm: ";
+    auto ant_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this,
                             std::placeholders::_1, std::placeholders::_2);
-  MeasureTSMAlgorithmTime(brute_fp, TSMSolutionType::Brute,
-                          static_cast<std::size_t>(n));
+    MeasureTSMAlgorithmTime(ant_fp, TSMSolutionType::Ant,
+                            static_cast<std::size_t>(n));
+    std::cout << std::left << std::setw(25) << "Annealing algorithm: ";
+    auto ann_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this,
+                            std::placeholders::_1, std::placeholders::_2);
+    MeasureTSMAlgorithmTime(ann_fp, TSMSolutionType::Annealing,
+                            static_cast<std::size_t>(n));
+    std::cout << std::left << std::setw(25) << "Brute force algorithm: ";
+    auto brute_fp = std::bind(&Menu::SolveTravelingSalesmanProblem, this,
+                              std::placeholders::_1, std::placeholders::_2);
+    MeasureTSMAlgorithmTime(brute_fp, TSMSolutionType::Brute,
+                            static_cast<std::size_t>(n));
+  } catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  }
 }
 
 void Menu::MeasureTSMAlgorithmTime(
@@ -248,22 +256,20 @@ void Menu::SolveTravelingSalesmanProblem(TSMSolutionType al_type,
     result = graph_algrthm_.SimulatedAnnealint(*graph);
   else if (al_type == TSMSolutionType::Brute)
     result = graph_algrthm_.BruteForceAlg(*graph);
+  if (result.vertices.size() - 1 != graph->Size())
+    throw std::runtime_error("Error: it is impossible to build a route");
   if (show_result) {
-    if (result.vertices.size() != graph->Size()) {
-      std::cout << "Error: it is impossible to build a route" << std::endl;
-    } else {
-      if (al_type == TSMSolutionType::Ant)
-        std::cout << "Ant algorithm:" << std::endl;
-      else if (al_type == TSMSolutionType::Annealing)
-        std::cout << "Annealing algorithm:" << std::endl;
-      else if (al_type == TSMSolutionType::Brute)
-        std::cout << "Brute force algorithm:" << std::endl;
-      std::cout << "Distance: " << result.distance << std::endl;
-      std::cout << "Path: ";
-      SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(),
-                              "->");
-      std::cout << std::endl;
-    }
+    if (al_type == TSMSolutionType::Ant)
+      std::cout << "Ant algorithm:" << std::endl;
+    else if (al_type == TSMSolutionType::Annealing)
+      std::cout << "Annealing algorithm:" << std::endl;
+    else if (al_type == TSMSolutionType::Brute)
+      std::cout << "Brute force algorithm:" << std::endl;
+    std::cout << "Distance: " << result.distance << std::endl;
+    std::cout << "Path: ";
+    SeparatedContainerPrint(result.vertices.begin(), result.vertices.end(),
+                            "->");
+    std::cout << std::endl;
   }
 }
 }  // namespace s21

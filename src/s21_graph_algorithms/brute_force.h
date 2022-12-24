@@ -31,6 +31,8 @@ class BruteForce {
       temp_path += graph_(j, source);
       result_.distance = std::min(result_.distance, temp_path);
     };
+    result_.distance += graph_(result_.vertices.back(), result_.vertices.front());
+    result_.vertices.push_back(result_.vertices.front());
   }
   TsmResult result() const { return result_; }
 

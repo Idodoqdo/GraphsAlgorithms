@@ -1,5 +1,6 @@
 #ifndef SRC_S21_RAND_GENERATOR_H_
 #define SRC_S21_RAND_GENERATOR_H_
+#include <cassert>
 #include <random>
 
 namespace s21 {
@@ -8,10 +9,14 @@ class RandomNumberGenerator {
  public:
   RandomNumberGenerator() : gen_(rd_()){};
   int GenerateRandomInt(int lower_bound, int upper_bound) {
+    assert(lower_bound <= upper_bound);
+    if (lower_bound == upper_bound) return lower_bound;
     std::uniform_int_distribution<> distrib(lower_bound, upper_bound);
     return distrib(gen_);
   }
   double GenerateRandomDouble(int lower_bound, int upper_bound) {
+    assert(lower_bound <= upper_bound);
+    if (lower_bound == upper_bound) return lower_bound;
     std::uniform_real_distribution<double> distrib(lower_bound, upper_bound);
     return distrib(gen_);
   }
