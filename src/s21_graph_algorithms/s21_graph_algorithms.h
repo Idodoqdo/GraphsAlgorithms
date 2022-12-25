@@ -51,9 +51,11 @@ class GraphAlgorithms {
     return ++result.result();
   }
 
-//  private:
-  std::vector<double> Dijkstras_algorithm(Graph &graph, int vertex1);
-  std::vector<std::size_t> Restoring_the_path(Graph &graph, std::vector<double> dist, std::size_t vertex1, std::size_t vertex2);
+  std::vector<std::size_t> SchortestPath(Graph &graph, std::size_t vertex1, std::size_t vertex2);
+
+ private:
+  std::vector<double> DijkstrasAlgorithm(Graph &graph, int vertex1);
+  std::vector<std::size_t> RestoringPath(Graph &graph, std::vector<double> dist, std::size_t vertex1, std::size_t vertex2);
 };
 
 }  // namespace s21
