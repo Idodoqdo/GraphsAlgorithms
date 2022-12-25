@@ -58,11 +58,11 @@ std::vector<std::size_t> GraphAlgorithms::Restoring_the_path(Graph &graph, std::
   double weight = dist[vertex2]; // вес конечной вершины
   std::size_t end = vertex2 - 1;
   std::size_t k = 1; // индекс предыдущей вершины
-  while (end != vertex1 - 1) { // пока не дошли до начальной вершины
+  while (end != vertex1 - 1 && k < graph.Size()) { // пока не дошли до начальной вершины
     for (std::size_t i = 0; i < graph.Size(); i++) // просматриваем все вершины
-      if (graph(i, end) > std::numeric_limits<double>::epsilon()) {   // если связь есть
-        double temp = weight - graph(i, end); // определяем вес пути из предыдущей вершины
-        if ((temp - dist.at(i)) < std::numeric_limits<double>::epsilon()) { // если вес совпал с рассчитанным
+      if (graph(i, end) > std::numeric_limits<double>::epsilon()) {   // если связь есть (graph(i, end) != 0)
+        double temp = weight - graph(i, end); // определяем вес пути из предыдущей вершины 
+        if ((temp - dist.at(i)) < std::numeric_limits<double>::epsilon() && k < graph.Size()) { // если вес совпал с рассчитанным (temp == dist.at(i))
                          // значит из этой вершины и был переход
           weight = temp; // сохраняем новый вес
           end = i;       // сохраняем предыдущую вершину
