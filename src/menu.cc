@@ -256,7 +256,7 @@ void Menu::SolveTravelingSalesmanProblem(TSMSolutionType al_type,
     result = graph_algrthm_.SimulatedAnnealint(*graph);
   else if (al_type == TSMSolutionType::Brute)
     result = graph_algrthm_.BruteForceAlg(*graph);
-  if (result.vertices.size() - 1 != graph->Size())
+  if (result.vertices.size() != graph->Size() + 1)
     throw std::runtime_error("Error: it is impossible to build a route");
   if (show_result) {
     if (al_type == TSMSolutionType::Ant)
