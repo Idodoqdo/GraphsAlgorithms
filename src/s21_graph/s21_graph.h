@@ -20,8 +20,7 @@ class Graph {
         const_cast<const Graph*>(this)->operator()(x, y));
   }
   const double& operator()(std::size_t x, std::size_t y) const {
-    std::size_t size = Size();
-    assert(x < size && y < size);
+    assert(x < Size() && y < Size());
     return matrix_[y][x];
   }
   std::size_t Size() const { return matrix_.size(); }
@@ -37,7 +36,7 @@ class Graph {
       @param filename Absolute Path to file
   */
   void ExportGraphToDot(const std::string& filename) const;
-  std::vector<std::size_t> GetConnectedNodes(std::size_t index);
+  std::vector<std::size_t> GetConnectedNodes(std::size_t index) const;
 
  private:
   void AllocateMatrix(std::size_t size);

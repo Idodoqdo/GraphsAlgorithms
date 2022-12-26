@@ -36,7 +36,7 @@ bool Graph::CheckFormat(std::ifstream &stream, std::string reg) const {
   return result;
 }
 
-std::vector<std::size_t> Graph::GetConnectedNodes(std::size_t index) {
+std::vector<std::size_t> Graph::GetConnectedNodes(std::size_t index) const {
   std::size_t size = Size();
   std::vector<std::size_t> paths;
   for (std::size_t x = 0; x < size; x++) {

@@ -10,29 +10,41 @@ class BruteForce {
  public:
   explicit BruteForce(const Graph& graph) : graph_(graph) {}
   void FindResult() {
-    std::size_t source = 0;
-    for (std::size_t i = 1; i < graph_.Size(); ++i) {
-      result_.vertices.push_back(i);
-    }
     result_.distance = std::numeric_limits<double>::max();
-    while (std::next_permutation(result_.vertices.begin(),
-                                 result_.vertices.end())) {
-      std::size_t j = source;
-      double temp_path = 0;
-      for (std::size_t i = 0; i < result_.vertices.size(); ++i) {
-        if (graph_(j, result_.vertices[i]) > 0) {
-          temp_path += graph_(j, result_.vertices[i]);
-          j = result_.vertices[i];
-        } else {
-          temp_path = std::numeric_limits<double>::max();
-          break;
+    for (std::size_t i = 0; i < graph_.Size(); ++i) {
+      RouteGeneration(i);
+    }
+  }
+  void RouteGeneration(std::size_t step, std::vector<std::size_t> route = {}, std::set<std::size_t> visited = {}) {
+    route.push_back(step);
+    visited.insert(step);
+    auto connected = graph_.GetConnectedNodes(step);
+    for(auto node : connected) {
+      if (step == node || graph_(step, node) < std::numeric_limits<double>::epsilon())
+        continue;
+      if (visited.size() == graph_.Size()) {
+        if (node == route.front()) {
+          route.push_back(route.front());
+          CalculateAndComparePath(route);
+          return;
         }
+      } else {
+        if(visited.find(node) == visited.end())
+          RouteGeneration(node, route, visited);
       }
-      temp_path += graph_(j, source);
-      result_.distance = std::min(result_.distance, temp_path);
-    };
-    result_.distance += graph_(result_.vertices.back(), result_.vertices.front());
-    result_.vertices.push_back(result_.vertices.front());
+    }
+  };
+  void CalculateAndComparePath(std::vector<std::size_t> &route) {
+    double distance = 0;
+    for(auto i = route.begin(); i != route.end(); ++i) {
+      auto next = std::next(i);
+      if (next != route.end())
+        distance += graph_(*i, *next);
+    }
+    if (result_.distance > distance) {
+      result_.distance = distance;
+      result_.vertices = route;
+    }
   }
   TsmResult result() const { return result_; }
 
