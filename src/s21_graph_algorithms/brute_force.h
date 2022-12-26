@@ -17,10 +17,8 @@ class BruteForce {
         result.push_back(i);
       }
       result.push_back(start);
-      while (std::next_permutation(result.begin(),
-                                  result.end())) {
-        if (*result.begin() != *std::prev(result.end()))
-          continue;
+      while (std::next_permutation(result.begin(), result.end())) {
+        if (*result.begin() != *std::prev(result.end())) continue;
         std::size_t j = start;
         double temp_path = 0;
         for (std::size_t i = 1; i < result.size(); ++i) {
