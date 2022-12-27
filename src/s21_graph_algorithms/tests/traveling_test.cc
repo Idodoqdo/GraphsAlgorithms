@@ -41,10 +41,10 @@ TEST(graph_algorithms, simulated_annealing_2) {
 
 TEST(graph_algorithms, brute_force) {
   s21::TsmResult result{};
-  s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR "/graph_raw_file");
+  s21::Graph graph(CMAKE_CURRENT_SOURCE_DIR "/graph_raw_file3x3");
   s21::GraphAlgorithms testAlg;
   result = testAlg.BruteForceAlg(graph);
-  EXPECT_EQ(result.distance, 253);
+  EXPECT_EQ(result.distance, 64);
 }
 
 TEST(graph_algorithms, simulated_annealing_3) {
