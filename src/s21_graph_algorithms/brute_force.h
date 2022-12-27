@@ -12,26 +12,29 @@ class BruteForce {
   void FindResult() {
     result_.distance = std::numeric_limits<double>::max();
     for (std::size_t start = 0; start < graph_.Size(); ++start) {
-      std::vector<std::size_t> result = {};
+      std::vector<std::size_t> result_path = {};
       for (std::size_t i = 0; i < graph_.Size(); ++i) {
-        result.push_back(i);
+        result_path.push_back(i);
       }
-      result.push_back(start);
-      while (std::next_permutation(result.begin(), result.end())) {
-        if (*result.begin() != *std::prev(result.end())) continue;
+      result_path.push_back(start);
+      while (std::next_permutation(result_path.begin(), result_path.end())) {
+        if (*result_path.begin() != *std::prev(result_path.end())) continue;
         std::size_t j = start;
         double temp_path = 0;
-        for (std::size_t i = 1; i < result.size(); ++i) {
-          if (graph_(j, result[i]) > 0) {
-            temp_path += graph_(j, result[i]);
-            j = result[i];
+        for (std::size_t i = 1; i < result_path.size(); ++i) {
+          if (graph_(j, result_path[i]) > 0) {
+            temp_path += graph_(j, result_path[i]);
+            j = result_path[i];
           } else {
             temp_path = std::numeric_limits<double>::max();
             break;
           }
         }
         temp_path += graph_(j, start);
-        result_.distance = std::min(result_.distance, temp_path);
+        if (result_.distance > temp_path) {
+          result_.distance = temp_path;
+          result_.vertices = result_path;
+        }
       };
     }
   }
