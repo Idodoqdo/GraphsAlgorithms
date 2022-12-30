@@ -13,6 +13,18 @@ TEST(dijkstra, test_1) {
   ASSERT_EQ(result, 11);
 }
 
+TEST(dijkstra, test_tmp) {
+  double graph6x6[] = {0, 7,  9, 0,  0, 14, 7,  0,  10, 15, 0, 0,
+                       9, 10, 0, 11, 0, 2,  0,  15, 11, 0,  6, 0,
+                       0, 0,  0, 6,  0, 9,  14, 0,  2,  0,  9, 0};
+  s21::Graph graph(graph6x6, 6);
+  s21::GraphAlgorithms graph_algorithms;
+  std::vector<std::size_t> result = graph_algorithms.SchortestPath(graph, 1, 6);
+  ASSERT_EQ(result[0], 6);
+  ASSERT_EQ(result[1], 3);
+  ASSERT_EQ(result[2], 1);
+}
+
 TEST(dijkstra, test_2) {
   double graph9x9[] = {0, 4, 0, 0, 0, 0, 0, 8,  0, 4, 0, 8, 0, 0,  0,  0,  11,
                        0, 0, 8, 0, 7, 0, 4, 0,  0, 2, 0, 0, 7, 0,  9,  14, 0,

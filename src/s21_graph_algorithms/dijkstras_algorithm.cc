@@ -1,10 +1,20 @@
 #include <limits>
+
+#include <stdexcept>
 #include "s21_graph_algorithms.h"
 
 namespace s21 {
 double GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph,
                                                        int vertex1,
                                                        int vertex2) {
+  std::vector<double> tmp(graph.Size());
+  tmp = DijkstrasAlgorithm(graph, vertex1);
+  double result = tmp[static_cast<std::size_t>(vertex2 - 1)];
+  return result;
+}
+
+std::vector<double> GraphAlgorithms::DijkstrasAlgorithm(Graph &graph,
+                                                        int vertex1) {
   size_t graph_size = graph.Size();
   double max = std::numeric_limits<double>::max();
   std::vector<double> dist(static_cast<std::size_t>(graph_size), max);
@@ -36,6 +46,50 @@ double GraphAlgorithms::getShortestPathBetweenVertices(Graph &graph,
       not_visited[minindex] = false;
     }
   } while (minindex < graph_size);
-  return dist[static_cast<std::size_t>(vertex2 - 1)];
+  return dist;
+}
+
+std::vector<std::size_t> GraphAlgorithms::RestoringPath(
+    Graph &graph, std::vector<double> dist, std::size_t vertex1,
+    std::size_t vertex2) {
+  if (dist[vertex2 - 1] < std::numeric_limits<double>::epsilon())
+    throw std::runtime_error(
+        "Error! Vertices in the introduced graph are not connected!");
+  // Восстановление пути
+  std::vector<std::size_t> result(graph.Size(), 0);  // массив посещенных вершин
+  result[0] = vertex2;  // начальный элемент - конечная вершина
+  std::size_t end = vertex2 - 1;
+  double weight = dist.at(end);  // вес конечной вершины
+  std::size_t k = 1;  // индекс предыдущей вершины
+  while (end != vertex1 - 1) {  // пока не дошли до начальной вершины
+    for (std::size_t i = 0; i < graph.Size(); i++)  // просматриваем все вершины
+      if (graph(i, end) >
+          std::numeric_limits<double>::epsilon()) {  // если связь есть
+                                                     // (graph(i, end) != 0)
+        double temp =
+            weight -
+            graph(i, end);  // определяем вес пути из предыдущей вершины
+        if (std::abs(temp - dist.at(i)) <
+            std::numeric_limits<double>::epsilon()) {
+          // если вес совпал с рассчитанным (temp == dist.at(i))
+          // значит из этой вершины и был переход
+          weight = temp;  // сохраняем новый вес
+          end = i;  // сохраняем предыдущую вершину
+          result.at(k) = i + 1;  // и записываем ее в массив
+          k++;
+        }
+      }
+  }
+  return result;  //  путь записан в обратном порядке т.к. шли с конца
+}
+
+std::vector<std::size_t> GraphAlgorithms::SchortestPath(Graph &graph,
+                                                        std::size_t vertex1,
+                                                        std::size_t vertex2) {
+  std::vector<double> dist =
+      DijkstrasAlgorithm(graph, static_cast<int>(vertex1));
+  std::vector<std::size_t> result =
+      RestoringPath(graph, dist, vertex1, vertex2);
+  return result;
 }
 }  // namespace s21
