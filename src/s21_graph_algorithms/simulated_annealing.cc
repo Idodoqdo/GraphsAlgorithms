@@ -62,6 +62,7 @@ void SimulatedAnnealing::RouteGeneration() {
     if (i == graph_.Size() - 1) available.insert(result_.vertices[0]);
     std::vector<std::size_t> where_can_go{};
     FillingWhereCanGo(where_can_go, available);
+    if (!where_can_go.size()) break;
     ChooseRandomPlace(available, where_can_go);
   }
 }
