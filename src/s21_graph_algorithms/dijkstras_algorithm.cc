@@ -1,6 +1,6 @@
 #include <limits>
 
-#include <exception>
+#include <stdexcept>
 #include "s21_graph_algorithms.h"
 
 namespace s21 {
